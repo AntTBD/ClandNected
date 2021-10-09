@@ -19,7 +19,7 @@ public class Grid<TGridObject>
         this.height = height;
         this.cellSize = cellSize;
         if (isCenter)
-            this.originPosition = originPosition - new Vector3(width / 2, height / 2, 0) * cellSize;
+            this.originPosition = originPosition - new Vector3(width / 2f, height / 2f, 0) * cellSize;
         else
             this.originPosition = originPosition;
 
