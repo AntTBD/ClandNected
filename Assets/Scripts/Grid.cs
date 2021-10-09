@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid<TGridObject>
+public class Grid<TGridObject> 
 {
     private int width;
     private int height;
-    private TGridObject[,] gridArray;
+    public TGridObject[,] gridArray;
 
     private float cellSize;
     private Vector3 originPosition;
 
     private TextMesh[,] debugTextArray;
+
+    public enum Direction { Down, Right, Up, Left };
 
     public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false)
     {
@@ -55,6 +57,14 @@ public class Grid<TGridObject>
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
 
+    }
+
+    public Vector3 GetXY(Vector3 worldPosition)
+    {
+        int x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
+        int y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+        
+        return new Vector3(x,y,0);
     }
 
     public Vector3 GetGridPosition(Vector3 position)
@@ -147,6 +157,33 @@ public class Grid<TGridObject>
     public Vector3 GetOriginPosition()
     {
         return this.originPosition;
+    }
+
+    public float GetCellSize()
+    {
+        return this.cellSize;
+    }
+
+    public float GetRotationAngle(Direction dir)
+    {
+        if (dir == Direction.Down)
+        {
+            return 90;
+        }
+        else if (dir == Direction.Right)
+        {
+            return 0;
+        }
+        else if (dir == Direction.Up)
+        {
+            return 90;
+        }
+        else if (dir == Direction.Left)
+        {
+            return 0;
+        }
+
+        return 0;
     }
 
     public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = 0)
