@@ -5,30 +5,30 @@ using UnityEngine;
 
 /*
 Maison :
- - la maison crée des data pour les envoyer vers un datacenter                                              // TODO
- - une maison peut être ou non satisfaite de sa connexion aux dataCenters ( décidé par les data )
- - les maisons sont générées aléatoirement autour des datacenters                                           // In spawn generator
- - une maison a besoin d'être connectée à un câble pour envoyer des données                                 // if OK
+ - la maison crï¿½e des data pour les envoyer vers un datacenter                                              // TODO
+ - une maison peut ï¿½tre ou non satisfaite de sa connexion aux dataCenters ( dï¿½cidï¿½ par les data )
+ - les maisons sont gï¿½nï¿½rï¿½es alï¿½atoirement autour des datacenters                                           // In spawn generator
+ - une maison a besoin d'ï¿½tre connectï¿½e ï¿½ un cï¿½ble pour envoyer des donnï¿½es                                 // if OK
 
 Attributs du MaisonController :
- - booléen de satisfaction                                                                                  // OK
- - ref portion de câble                                                                                     // OK
- - DeltaTime pour l'envoi de données                                                                        // Added
+ - boolï¿½en de satisfaction                                                                                  // OK
+ - ref portion de cï¿½ble                                                                                     // OK
+ - DeltaTime pour l'envoi de donnï¿½es                                                                        // Added
  - Visiblement c'est tout ?..
 
 Methods :
- - Génération des data                                                                                      // TODO
+ - Gï¿½nï¿½ration des data                                                                                      // TODO
  - Get/Set satisfaction                                                                                     // Added
  - Set Connected Cable                                                                                      // Added
 
 Note :
- - Penser à lister les maisons dans un seul GameObject pour calculer la satisfaction générale
+ - Penser ï¿½ lister les maisons dans un seul GameObject pour calculer la satisfaction gï¿½nï¿½rale
 */
 
 public class HouseController : MonoBehaviour
 {
     private bool isSatisfied;
-    private CableController connectedCable; // TODO : add Cable script
+    public GameObject connectedCable; // TODO : add Cable script
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
@@ -47,7 +47,7 @@ public class HouseController : MonoBehaviour
     {
         return isSatisfied;
     }
-    public void ConnectTo(CableController cable)
+    public void ConnectTo(GameObject cable)
     {
         connectedCable = cable;
     }
@@ -60,7 +60,7 @@ public class HouseController : MonoBehaviour
 
     IEnumerator SendDatas()
     {
-        if(connectedCable != null) // une maison a besoin d'être connectée à un câble pour envoyer des données
+        if(connectedCable != null) // une maison a besoin d'ï¿½tre connectï¿½e ï¿½ un cï¿½ble pour envoyer des donnï¿½es
         {
             CreateNewData();
         }
@@ -69,11 +69,12 @@ public class HouseController : MonoBehaviour
     }
 
     /// <summary>
-    /// La maison crée des data pour les envoyer vers un datacenter
+    /// La maison crï¿½e des data pour les envoyer vers un datacenter
     /// </summary>
     void CreateNewData()
     {
         /// TODO : Create data prefab
         /// Send data
     }
+    
 }

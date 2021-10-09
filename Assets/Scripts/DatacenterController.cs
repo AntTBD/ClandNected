@@ -4,33 +4,33 @@ using UnityEngine;
 
 /*
 Datacenter :
- - le datacenter accueille les data pour gÈnÈrer de l'argent au joueur                                          // TODO
- - il a une vitesse de traitement des data lorsqu'il les reÁoit                                                 // OK
-   -> empÍche de traiter des donnÈes ‡ volontÈ
- - il est amÈliorable  (vitesse de traitement, nombre de port 1-4 ...)                                          // OK vitesse (SetProcessingSpeed) / nb ports (UpgradePortsMax)
- - le joueur pourra demander ‡ avoir un autre datacenter mais ce dernier apparait alÈatoirement sur la carte !
+ - le datacenter accueille les data pour g√©n√©rer de l'argent au joueur                                          // TODO
+ - il a une vitesse de traitement des data lorsqu'il les re√ßoit                                                 // OK
+   -> emp√™che de traiter des donn√©es √† volont√©
+ - il est am√©liorable  (vitesse de traitement, nombre de port 1-4 ...)                                          // OK vitesse (SetProcessingSpeed) / nb ports (UpgradePortsMax)
+ - le joueur pourra demander √† avoir un autre datacenter mais ce dernier apparait al√©atoirement sur la carte !
 
 Attributs du controller :
  - Vitesse de traitement                                                                                        // ADDED
  - Nb port max                                                                                                  // OK
- - Nb port utilisÈes                                                                                            // OK
- - boolÈen pour savoir si on peut tirer un c‚ble ou non ( calculÈ ‡ partir des deux au dessus )                 // OK
+ - Nb port utilis√©es                                                                                            // OK
+ - bool√©en pour savoir si on peut tirer un c√¢ble ou non ( calcul√© √† partir des deux au dessus )                 // OK
  - file de traitement des data                                                                                  // OK
-   -> si pleine -> on dÈtruit les data qui arrivent                                                             // OK AddNewDataToWaitingList (on ne l'ajoute pas ‡ la list) TODO delete prefab
- - capacitÈe max de la list                                                                                     // ADDED
+   -> si pleine -> on d√©truit les data qui arrivent                                                             // OK AddNewDataToWaitingList (on ne l'ajoute pas √† la list) TODO delete prefab
+ - capacit√©e max de la list                                                                                     // ADDED
  - Autres aux besoins 
 
 Methodes:
- - Update boolÈen pour savoir si on peut tirer un c‚ble ou non                                                  // OK SetCanPullCable()
- - AmÈliorer la vitesse de traitement                                                                           // OK SetProcessingSpeed(float deltaTime = 0.5f)
- - AmÈliroer le nb de ports                                                                                     // OK UpgradePortsMax(int deltaUpgrade = 1)
+ - Update bool√©en pour savoir si on peut tirer un c√¢ble ou non                                                  // OK SetCanPullCable()
+ - Am√©liorer la vitesse de traitement                                                                           // OK SetProcessingSpeed(float deltaTime = 0.5f)
+ - Am√©liroer le nb de ports                                                                                     // OK UpgradePortsMax(int deltaUpgrade = 1)
  - Connecter un nouveau cable                                                                                   // OK ConnectNewCable(CableManager cable)
  - Traitement de la list toute les X secondes                                                                   // OK DatasProcessing()
- - Traitement d'une donnÈe                                                                                      // TODO TOCOMPLET OneDataProcessing(DataManager data)
+ - Traitement d'une donn√©e                                                                                      // TODO TOCOMPLET OneDataProcessing(DataManager data)
  - Ajouter une nouvelle list                                                                                    // TODO TOCOMPLET AddNewDataToWaitingList(DataManager data)
 
 Note :
- - ne pas oublier la gestion de l'Èconomie et de la satisfaction lorsque l'on traite une data
+ - ne pas oublier la gestion de l'√©conomie et de la satisfaction lorsque l'on traite une data
 */
 
 public class DatacenterController : MonoBehaviour
@@ -56,7 +56,7 @@ public class DatacenterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Set canPullCable pour savoir si on peut tirer un c‚ble ou non ( calculÈ ‡ partir du nbOutputMax et nbOutputUsed )
+    /// Set canPullCable pour savoir si on peut tirer un c√¢ble ou non ( calcul√© √† partir du nbOutputMax et nbOutputUsed )
     /// </summary>
     private void SetCanPullCable()
     {
@@ -71,8 +71,8 @@ public class DatacenterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Vitesse de traitement amÈliorable (-0.5 par defaut)<br/>
-    /// SI supÈrieur ‡ 0s entre chaque traitement
+    /// Vitesse de traitement am√©liorable (-0.5 par defaut)<br/>
+    /// SI sup√©rieur √† 0s entre chaque traitement
     /// </summary>
     /// <param name="deltaTime"></param>
     void SetProcessingSpeed(float deltaTime = 0.5f)
@@ -85,7 +85,7 @@ public class DatacenterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Amelioration du nb max de ports (par dÈfaut : +1) <br/>
+    /// Amelioration du nb max de ports (par d√©faut : +1) <br/>
     /// Update canPullCable
     /// </summary>
     /// <param name="deltaUpgrade"></param>
@@ -109,7 +109,7 @@ public class DatacenterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Traitement des donnÈes toute les [processingSpeed] secondes
+    /// Traitement des donn√©es toute les [processingSpeed] secondes
     /// </summary>
     /// <returns></returns>
     IEnumerator DatasProcessing()
@@ -119,11 +119,11 @@ public class DatacenterController : MonoBehaviour
             OneDataProcessing(waitingLine[0]);
         }
 
-        yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les reÁoit
+        yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re√ßoit
     }
 
     /// <summary>
-    /// Traitement d'une donnÈe (house satisfied + player money)<br/>
+    /// Traitement d'une donn√©e (house satisfied + player money)<br/>
     /// Supprime la data de la list d'attente
     /// Supprime la data
     /// </summary>
@@ -145,8 +145,8 @@ public class DatacenterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Ajoute une data ‡ la liste d'attente <br/>
-    /// SI la list n'a pas atteint Áa capacitÈ max <br/>
+    /// Ajoute une data √† la liste d'attente <br/>
+    /// SI la list n'a pas atteint √ßa capacit√© max <br/>
     /// SINON affect house satisfaction (TODO) + supprime la data (TODO)
     /// </summary>
     /// <param name="data"></param>
