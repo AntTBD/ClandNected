@@ -4,31 +4,31 @@ using UnityEngine;
 
 /*
 Cable :
- - le cï¿½ble est un ï¿½lï¿½ment cï¿½ur du gameplay, il s'agit du seul ï¿½lï¿½ment manipulable par le joueur
- - le joueur pourra tirer des cï¿½bles depuis des "points de tirage" ( datacenter, maison, routeurs, autres cï¿½bles )
- - le cï¿½ble est un objet regroupant toutes les portions de cï¿½bles formant ce dernier ( une portion = une case )
- - un cï¿½ble possï¿½de une capacitï¿½ maximale de data transportables
-   -> un cï¿½ble peut ï¿½tre amï¿½liorï¿½ pour augmenter sa capacitï¿½ de transport
-   -> la capacitï¿½ de transport du cï¿½ble est calculï¿½e en fonction de sa longueur
-      -> ï¿½vite de tricher en faisant se succï¿½der des petits cï¿½bles pouvant transporter plus de donnï¿½es qu'un seul long
-      -> utiliser un multiplicateur et le nb de portions de cï¿½ble contenu par le cï¿½ble
-   -> Un cï¿½ble saturï¿½ ne peut accueillir aucune data de plus
+ - le câble est un élément cœur du gameplay, il s'agit du seul élément manipulable par le joueur
+ - le joueur pourra tirer des câbles depuis des "points de tirage" ( datacenter, maison, routeurs, autres câbles )
+ - le câble est un objet regroupant toutes les portions de câbles formant ce dernier ( une portion = une case )
+ - un câble possède une capacité maximale de data transportables
+   -> un câble peut être amélioré pour augmenter sa capacité de transport
+   -> la capacité de transport du câble est calculée en fonction de sa longueur
+      -> évite de tricher en faisant se succéder des petits câbles pouvant transporter plus de données qu'un seul long
+      -> utiliser un multiplicateur et le nb de portions de câble contenu par le câble
+   -> Un câble saturé ne peut accueillir aucune data de plus
 
 Attributs du CableController :
  - ref ObjDepart ( en vrai le sens n'a pas d'importance )                                                                       // OK
  - ref ObjArrivee ( en vrai le sens n'a toujours pas d'importance )                                                             // OK
- - Niveau d'amï¿½lioration                                                                                                        // OK
+ - Niveau d'amélioration                                                                                                        // OK
  - Nombre de data max dans le cable                                                                                             // OK
-   -> amï¿½liorable
+   -> améliorable
  - Nombre de data actuellement dans le cable                                                                                    // ADDED
- - float poid du cable ( le poid nous aide ï¿½ calculer les chemins les plus courts vers les datacenters )                        // OK
+ - float poid du cable ( le poid nous aide à calculer les chemins les plus courts vers les datacenters )                        // OK
    - Deux options ici :
-   -> ( 1 ) On calcul simplement en fonction de la taille de cï¿½ble (nb de portions de cï¿½ble)
-   -> ( 2 ) On calcul en fonction de la taille du cï¿½ble et de sa saturation                                                     // OK (could be improve)
-      -> permet d'avoir un rï¿½seau plus intelligent et ï¿½quilibrï¿½ qui essaie d'ï¿½viter les bouchons de data
-      -> peut ï¿½tre implï¿½mentï¿½ via une amï¿½lioration pour que le joueur le dï¿½bloque en cours de jeu
+   -> ( 1 ) On calcul simplement en fonction de la taille de câble (nb de portions de câble)
+   -> ( 2 ) On calcul en fonction de la taille du câble et de sa saturation                                                     // OK (could be improve)
+      -> permet d'avoir un réseau plus intelligent et équilibré qui essaie d'éviter les bouchons de data
+      -> peut être implémenté via une amélioration pour que le joueur le débloque en cours de jeu
  - operationnel                                                                                                                 // OK
-   -> dans le cas d'un cï¿½ble cassï¿½ qui foutrait la merde :)
+   -> dans le cas d'un câble cassé qui foutrait la merde :)
  - list de sections                                                                                                             // ADDED
  - list de datas => dans les enfants du cable
 
@@ -51,9 +51,9 @@ Diviser(GameObject router)                                                      
 
 Note :
  - Un cable doit pouvoir se dessiner et se supprimer facilement sur la grille                                                   // TODO delete TO CHECK
- - gï¿½rer la section d'un cï¿½ble en deux cï¿½bles lors de la connexion d'un autre ï¿½ celui-ci (cf-> routeur)                         // OK : to check
- - Un cï¿½ble saturï¿½ devra changer de couleur et tirer vers le rouge, un cï¿½ble au repos sera bleu ou vert                         // TODO
- - on pourra ï¿½ventuellement ajouter un systï¿½me d'usure du cï¿½ble                                                                 // TODO
+ - gérer la section d'un câble en deux câbles lors de la connexion d'un autre à celui-ci (cf-> routeur)                         // OK : to check
+ - Un câble saturé devra changer de couleur et tirer vers le rouge, un câble au repos sera bleu ou vert                         // TODO
+ - on pourra éventuellement ajouter un système d'usure du câble                                                                 // TODO
 */
 
 public class CableController : MonoBehaviour
@@ -138,7 +138,7 @@ public class CableController : MonoBehaviour
     void UpdateWeight()
     {
         /// TODO : calcul du poid
-        ///  On calcul en fonction de la taille du cï¿½ble et de sa saturation 
+        ///  On calcul en fonction de la taille du câble et de sa saturation 
         weight = transform.childCount * ((float)nbMaxDatas / (float)nbDatas);
     }
 
