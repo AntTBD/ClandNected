@@ -16,7 +16,7 @@ public class DataController : MonoBehaviour {
         //Initial objDepart is it's parent aka HouseObject
         objDepart = trs.parent.gameObject;
         trs.position = objDepart.transform.position;
-        objArrive = objDepart.GetComponent<HouseController> ().GetConnectedCable();
+        objArrive = objDepart.GetComponent<HouseController> ().GetConnectedCable ();
         dataCenter = SelectRandomDataCenter ();
         Debug.Log ("Iniatlization finished");
         GetComponent<SpriteRenderer> ().sortingOrder = 1;
@@ -26,22 +26,23 @@ public class DataController : MonoBehaviour {
         if (objArrive != null) {
             var step = speed * Time.deltaTime;
 
-        transform.position = Vector3.MoveTowards (transform.position, objArrive.transform.position, step);
-        if (transform.position != objArrive.transform.position) return;
-        if (direction) indexChild++;
-        else indexChild--;
-        if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount) {
-            var endCable = objArrive.transform.parent.GetComponent<CableController> ().GetEnd();
-            if (endCable.CompareTag ("Router")) {
-                //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
-                objDepart = endCable;
-                objArrive = endCable.GetComponent<RouterController> ().redirectTo;
-                indexChild = InitializeIndex ();
-            } else if (endCable.CompareTag ("DataCenter")) {
-                Debug.Log ("Winner");
+            transform.position = Vector3.MoveTowards (transform.position, objArrive.transform.position, step);
+            if (transform.position != objArrive.transform.position) return;
+            if (direction) indexChild++;
+            else indexChild--;
+            if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount) {
+                var endCable = objArrive.transform.parent.GetComponent<CableController> ().GetEnd ();
+                if (endCable.CompareTag ("Router")) {
+                    //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
+                    objDepart = endCable;
+                    objArrive = endCable.GetComponent<RouterController> ().redirectTo;
+                    indexChild = InitializeIndex ();
+                } else if (endCable.CompareTag ("DataCenter")) {
+                    Debug.Log ("Winner");
+                }
             }
-        }
 
+        }
     }
 
     private GameObject SelectRandomDataCenter () {
@@ -58,7 +59,7 @@ public class DataController : MonoBehaviour {
         return direction ? 0 : parentObj.childCount;
     }
 
-    public void Delete() {
+    public void Delete () {
         transform.parent.GetComponent<HouseController> ().SetIsSatified (false);
         Destroy (gameObject);
 
