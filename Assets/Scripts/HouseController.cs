@@ -28,7 +28,7 @@ Note :
 public class HouseController : MonoBehaviour
 {
     private bool isSatisfied;
-    public GameObject connectedCable; // TODO : add Cable script
+    [SerializeField] private GameObject connectedCable; // TODO : add Cable script
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
@@ -52,6 +52,12 @@ public class HouseController : MonoBehaviour
         connectedCable = cable;
     }
 
+
+    public GameObject GetConnectedCable()
+    {
+        return connectedCable;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -60,7 +66,7 @@ public class HouseController : MonoBehaviour
 
     IEnumerator SendDatas()
     {
-        if(connectedCable != null) // une maison a besoin d'ï¿½tre connectï¿½e ï¿½ un cï¿½ble pour envoyer des donnï¿½es
+        if(connectedCable != null) // une maison a besoin d'être connectée à un câble pour envoyer des données
         {
             CreateNewData();
         }
@@ -69,12 +75,11 @@ public class HouseController : MonoBehaviour
     }
 
     /// <summary>
-    /// La maison crï¿½e des data pour les envoyer vers un datacenter
+    /// La maison crée des data pour les envoyer vers un datacenter
     /// </summary>
     void CreateNewData()
     {
         /// TODO : Create data prefab
         /// Send data
     }
-    
 }
