@@ -6,12 +6,10 @@ public class GridManager : MonoBehaviour {
     [SerializeField] private int width;
     // Start is called before the first frame update
     private void Awake () {
-        _grid = new Grid<GameObject>(width, height, 1.0f, new Vector3(0, 0, 0), true);
-    }
-    
-    public Grid<GameObject> GetGrid()
-    {
-        return _grid;
+        _grid = new Grid<GameObject> (width, height, 1.0f, new Vector3 (0, 0, 0), true);
     }
 
+    public Grid<GameObject> GetGrid () {
+        return _grid;
+    }
 }
