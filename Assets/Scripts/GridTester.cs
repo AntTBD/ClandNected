@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridTester : MonoBehaviour {
-    private Grid grid;
+    private Grid<bool> grid;
     // Start is called before the first frame update
     private void Start () {
-        grid = new Grid (4, 2, 2f, new Vector3 (0, 0, 0));
+        grid = new Grid<bool> (4, 2, 2f, new Vector3 (0, 0, 0));
     }
 
     // Update is called once per frame
     void Update () {
         if (Input.GetMouseButtonDown (0)) {
-            grid.SetValue (GetMouseWorldPosition (), 56);
+            grid.SetValue (GetMouseWorldPosition (), true);
         }
 
         if (Input.GetMouseButtonDown (1)) {
