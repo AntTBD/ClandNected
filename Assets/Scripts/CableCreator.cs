@@ -28,27 +28,26 @@ public class CableCreator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && grid.IsInGrid(mousePos) && depart.tag == "Maison")
-        {
-            PlaceObject();
-        }
-    }
+        mousePos = GetMouseWorldPosition();
 
-    void OnMouseDown()
-    {
-        if(depart == null)
+        if(depart != null)
         {
-            Debug.Log(depart);
-            mousePos = GetMouseWorldPosition();
+            if (Input.GetMouseButton(0) && grid.IsInGrid(mousePos) && depart.tag == "Maison")
+            {
+                PlaceObject();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
             Vector3 gridPosition = grid.GetXY(mousePos);
             depart = grid.gridArray[(int)gridPosition.x,(int)gridPosition.y];
         }
-    }
 
-    /*void OnMouseUp()
-    {
-        depart = null;
-    }*/
+        if (Input.GetMouseButtonUp(0))
+        {
+            depart = null;
+        }
+    }
 
     /*private void DestroyObject(Vector2 gridPos)
     {
