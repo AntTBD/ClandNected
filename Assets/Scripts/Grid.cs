@@ -8,8 +8,8 @@ public class Grid<TGridObject>
     private int height;
     private TGridObject[,] gridArray;
 
-    private float _cellSize;
-    private Vector3 _originPosition;
+    private float cellSize;
+    private Vector3 originPosition;
 
     private TextMesh[,] debugTextArray;
 
@@ -23,8 +23,8 @@ public class Grid<TGridObject>
         else
             this.originPosition = originPosition;
 
-        _gridArray = new TGridObject[width, height];
-        _debugTextArray = new TextMesh[width, height];
+        gridArray = new TGridObject[width, height];
+        debugTextArray = new TextMesh[width, height];
 
         //Debug.Log (this.width + " " + this.height);
         bool showDebug = true;
