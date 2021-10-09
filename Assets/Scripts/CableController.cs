@@ -65,6 +65,7 @@ public class CableController : MonoBehaviour
     private int nbDatas;
     private float weight;
     private bool operational;
+    private List<DataController> datas;
 
 
     // Start is called before the first frame update
@@ -74,17 +75,27 @@ public class CableController : MonoBehaviour
         CheckAndUpdateMaxData();
         UpdateOperational();
         weight = 0f;
-
+        datas = new List<DataController>();
     }
 
-    void SetBegin(GameObject begin)
+    public void SetBegin(GameObject begin)
     {
         objBegin = begin;
     }
-    void SetEnd(GameObject end)
+    public void SetEnd(GameObject end)
     {
         objEnd = end;
     }
+
+    public GameObject GetBegin()
+    {
+        return objBegin;
+    }
+    public GameObject GetEnd()
+    {
+        return objEnd;
+    }
+
 
     /// <summary>
     /// Upgrade max capacity of data<br/>
@@ -96,7 +107,7 @@ public class CableController : MonoBehaviour
         nbMaxDatas = level * transform.childCount;
     }
 
-    void UpgradeLevel()
+    public void UpgradeLevel()
     {
         level++;
         CheckAndUpdateMaxData();
@@ -107,7 +118,7 @@ public class CableController : MonoBehaviour
         }
         UpdateWeight();
     }
-    float GetWeight()
+    public float GetWeight()
     {
         return weight;
     }
@@ -126,7 +137,11 @@ public class CableController : MonoBehaviour
     {
         if (IsOperational() == false)
         {
-            /// TODO : change color
+            // change color foreach sections
+            foreach (Transform section in transform)
+            {
+                section.GetComponent<CableSectionController>().SetSatured(operational);
+            }
         }
     }
 
@@ -142,18 +157,19 @@ public class CableController : MonoBehaviour
         weight = transform.childCount * ((float)nbMaxDatas / (float)nbDatas);
     }
 
-    void AddSection(CableSectionController section)
+    public void AddSection(CableSectionController section)
     {
         section.transform.parent = transform; // add section as a child
 
         UpdateWeight();
     }
 
-    bool AddData(GameObject data)
+    public bool AddData(GameObject data)
     {
         if (IsOperational())
         {
             nbDatas++;
+            datas.Add(data.GetComponent<DataController>());
             UpdateOperational();
             UpdateWeight();
             /// TODO : faire parcourir la data le long des sections
@@ -164,37 +180,45 @@ public class CableController : MonoBehaviour
         else
         {
             /// TODO : delete data
-            // data.GetComponent<CableSectionController>().Delete();
+            data.GetComponent<DataController>().Delete();
             return false;
         }
     }
 
-    void RemoveData(GameObject data)
+    public void RemoveData(GameObject data)
     {
         nbDatas--;
+        datas.Remove(data.GetComponent<DataController>());
         UpdateOperational();
         UpdateWeight();
 
         /// TODO : Delete data or transmit to objEnd or objBegin
+        /// ...
 
     }
 
     /// <summary>
-    /// Delete cable
+    /// Delete sections + datas
     /// </summary>
-    void Delete()
+    public void Delete()
     {
+        // delete sections
         foreach (Transform section in transform)
         {
             /// TODO : call function to remove section
             section.GetComponent<CableSectionController>().Delete();
-            
+
+        }
+        // delete datas
+        foreach (DataController data in datas)
+        {
+            data.Delete();
         }
         // delete cable prefab
         Destroy(gameObject);
     }
 
-    void Diviser(GameObject router)
+    public void Diviser(GameObject router)
     {
         // create new cable
         GameObject newCable = Instantiate((GameObject)Resources.Load("Prefabs/" + "Cable", typeof(GameObject)), Vector3.zero, Quaternion.identity);
