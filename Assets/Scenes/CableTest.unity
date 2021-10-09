@@ -153,11 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalObject: {fileID: 6925759753458750352, guid: ad08587473e3eee4a97131a29b4b02db, type: 3}
-  height: 10
+  height: 5
   width: 10
   allTilesLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!4 &790260335
 Transform:
   m_ObjectHideFlags: 0
