@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public class BuildingSpawner : MonoBehaviour {
 
     [SerializeField] private GameObject houseGO;
     [SerializeField] private GameObject datacenterGO;
+    [SerializeField] private const int secondBeforeSpawnHouse = 5;
     private Grid<GameObject> _grid;
 
     private int maxX;
@@ -21,6 +23,7 @@ public class BuildingSpawner : MonoBehaviour {
         maxY = Mathf.FloorToInt (_grid.GetHeight () / 2.0f);
 
         this.SpawnDatacenter ();
+        StartCoroutine ("coroutineSpawnHouse");
     }
 
     void Update () {
@@ -29,6 +32,17 @@ public class BuildingSpawner : MonoBehaviour {
             SpawnHouse ();
         }
     }
+
+    // Coroutine de spawn des houses
+
+    IEnumerator coroutineSpawnHouse () {
+        //TODO : Change that by while game is running
+        while (true) {
+            this.SpawnHouse ();
+            yield return new WaitForSeconds (secondBeforeSpawnHouse);
+        }
+    }
+
     void SpawnDatacenter () {
         for (int i = 0; i < 1000; i++) {
             Vector3 pos = new Vector3 (
