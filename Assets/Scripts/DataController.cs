@@ -23,6 +23,8 @@ public class DataController : MonoBehaviour {
         InitializeIndex ();
     }
     public void FixedUpdate () {
+        if (objArrive == null)
+            return;
         var step = speed * Time.deltaTime;
 
         transform.position = Vector3.MoveTowards (transform.position, objArrive.transform.position, step);
@@ -52,6 +54,8 @@ public class DataController : MonoBehaviour {
     }
 
     private int InitializeIndex () {
+        if (objArrive == null)
+            return 0;
         var parentObj = objArrive.transform.parent;
         direction = objArrive.Equals (parentObj.GetChild (0).gameObject);
         return direction ? 0 : parentObj.childCount;
