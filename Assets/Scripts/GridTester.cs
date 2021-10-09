@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GridTester : MonoBehaviour {
     private Grid<bool> grid;
+
+    [SerializeField] private int height;
+    [SerializeField] private int width;
+
     // Start is called before the first frame update
     private void Start () {
-        grid = new Grid<bool> (4, 2, 2f, new Vector3 (0, 0, 0));
+        grid = new Grid<bool> (width, height, 1.5f, new Vector3 (-7, -3, 0));
     }
 
     // Update is called once per frame

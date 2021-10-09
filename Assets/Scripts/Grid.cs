@@ -27,7 +27,7 @@ public class Grid<TGridObject> {
         if (showDebug) {
             for (int x = 0; x < gridArray.GetLength (0); x++) {
                 for (int y = 0; y < gridArray.GetLength (1); y++) {
-                    debugTextArray[x, y] = CreateWorldText (gridArray[x, y].ToString (), null, GetWorldPosition (x, y) + new Vector3 (cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
+                    //debugTextArray[x, y] = CreateWorldText (gridArray[x, y].ToString (), null, GetWorldPosition (x, y) + new Vector3 (cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
                     Debug.DrawLine (GetWorldPosition (x, y), GetWorldPosition (x, y + 1), Color.white, 100f);
                     Debug.DrawLine (GetWorldPosition (x, y), GetWorldPosition (x + 1, y), Color.white, 100f);
                 }
@@ -35,7 +35,6 @@ public class Grid<TGridObject> {
             Debug.DrawLine (GetWorldPosition (0, height), GetWorldPosition (width, height), Color.white, 100f);
             Debug.DrawLine (GetWorldPosition (width, 0), GetWorldPosition (width, height), Color.white, 100f);
         }
-
     }
 
     public Vector3 GetWorldPosition (int x, int y) {
@@ -46,6 +45,23 @@ public class Grid<TGridObject> {
         x = Mathf.FloorToInt ((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt ((worldPosition - originPosition).y / cellSize);
 
+    }
+
+    public Vector3 GetGridPosition(Vector3 position)
+    {
+        position -= originPosition;
+
+        int xCount = Mathf.RoundToInt(position.x / cellSize);
+        int yCount = Mathf.RoundToInt(position.y / cellSize);
+
+        Vector3 result = new Vector3(
+            (float)xCount * cellSize,
+            (float)yCount * cellSize,
+           0);
+
+        result += originPosition;
+
+        return result;
     }
 
     public void SetValue (Vector3 worldPosition, TGridObject value) {
@@ -79,12 +95,16 @@ public class Grid<TGridObject> {
         return this.GetValue (x, y);
     }
 
-    public int GetWitdh () {
+    public int GetWidth () {
         return this.width;
     }
 
     public int GetHeight () {
         return this.height;
+    }
+
+    public Vector3 GetOriginPosition () {
+        return this.originPosition;
     }
 
     public static TextMesh CreateWorldText (string text, Transform parent = null, Vector3 localPosition = default (Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = 0) {

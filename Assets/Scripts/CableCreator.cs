@@ -4,41 +4,41 @@ using UnityEngine;
 
 public class CableCreator : MonoBehaviour
 {
+    private Vector2 mousePos;
 
-    //public Grid grid;
+    public GameObject finalObject;
 
-    public Texture2D tex;
-    private Sprite mySprite;
-    private SpriteRenderer sr;
+    private Grid<GameObject> grid;
 
-    public GameObject cube;
-
-    void Awake()
-    {
-        sr = gameObject.AddComponent<SpriteRenderer>() as SpriteRenderer;
-        sr.color = new Color(0.9f, 0.9f, 0.9f, 1.0f);
-
-        transform.position = new Vector3(1.5f, 1.5f, 0.0f);
-    }
+    [SerializeField] private int height;
+    [SerializeField] private int width;
+    [SerializeField] private LayerMask allTilesLayer;
 
     void Start()
     {
-        mySprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+        grid = new Grid<GameObject> (width, height, 3f, new Vector3 (-15,-10,0));
     }
 
     // Update is called once per frame
     void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y));
         if(Input.GetMouseButton(0))
         {
-            sr.sprite = mySprite;
-            cube.SetActive(true);
-            Debug.Log("pressed");
-        }
-        else
-        {
-            cube.SetActive(false);
-            Destroy(mySprite);
+            RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, allTilesLayer);
+            
+            if (rayHit.collider == null)
+            {
+                if (mousePos.x >= grid.GetOriginPosition().x && mousePos.y >= grid.GetOriginPosition().y && mousePos.x < grid.GetWidth() && mousePos.y < grid.GetHeight()) 
+                {
+                    Instantiate(finalObject, grid.GetGridPosition(mousePos), Quaternion.identity);
+                } 
+                else 
+                {
+                    Debug.LogError ("INDEX OUT OF GRID ARRAY, U RETARDED (set value)");
+                }
+            }
         }
     }
 }
