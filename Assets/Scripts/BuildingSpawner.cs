@@ -11,8 +11,6 @@ public class BuildingSpawner : MonoBehaviour
     void Start() 
     {
         _grid = gridManager.GetGrid();
-        SpawnDatacenter();
-        SpawnHouse();
     }
     void SpawnDatacenter()
     {
