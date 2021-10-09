@@ -36,6 +36,7 @@ public class DataController : MonoBehaviour
             var endCable=objArrive.transform.parent.GetComponent<CableController>().connectedTo;
             if (endCable.CompareTag("Router"))
             {
+                //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
                 objDepart = endCable;
                 objArrive = endCable.GetComponent<RouterController>().redirectTo;
                 indexChild=InitializeIndex();
