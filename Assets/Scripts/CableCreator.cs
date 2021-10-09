@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
 
-public class CableCreator : MonoBehaviour
-{
+public class CableCreator : MonoBehaviour {
     private Vector2 mousePos;
 
     public CableType[] cableTypes;
@@ -14,37 +13,28 @@ public class CableCreator : MonoBehaviour
     public GameObject tempObject;
 
     private GameObject depart = null;
+    [SerializeField] private GridManager gridManager;
 
-    [SerializeField] private int height;
-    [SerializeField] private int width;
-
-    void Start()
-    {
-        mousePos = GetMouseWorldPosition();
-        grid = new Grid<GameObject>(width, height, 1.5f, new Vector3(0, 0, 0), true);
-        Place(mousePos,Quaternion.identity,new Vector2(3,3),tempObject);
+    void Start () {
+        mousePos = GetMouseWorldPosition ();
+        grid = gridManager.GetGrid ();
+        Place (mousePos, Quaternion.identity, new Vector2 (3, 3), tempObject);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        mousePos = GetMouseWorldPosition();
+    void Update () {
+        mousePos = GetMouseWorldPosition ();
 
-        if(depart != null)
-        {
-            if (Input.GetMouseButton(0) && grid.IsInGrid(mousePos) && depart.tag == "Maison")
-            {
-                PlaceObject();
+        if (depart != null) {
+            if (Input.GetMouseButton (0) && grid.IsInGrid (mousePos) && depart.tag == "Maison") {
+                PlaceObject ();
             }
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 gridPosition = grid.GetXY(mousePos);
-            depart = grid.gridArray[(int)gridPosition.x,(int)gridPosition.y];
+        } else if (Input.GetMouseButtonDown (0)) {
+            Vector3 gridPosition = grid.GetXY (mousePos);
+            depart = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
+        if (Input.GetMouseButtonUp (0)) {
             depart = null;
         }
     }
@@ -101,16 +91,14 @@ public class CableCreator : MonoBehaviour
         }
     }*/
 
-    private void PlaceObject()
-    {
-        Vector3 posXY = grid.GetXY(mousePos);
-        int x = (int)posXY.x;
-        int y = (int)posXY.y;
+    private void PlaceObject () {
+        Vector3 posXY = grid.GetXY (mousePos);
+        int x = (int) posXY.x;
+        int y = (int) posXY.y;
 
-        if (grid.GetValue(mousePos) == null)
-        {
-            GameObject objectToPlace =tempObject;
-            Place(mousePos,Quaternion.identity,new Vector2(x,y),objectToPlace);
+        if (grid.GetValue (mousePos) == null) {
+            GameObject objectToPlace = tempObject;
+            Place (mousePos, Quaternion.identity, new Vector2 (x, y), objectToPlace);
 
             /*for (int i = 1; i < 5; i++)
             {
@@ -153,19 +141,17 @@ public class CableCreator : MonoBehaviour
         }
     }
 
-    private void Place(Vector3 placePos, Quaternion placeRot, Vector2 gridPos, GameObject objectToPlace)
-    {
-        GameObject placedObject = Instantiate(objectToPlace, grid.GetGridPosition(mousePos), placeRot);
+    private void Place (Vector3 placePos, Quaternion placeRot, Vector2 gridPos, GameObject objectToPlace) {
+        GameObject placedObject = Instantiate (objectToPlace, grid.GetGridPosition (mousePos), placeRot);
 
         //Adapte la taille du sprite aux cases
-        placedObject.transform.localScale = new Vector3(grid.GetCellSize()*100/512,grid.GetCellSize()*100/512,grid.GetCellSize()*100/512);
+        placedObject.transform.localScale = new Vector3 (grid.GetCellSize () * 100 / 512, grid.GetCellSize () * 100 / 512, grid.GetCellSize () * 100 / 512);
 
-        grid.SetValue(mousePos, placedObject);
+        grid.SetValue (mousePos, placedObject);
     }
 
     [System.Serializable]
-    public class CableType
-    {
+    public class CableType {
         public GameObject cablePrefab;
         public bool down;
         public bool right;
