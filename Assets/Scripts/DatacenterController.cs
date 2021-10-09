@@ -40,8 +40,8 @@ public class DatacenterController : MonoBehaviour
     [SerializeField] private int nbPortsMax;
     private int nbPortsUsed;
     private bool canPullCable;
-    private List<CableManager> connectedCables;
-    private List<DataManager> waitingLine;
+    private List<CableController> connectedCables;
+    private List<DataController> waitingLine;
     [SerializeField] private int waitingLineMaxCapacity;
 
 
@@ -51,8 +51,8 @@ public class DatacenterController : MonoBehaviour
     {
         nbPortsUsed = 0;
         SetCanPullCable();
-        connectedCables = new List<CableManager>();
-        waitingLine = new List<DataManager>(waitingLineMaxCapacity);
+        connectedCables = new List<CableController>();
+        waitingLine = new List<DataController>(waitingLineMaxCapacity);
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class DatacenterController : MonoBehaviour
         SetCanPullCable();
     }
 
-    void ConnectNewCable(CableManager cable)
+    void ConnectNewCable(CableController cable)
     {
         connectedCables.Add(cable);
         nbPortsUsed++;
@@ -128,7 +128,7 @@ public class DatacenterController : MonoBehaviour
     /// Supprime la data
     /// </summary>
     /// <param name="data"></param>
-    void OneDataProcessing(DataManager data)
+    void OneDataProcessing(DataController data)
     {
         /// TODO : complete to affect data + its house satisfaction (+) + player money (+)
         // ...
@@ -150,7 +150,7 @@ public class DatacenterController : MonoBehaviour
     /// SINON affect house satisfaction (TODO) + supprime la data (TODO)
     /// </summary>
     /// <param name="data"></param>
-    void AddNewDataToWaitingList(DataManager data)
+    void AddNewDataToWaitingList(DataController data)
     {
         if (waitingLine.Count <= waitingLineMaxCapacity)
         {
