@@ -6,11 +6,11 @@ public class BuildingSpawner : MonoBehaviour
     [SerializeField] private Transform dataCenters;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private int minDistanceBetweenDataCenters;
-    Grid<GameObject> grid;
+    private Grid<GameObject> _grid;
 
     void Start() 
     {
-        grid = gridManager.GetGrid();
+        _grid = gridManager.GetGrid();
     }
     void SpawnDatacenter()
     {
@@ -18,11 +18,11 @@ public class BuildingSpawner : MonoBehaviour
         for (int i = 0; i < 1000; i++)
         {
             Vector3 pos = new Vector3(
-                Random.Range(0, grid.GetWidth() - 1),
-                Random.Range(0, grid.GetHeight() - 1),
+                Random.Range(0, _grid.GetWidth() - 1),
+                Random.Range(0, _grid.GetHeight() - 1),
                 0);
             Debug.Log("Random pos : " + pos);
-            if (grid.GetValue(pos) == null && !IsTooCloseFromDatacenters(pos))
+            if (_grid.GetValue(pos) == null && !IsTooCloseFromDatacenters(pos))
             {
                 Debug.Log("Pos is valid");
                 //instantiate new datacenter at pos
@@ -51,7 +51,7 @@ public class BuildingSpawner : MonoBehaviour
         pos.x = RandomFromDistribution.RandomNormalDistribution(datacenter.x, 0.8f);
         pos.y = RandomFromDistribution.RandomNormalDistribution(datacenter.y, 0.8f);
         Debug.Log("House pos : " + pos);
-        if (grid.GetValue(pos) == null)
+        if (_grid.GetValue(pos) == null)
         {
             Debug.Log("Pos is valid");
             //instantiate new house at pos
