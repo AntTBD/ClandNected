@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridTester : MonoBehaviour {
-    private Grid<bool> grid;
+    private Grid<bool> _grid;
     // Start is called before the first frame update
     private void Start () {
-        grid = new Grid<bool> (4, 2, 2f, new Vector3 (0, 0, 0));
+        _grid = new Grid<bool> (4, 2, 2f, new Vector3 (0, 0, 0));
     }
 
     // Update is called once per frame
     void Update () {
         if (Input.GetMouseButtonDown (0)) {
-            grid.SetValue (GetMouseWorldPosition (), true);
+            _grid.SetValue (GetMouseWorldPosition (), true);
         }
 
         if (Input.GetMouseButtonDown (1)) {
-            Debug.Log (grid.GetValue (GetMouseWorldPosition ()));
+            Debug.Log (_grid.GetValue (GetMouseWorldPosition ()));
         }
     }
 
