@@ -23,7 +23,8 @@ public class DataController : MonoBehaviour {
         InitializeIndex ();
     }
     public void FixedUpdate () {
-        var step = speed * Time.deltaTime;
+        if (objArrive != null) {
+            var step = speed * Time.deltaTime;
 
         transform.position = Vector3.MoveTowards (transform.position, objArrive.transform.position, step);
         if (transform.position != objArrive.transform.position) return;
@@ -39,8 +40,6 @@ public class DataController : MonoBehaviour {
             } else if (endCable.CompareTag ("DataCenter")) {
                 Debug.Log ("Winner");
             }
-        } else {
-            objArrive = objArrive.transform.parent.GetChild (indexChild).gameObject;
         }
 
     }
@@ -52,6 +51,8 @@ public class DataController : MonoBehaviour {
     }
 
     private int InitializeIndex () {
+        if (objArrive == null)
+            return 0;
         var parentObj = objArrive.transform.parent;
         direction = objArrive.Equals (parentObj.GetChild (0).gameObject);
         return direction ? 0 : parentObj.childCount;
