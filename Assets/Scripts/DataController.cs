@@ -26,7 +26,7 @@ public class DataController : MonoBehaviour
     {
         float step = speed * Time.deltaTime;
         transform.position=Vector3.MoveTowards(transform.position, dataCenter.transform.position, step);
-        if (transform.position.Equals())
+        if (transform.position.Equals(dataCenter.transform.position))
         {
             dataCenter = SelectRandomDataCenter();
         }
