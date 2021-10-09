@@ -10,7 +10,7 @@ public class GridTester : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start () {
-        grid = new Grid<bool> (width, height, 1.5f, new Vector3 (-7, -3, 0));
+        grid = new Grid<bool> (width, height, 1.5f, new Vector3 (0, 0, 0), true);
     }
 
     // Update is called once per frame

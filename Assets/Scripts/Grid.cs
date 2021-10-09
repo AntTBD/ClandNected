@@ -12,11 +12,14 @@ public class Grid<TGridObject> {
 
     private TextMesh[, ] debugTextArray;
 
-    public Grid (int width, int height, float cellSize, Vector3 originPosition) {
+    public Grid (int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
-        this.originPosition = originPosition;
+        if (isCenter)
+            this.originPosition = originPosition - new Vector3 (width / 2, height / 2, 0) * cellSize;
+        else
+            this.originPosition = originPosition;
 
         gridArray = new TGridObject[width, height];
         debugTextArray = new TextMesh[width, height];
@@ -47,17 +50,16 @@ public class Grid<TGridObject> {
 
     }
 
-    public Vector3 GetGridPosition(Vector3 position)
-    {
+    public Vector3 GetGridPosition (Vector3 position) {
         position -= originPosition;
 
-        int xCount = Mathf.RoundToInt(position.x / cellSize);
-        int yCount = Mathf.RoundToInt(position.y / cellSize);
+        int xCount = Mathf.RoundToInt (position.x / cellSize);
+        int yCount = Mathf.RoundToInt (position.y / cellSize);
 
-        Vector3 result = new Vector3(
-            (float)xCount * cellSize,
-            (float)yCount * cellSize,
-           0);
+        Vector3 result = new Vector3 (
+            (float) xCount * cellSize,
+            (float) yCount * cellSize,
+            0);
 
         result += originPosition;
 
