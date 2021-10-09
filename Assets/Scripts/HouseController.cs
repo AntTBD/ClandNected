@@ -28,7 +28,7 @@ Note :
 public class HouseController : MonoBehaviour
 {
     private bool isSatisfied;
-    private CableController connectedCable; // TODO : add Cable script
+    [SerializeField] private GameObject connectedCable; // TODO : add Cable script
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
@@ -47,9 +47,15 @@ public class HouseController : MonoBehaviour
     {
         return isSatisfied;
     }
-    public void ConnectTo(CableController cable)
+    public void ConnectTo(GameObject cable)
     {
         connectedCable = cable;
+    }
+
+
+    public GameObject GetConnectedCable()
+    {
+        return connectedCable;
     }
 
     // Update is called once per frame

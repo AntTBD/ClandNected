@@ -59,7 +59,7 @@ Note :
 public class CableController : MonoBehaviour
 {
     private GameObject objBegin;
-    private GameObject objEnd;
+    [SerializeField] private GameObject objEnd;
     private int level;
     private int nbMaxDatas;
     private int nbDatas;
