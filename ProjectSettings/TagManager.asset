@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Router
   - DataCenter
+  - HouseTemplate
+  - Maison
   layers:
   - Default
   - TransparentFX

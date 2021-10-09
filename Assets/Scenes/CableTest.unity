@@ -158,22 +158,22 @@ MonoBehaviour:
     right: 0
     up: 1
     left: 0
-  - cablePrefab: {fileID: 8100959733804815394, guid: 5023b62392551fd45ad8db61becbbe32, type: 3}
-    down: 0
-    right: 1
-    up: 1
-    left: 0
-  - cablePrefab: {fileID: 9058033895811412787, guid: 3ac3336c69fe9cf48b72653ca01a2aad, type: 3}
+  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
+    down: 1
+    right: 0
+    up: 0
+    left: 1
+  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
     down: 1
     right: 1
     up: 0
     left: 0
-  - cablePrefab: {fileID: 2079087644246874764, guid: 3abe37910b7dc7245ad67b1999bdc443, type: 3}
+  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
     down: 0
     right: 0
     up: 1
     left: 1
-  - cablePrefab: {fileID: 8100959733804815394, guid: 5023b62392551fd45ad8db61becbbe32, type: 3}
+  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
     down: 0
     right: 1
     up: 1
@@ -229,6 +229,7 @@ MonoBehaviour:
     up: 1
     left: 1
   dir: 3
+  tempObject: {fileID: 6925759753458750352, guid: ad08587473e3eee4a97131a29b4b02db, type: 3}
   height: 7
   width: 13
 --- !u!4 &790260335
@@ -338,7 +339,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1233663343}
   - component: {fileID: 1233663342}
-  - component: {fileID: 1233663344}
   m_Layer: 0
   m_Name: 'Background '
   m_TagString: Untagged
@@ -411,29 +411,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1233663344
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233663341}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.2, y: 10.8}
-    newSize: {x: 19.2, y: 10.8}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 19.2, y: 10.8}
-  m_EdgeRadius: 0
