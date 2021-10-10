@@ -70,13 +70,15 @@ public class HouseController : MonoBehaviour
 
     IEnumerator SendDatas()
     {
-        Debug.Log("Waiting 5s ...");
-        yield return new WaitForSeconds(sendDeltaTimeSeconds);
-        Debug.LogWarning(connectedCable);
-        if (connectedCable == null) yield break;
-        Debug.Log("Creating a new Data...");
-        CreateNewData();
-        StartCoroutine(SendDatas());
+        while(true){
+            Debug.Log("Waiting 2s ...");
+            yield return new WaitForSeconds(sendDeltaTimeSeconds);
+            Debug.LogWarning(connectedCable);
+            //if (connectedCable == null) yield break;
+            Debug.Log("Creating a new Data...");
+            CreateNewData();
+        }
+
     }
 
     /// <summary>

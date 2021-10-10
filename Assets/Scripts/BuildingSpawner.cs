@@ -22,6 +22,9 @@ public class BuildingSpawner : MonoBehaviour {
         maxX = Mathf.FloorToInt (_grid.GetWidth () / 2.0f);
         maxY = Mathf.FloorToInt (_grid.GetHeight () / 2.0f);
 
+        houseGO.transform.localScale = new Vector3 (_grid.GetCellSize () * 100 / 512, _grid.GetCellSize () * 100 / 512, _grid.GetCellSize () * 100 / 512);
+        datacenterGO.transform.localScale = new Vector3 (_grid.GetCellSize () * 100 / 512, _grid.GetCellSize () * 100 / 512, _grid.GetCellSize () * 100 / 512);
+
         this.SpawnDatacenter ();
         StartCoroutine ("coroutineSpawnHouse");
     }
