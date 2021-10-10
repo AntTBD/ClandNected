@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid<TGridObject>
+public class Grid<TGridObject> 
 {
     private int width;
     private int height;
-    private TGridObject[,] gridArray;
+    public TGridObject[,] gridArray;
 
     private float cellSize;
     private Vector3 originPosition;
@@ -57,6 +57,14 @@ public class Grid<TGridObject>
 
     }
 
+    public Vector3 GetXY(Vector3 worldPosition)
+    {
+        int x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
+        int y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+        
+        return new Vector3(x,y,0);
+    }
+
     public Vector3 GetGridPosition(Vector3 position)
     {
         int x, y;
@@ -83,9 +91,7 @@ public class Grid<TGridObject>
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
-
             this.gridArray[x, y] = value;
-            //this.debugTextArray[x, y].text = gridArray[x, y].ToString ();
         }
         else
         {
@@ -148,6 +154,12 @@ public class Grid<TGridObject>
     {
         return this.originPosition;
     }
+
+    public float GetCellSize()
+    {
+        return this.cellSize;
+    }
+
 
     public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = 0)
     {

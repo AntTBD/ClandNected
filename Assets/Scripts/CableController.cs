@@ -67,9 +67,7 @@ public class CableController : MonoBehaviour
     [SerializeField]
     private int nbDatas;
     private float weight;
-    [SerializeField]
-    private bool operational;
-    [SerializeField]
+    private bool operational = false;
     private List<DataController> datas;
 
 
@@ -78,7 +76,6 @@ public class CableController : MonoBehaviour
     {
         level = 1;
         CheckAndUpdateMaxData();
-        UpdateOperational();
         weight = 0f;
         datas = new List<DataController>();
     }
@@ -101,6 +98,10 @@ public class CableController : MonoBehaviour
         return objEnd;
     }
 
+    public void setOperational(bool test)
+    {
+        operational = test;
+    }
 
     /// <summary>
     /// Upgrade max capacity of data<br/>
