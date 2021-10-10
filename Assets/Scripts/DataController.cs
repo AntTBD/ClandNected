@@ -40,9 +40,10 @@ public class DataController : MonoBehaviour {
         else indexChild--;
         if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount)
         {
-            
             var cableController = objArrive.transform.parent.GetComponent<CableController>();
             var endCable = direction ? cableController.GetEnd() : cableController.GetBegin();
+            transform.position = Vector3.MoveTowards(transform.position, endCable.transform.position, Single.PositiveInfinity);
+
             Debug.Log("End Cable name :"+endCable.name);
             if (endCable.CompareTag ("Router")) {
                 Debug.LogWarning("Data Arrived to Router");

@@ -73,8 +73,8 @@ public class BuildingSpawner : MonoBehaviour {
         for (int i = 0; i < 1000; i++) {
             var datacenter = dataCenters.GetChild (Random.Range (0, dataCenters.childCount)).position;
             Vector3 pos = new Vector3 (0, 0, 0);
-            pos.x = RandomFromDistribution.RandomRangeNormalDistribution (datacenter.x, -maxX, maxX, RandomFromDistribution.ConfidenceLevel_e._98);
-            pos.y = RandomFromDistribution.RandomRangeNormalDistribution (datacenter.y, -maxY, maxY, RandomFromDistribution.ConfidenceLevel_e._98);
+            pos.x = RandomFromDistribution.RandomRangeNormalDistribution (datacenter.x, -maxX, maxX, RandomFromDistribution.ConfidenceLevel_e._60);
+            pos.y = RandomFromDistribution.RandomRangeNormalDistribution (datacenter.y, -maxY, maxY, RandomFromDistribution.ConfidenceLevel_e._60);
             //Debug.Log ("House pos : " + pos);
             if (_grid.IsInGrid (pos) && _grid.GetValue (pos) == null) {
                 _grid.SetValue (pos, Instantiate (houseGO, _grid.GetGridPosition (pos), Quaternion.identity, houses));
