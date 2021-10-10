@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1884074318481637643}
   - component: {fileID: 1476618917376134798}
   - component: {fileID: 7460120566801595624}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: home
   m_TagString: Maison
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: a90dae7f26ac77e46b12f012b9181163, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f446570a8b1bb1347a40142e48e2707a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,7 +101,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6, y: 6}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
