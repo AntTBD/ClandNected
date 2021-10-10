@@ -8,22 +8,20 @@ public class CableCreator : MonoBehaviour {
     private Vector2 mousePos;
     private Grid<GameObject> grid;
     [SerializeField] private GridManager gridManager;
-
+    [SerializeField] private GameObject prefabCables;
     public GameObject pieces;
-    public GameObject maisonTest;
     private GameObject currentFather;
     private GameObject lastDrawn;
-
+    private CableController _cableController;
     public Sprite straightCable;
     public Sprite cornerCable;
-
     private GameObject depart = null;
     private GameObject arrivee = null;
-
+    
     void Start () {
         mousePos = GetMouseWorldPosition ();
         grid = gridManager.GetGrid ();
-        InitialPlace(mousePos, Quaternion.identity, new Vector2 (3, 3), maisonTest);
+        //InitialPlace(mousePos, Quaternion.identity, new Vector2 (3, 3), maisonTest);
     }
 
     // Update is called once per frame
@@ -45,10 +43,12 @@ public class CableCreator : MonoBehaviour {
             lastDrawn = depart;
 
             //Si on est sur un point de départ recevable alors on crée un tuyau
-            if (depart != null && grid.IsInGrid (mousePos) && depart.tag == "Maison") 
+            if (depart != null && grid.IsInGrid (mousePos) && depart.CompareTag("Maison"))
             {
-                currentFather = new GameObject();
-                currentFather.name = "Cable"; 
+                currentFather = Instantiate(prefabCables,Vector3.zero, Quaternion.identity);
+                Debug.Log(currentFather.name);
+                _cableController = currentFather.GetComponent<CableController>();
+               _cableController.SetBegin(depart);
             }
         }
 
@@ -58,10 +58,33 @@ public class CableCreator : MonoBehaviour {
             
             if(arrivee != null)
             {
+                _cableController.SetEnd(arrivee);
                 switch (arrivee.tag)
                 {
                     case "Maison":
+                    {
+                        if (!depart.CompareTag("Maison"))
+                        {
+                            SetUpStartCable();
+                            arrivee.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount-1).gameObject);
+                        }
                         break;
+                    }
+                    case "Router":
+                    {
+                        SetUpStartCable();
+                        arrivee.GetComponent<RouterController>().addPort(currentFather);  
+                        break;
+                    }
+
+                    case "DataCenter":
+                    {
+                        SetUpStartCable();
+                        Debug.Log("cc :"+_cableController);
+                        Debug.Log("ar :"+arrivee.GetComponent<DatacenterController>());
+                        arrivee.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
+                        break;
+                    };
 
                     default:
                         Destroy(currentFather);
@@ -226,6 +249,33 @@ public class CableCreator : MonoBehaviour {
         return isAdjacent(mouseX,mouseY,lastDrawnX,lastDrawnY);
     }
 
+    private void SetUpStartCable()
+    {
+        switch (depart.tag)
+        {
+            case "Maison":
+            {
+                depart.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(0).gameObject);
+                break;
+            }
+            case "Router":
+            {
+                depart.GetComponent<RouterController>().addPort(currentFather);  
+                break;
+            }
+
+            case "DataCenter":
+            {
+                depart.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
+                break;
+            };
+
+            default:
+                Destroy(currentFather);
+                break;
+        }
+        
+    }
     /*private void DestroyObject(Vector2 gridPos)
     {
         int x = (int)gridPos.x;

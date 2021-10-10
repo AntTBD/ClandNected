@@ -149,4 +149,10 @@ public class RouterController : MonoBehaviour
 
         return datacenterID;
     }
+
+    public void addPort(GameObject port)
+    {
+        _ports.Add(port);
+        UpdateTable();
+    }
 }

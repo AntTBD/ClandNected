@@ -28,7 +28,7 @@ Note :
 public class HouseController : MonoBehaviour
 {
     private bool isSatisfied;
-    [SerializeField] private GameObject connectedCable; // TODO : add Cable script
+    [SerializeField] private GameObject connectedCable;
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
@@ -72,6 +72,7 @@ public class HouseController : MonoBehaviour
     {
         Debug.Log("Waiting 5s ...");
         yield return new WaitForSeconds(sendDeltaTimeSeconds);
+        Debug.LogWarning(connectedCable);
         if (connectedCable == null) yield break;
         Debug.Log("Creating a new Data...");
         CreateNewData();
