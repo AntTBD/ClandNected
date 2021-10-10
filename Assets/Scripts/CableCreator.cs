@@ -39,8 +39,12 @@ public class CableCreator : MonoBehaviour {
         {
             //On récupère le point de départ du potentiel tuyau
             Vector3 gridPosition = grid.GetXY (mousePos);
-            depart = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
-            lastDrawn = depart;
+            if (grid.IsInGrid(mousePos))
+            {
+                depart = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
+                            lastDrawn = depart;
+            }
+            
 
             //Si on est sur un point de départ recevable alors on crée un tuyau
             if (depart != null && grid.IsInGrid (mousePos))
@@ -104,18 +108,18 @@ public class CableCreator : MonoBehaviour {
                         if( currentFather.transform.childCount == 0 )
                         {
                         }                      
-                            //Creation routeur adjacent ?
+                        //Creation routeur adjacent ?
                         else if(arrivee != currentFather.transform.GetChild( currentFather.transform.childCount - 1 ).gameObject)
                         {
                             SetUpStartCable();
-                        GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
-                        _cableController.SetEnd(newRouter);
-                        arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
+                            GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
+                            _cableController.SetEnd(newRouter);
+                            arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
 
-                        grid.SetValue(arrivee.transform.position, newRouter);
-                        arrivee = grid.GetValue(arrivee.transform.position);
-                        _cableController.SetEnd(arrivee);
-                        arrivee.GetComponent<RouterController>().addPort(_cableController.gameObject);
+                            grid.SetValue(arrivee.transform.position, newRouter);
+                            arrivee = grid.GetValue(arrivee.transform.position);
+                            _cableController.SetEnd(arrivee);
+                            arrivee.GetComponent<RouterController>().addPort(_cableController.gameObject);
                         }
                         else
                         {
@@ -126,7 +130,7 @@ public class CableCreator : MonoBehaviour {
                         Destroy(currentFather);
                         break;
                 }
-                 DrawCable();
+                DrawCable();
             }
             else
             {
@@ -176,7 +180,7 @@ public class CableCreator : MonoBehaviour {
             }
 
             ChooseSprite(posPrev, posCurrent, posNext, i);
-         }
+        }
         
     }
 

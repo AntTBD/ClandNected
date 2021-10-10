@@ -193,7 +193,7 @@ public class CableController : MonoBehaviour
         Debug.Log("Remove Data :"+data.name+" nbData :"+nbDatas);
         nbDatas--;
         Debug.Log(datas.Count);
-        datas.RemoveAt(0);
+        if(datas.Count>0) datas.RemoveAt(0);
         UpdateOperational();
         UpdateWeight();
 
