@@ -191,6 +191,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3188860297708867250, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
+      propertyPath: m_Text
+      value: "Spawn Datacenter \n(cost 100 $)"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3188860297708867250, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 49
       objectReference: {fileID: 0}
@@ -434,7 +438,7 @@ MonoBehaviour:
   datacenterGO: {fileID: 2004177266883969894, guid: a5bb48ae918982a45a05f0ba9a715b4d, type: 3}
   moneyManager: {fileID: 1530889548}
   secondBeforeSpawnHouse: 5
-  dataCenterPrice: 10
+  dataCenterPrice: 100
 --- !u!4 &864912712
 Transform:
   m_ObjectHideFlags: 0
