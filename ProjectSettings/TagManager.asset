@@ -10,6 +10,7 @@ TagManager:
   - Maison
   - Undefined
   - Point
+  - Cable
   layers:
   - Default
   - TransparentFX

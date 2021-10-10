@@ -31,7 +31,7 @@ public class RouterController : MonoBehaviour
 
     void Start()
     {
-        UpdateTable();
+        //UpdateTable();
     }
 
     public void UpdateTable()

@@ -70,7 +70,6 @@ public class CableController : MonoBehaviour
     private bool operational=true;
     private List<DataController> datas;
 
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -223,29 +222,51 @@ public class CableController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Diviser(GameObject router)
+    public void Diviser(GameObject router, GameObject prefabCableController)
     {
+        Debug.LogWarning("diviser begin");
         // create new cable
-        GameObject newCable = Instantiate((GameObject)Resources.Load("Prefabs/" + "Cable", typeof(GameObject)), Vector3.zero, Quaternion.identity);
+        GameObject newCable = Instantiate(prefabCableController, Vector3.zero, Quaternion.identity);
+        Debug.LogWarning("diviser instantiated");
+        // parcourir le cable actuel
+        bool firstCable = true;
+        Transform middleSection = null;
+        List<CableSectionController> listTemp = new List<CableSectionController>();
+        foreach (Transform section in transform)
+        {
+            if (firstCable == true)
+            {
+                if (section.transform.position == router.transform.position)
+                {
+                    // suprime la section correspondant au router et changer de cable
+                    Debug.Log("section " + section.name);
+                    middleSection = section;
+                    firstCable = false;
+                }
+            }
+            else
+            {
+                // add section to new cable (auto change parent)
+                listTemp.Add(section.GetComponent<CableSectionController>());
+            }
+        }
+        // on change le parent apres
+        foreach (CableSectionController temp in listTemp)
+        {
+            newCable.GetComponent<CableController>().AddSection(temp);
+        }
+        middleSection.GetComponent<CableSectionController>().Delete();
+        Debug.LogWarning("diviser delete middle");
         newCable.GetComponent<CableController>().SetBegin(router);// set begin of new cable
         newCable.GetComponent<CableController>().SetEnd(objEnd);// set end of new cable
         objEnd = router; // set end of this cable
 
-        // parcourir le cable actuel
-        bool firstCable = true;
-        foreach (Transform section in transform)
-        {
-            if (firstCable == true && section.transform.position == router.transform.position)
-            {
-                // suprime la section correspondant au router et changer de cable
-                section.GetComponent<CableSectionController>().Delete();
-                firstCable = false;
-            }
-            else if (firstCable == false)
-            {
-                // add section to new cable (auto change parent)
-                newCable.GetComponent<CableController>().AddSection(section.GetComponent<CableSectionController>());
-            }
-        }
+        router.GetComponent<RouterController>().addPort(newCable);// newCable first section
+        Debug.LogWarning("diviser set newCable first section ok");
+        Debug.LogWarning("game object" + this.gameObject);
+        router.GetComponent<RouterController>().addPort(gameObject);// thisCable last section
+
+        Debug.LogWarning("diviser set ports ok");
+
     }
 }
