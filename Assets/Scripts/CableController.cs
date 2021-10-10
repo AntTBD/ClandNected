@@ -110,7 +110,7 @@ public class CableController : MonoBehaviour
     void CheckAndUpdateMaxData()
     {
         /// TODO : to improve
-        nbMaxDatas = level*5;
+        nbMaxDatas = level*2;
     }
 
     public void UpgradeLevel()
