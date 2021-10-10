@@ -39,8 +39,9 @@ public class CableSectionController : MonoBehaviour
     void Start()
     {
         level = 0;
+        name = "Section "+Random.Range(0, 1000).ToString();
 
-        if(sprites == null)
+        if (sprites == null)
         {
             Debug.LogError("[CableSectionController] Sprites manquant !!!");
         }

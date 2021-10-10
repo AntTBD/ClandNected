@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 1137505126}
   prefabCables: {fileID: 846738545951428417, guid: c61b7a8694562124d82f3ee8159fc9e0, type: 3}
+  prefabRouter: {fileID: 8349618484923305132, guid: 3723589ad69f65f4fb978f68e6f62a51, type: 3}
   pieces: {fileID: 1410394984248234162, guid: fd0f4c7483b75d84c9464f837f3421d5, type: 3}
   straightCable: {fileID: 565750913899466560, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
   cornerCable: {fileID: -1280098665169262832, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
@@ -343,7 +344,7 @@ MonoBehaviour:
   dataCenters: {fileID: 1863177680}
   houses: {fileID: 94809359}
   gridManager: {fileID: 1137505126}
-  minDistanceBetweenDataCenters: 0
+  minDistanceBetweenDataCenters: 5
   houseGO: {fileID: 6925759753458750352, guid: ad08587473e3eee4a97131a29b4b02db, type: 3}
   datacenterGO: {fileID: 6925759753458750352, guid: 1e3d6bc8d4c6fe143943c9bce59758b1, type: 3}
 --- !u!4 &864912712
@@ -665,6 +666,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2004082832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2004082833}
+  m_Layer: 0
+  m_Name: Routers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2004082833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004082832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4532941486812937154
 PrefabInstance:

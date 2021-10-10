@@ -9,6 +9,7 @@ public class CableCreator : MonoBehaviour {
     private Grid<GameObject> grid;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private GameObject prefabCables;
+    [SerializeField] private GameObject prefabRouter;
     public GameObject pieces;
     private GameObject currentFather;
     private GameObject lastDrawn;
@@ -66,31 +67,55 @@ public class CableCreator : MonoBehaviour {
                         if (!depart.CompareTag("Maison"))
                         {
                             SetUpStartCable();
-                            arrivee.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount-1).gameObject);
+                            arrivee.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount - 1).gameObject);
+                            DrawCable();
+                        }
+                        else
+                        {
+                            Destroy(currentFather);
                         }
                         break;
                     }
                     case "Router":
                     {
                         SetUpStartCable();
-                        arrivee.GetComponent<RouterController>().addPort(currentFather);  
+                        arrivee.GetComponent<RouterController>().addPort(currentFather);
+                        DrawCable();
                         break;
                     }
 
                     case "DataCenter":
                     {
                         SetUpStartCable();
-                        Debug.Log("cc :"+_cableController);
-                        Debug.Log("ar :"+arrivee.GetComponent<DatacenterController>());
+                        //Debug.Log("cc :"+_cableController);
+                        //Debug.Log("ar :"+arrivee.GetComponent<DatacenterController>());
                         arrivee.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
+                        DrawCable();
                         break;
-                    };
+                    }
+
+                    case "Cable":
+                    {
+                        SetUpStartCable();
+
+                        GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
+                        _cableController.SetEnd(newRouter);
+                        arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
+
+                        grid.SetValue(arrivee.transform.position, newRouter);
+                        arrivee = grid.GetValue(arrivee.transform.position);
+
+                        _cableController.SetEnd(arrivee);
+
+                        arrivee.GetComponent<RouterController>().addPort(_cableController.gameObject);
+                        DrawCable();
+                        break;
+                    }
 
                     default:
                         Destroy(currentFather);
                         break;
                 }
-                DrawCable();
             }
             else
             {
@@ -256,7 +281,10 @@ public class CableCreator : MonoBehaviour {
         {
             case "Maison":
             {
-                depart.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(0).gameObject);
+                if (depart.GetComponent<HouseController>().GetConnectedCable() == null)
+                {
+                    depart.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(0).gameObject);
+                }
                 break;
             }
             case "Router":
@@ -269,7 +297,7 @@ public class CableCreator : MonoBehaviour {
             {
                 depart.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
                 break;
-            };
+            }
 
             default:
                 Destroy(currentFather);
