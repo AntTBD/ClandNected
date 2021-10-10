@@ -36,7 +36,7 @@ public class DataController : MonoBehaviour {
             if (endCable.CompareTag ("Router")) {
                 //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
                 objDepart = endCable;
-                objArrive = endCable.GetComponent<RouterController> ().redirectTo;
+                objArrive = endCable.GetComponent<RouterController> ().GetShortestPath(dataCenter);
                 indexChild = InitializeIndex ();
             } else if (endCable.CompareTag ("DataCenter")) {
                 Debug.Log ("Winner");
