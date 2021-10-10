@@ -11,7 +11,8 @@ public class CameraMovements : MonoBehaviour
     [SerializeField]
     private GridManager gridManager;
 
-    private float size;
+    [SerializeField]
+    private float size = 10;
 
     private const int MINSIZE = 4;
     private const int MAXSIZE = 13;
@@ -29,7 +30,7 @@ public class CameraMovements : MonoBehaviour
             dragOrigin = Input.mousePosition;
             return;
         }
-        size += Input.GetAxis("Mouse ScrollWheel");
+        size -= Input.GetAxis("Mouse ScrollWheel");
         if (size < MINSIZE)
         {
             size = MINSIZE;

@@ -63,6 +63,7 @@ public class CableSectionController : MonoBehaviour
     {
         level++;
         SetActualSprite();
+        cableSatured = false;
 
 
 
