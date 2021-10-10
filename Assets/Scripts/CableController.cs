@@ -61,17 +61,21 @@ public class CableController : MonoBehaviour
     private GameObject objBegin;
     [SerializeField] private GameObject objEnd;
     private int level;
+    [SerializeField]
     private int nbMaxDatas;
+    [SerializeField]
     private int nbDatas;
     private float weight;
+    [SerializeField]
     private bool operational;
+    [SerializeField]
     private List<DataController> datas;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        level = 0;
+        level = 1;
         CheckAndUpdateMaxData();
         UpdateOperational();
         weight = 0f;
@@ -130,7 +134,7 @@ public class CableController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckSaturation();
+        //CheckSaturation();
     }
 
     void CheckSaturation()
@@ -147,7 +151,7 @@ public class CableController : MonoBehaviour
 
     void UpdateOperational()
     {
-        operational = (nbDatas <= nbMaxDatas);
+        operational = (nbDatas < nbMaxDatas);
     }
 
     void UpdateWeight()
@@ -172,23 +176,22 @@ public class CableController : MonoBehaviour
             datas.Add(data.GetComponent<DataController>());
             UpdateOperational();
             UpdateWeight();
-            /// TODO : faire parcourir la data le long des sections
-            /// ... devrait se faire dans la data
-
             return true;
         }
         else
         {
-            /// TODO : delete data
-            data.GetComponent<DataController>().Delete();
+            // delete data
+            data.GetComponent<DataController>().Delete(false);
             return false;
         }
     }
 
     public void RemoveData(GameObject data)
     {
+        Debug.Log("Remove Data :"+data.name+" nbData :"+nbDatas);
         nbDatas--;
-        datas.Remove(data.GetComponent<DataController>());
+        Debug.Log(datas.Count);
+        datas.RemoveAt(0);
         UpdateOperational();
         UpdateWeight();
 
@@ -212,7 +215,7 @@ public class CableController : MonoBehaviour
         // delete datas
         foreach (DataController data in datas)
         {
-            data.Delete();
+            data.Delete(false);
         }
         // delete cable prefab
         Destroy(gameObject);

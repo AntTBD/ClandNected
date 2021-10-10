@@ -40,7 +40,9 @@ public class DatacenterController : MonoBehaviour
     [SerializeField] private int nbPortsMax;
     private int nbPortsUsed;
     private bool canPullCable;
+    [SerializeField]
     private List<CableController> connectedCables;
+    [SerializeField]
     private List<DataController> waitingLine;
     [SerializeField] private int waitingLineMaxCapacity;
 
@@ -53,6 +55,7 @@ public class DatacenterController : MonoBehaviour
         SetCanPullCable();
         connectedCables = new List<CableController>();
         waitingLine = new List<DataController>(waitingLineMaxCapacity);
+        StartCoroutine(DatasProcessing());
     }
 
     /// <summary>
@@ -101,25 +104,21 @@ public class DatacenterController : MonoBehaviour
         nbPortsUsed++;
         SetCanPullCable();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        DatasProcessing();
-    }
-
+    
     /// <summary>
     /// Traitement des donn�es toute les [processingSpeed] secondes
     /// </summary>
     /// <returns></returns>
     IEnumerator DatasProcessing()
     {
-        if (waitingLine.Count > 0) // Si on a des datas
+        yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
+        if (waitingLine.Count > 0)
         {
+            Debug.Log(waitingLine[0]);
             OneDataProcessing(waitingLine[0]);
         }
+        StartCoroutine(DatasProcessing());
 
-        yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
     }
 
     /// <summary>
@@ -130,18 +129,14 @@ public class DatacenterController : MonoBehaviour
     /// <param name="data"></param>
     void OneDataProcessing(DataController data)
     {
-        /// TODO : complete to affect data + its house satisfaction (+) + player money (+)
-        // ...
-        // data.GetHouse().SetIsSatified(true);
-        // playerManager.AddMoney(...);
-
-
-
+        //affect data + its house satisfaction (+) + player money (+)
+        GameObject.Find("MoneyManager").GetComponent<MoneyManager>().addMoney();
         // remove data from list
-        waitingLine.RemoveAt(0);
+        waitingLine.Remove(data.GetComponent<DataController>());
+        // delete prefab data + affect satisfaction(+)
+        data.Delete(true);
 
-        /// TODO : delete prefab data
-        // ...
+
     }
 
     /// <summary>
@@ -150,7 +145,7 @@ public class DatacenterController : MonoBehaviour
     /// SINON affect house satisfaction (TODO) + supprime la data (TODO)
     /// </summary>
     /// <param name="data"></param>
-    void AddNewDataToWaitingList(DataController data)
+    public void AddNewDataToWaitingList(DataController data)
     {
         if (waitingLine.Count <= waitingLineMaxCapacity)
         {
@@ -158,11 +153,7 @@ public class DatacenterController : MonoBehaviour
         }
         else
         {
-            /// TODO : affect data + its house satisfaction (-)
-            // data.GetHouse().SetIsSatified(false);
-
-            /// TODO : delete prefab data
-            // ...
+            data.Delete(false);
         }
     }
 }

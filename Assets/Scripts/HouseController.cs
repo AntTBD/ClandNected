@@ -32,15 +32,19 @@ public class HouseController : MonoBehaviour
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
+    [SerializeField] private GameObject dataPrefab;
     // Start is called before the first frame update
     void Start()
     {
         isSatisfied = false;
-        connectedCable = null;
+        StartCoroutine(SendDatas());
     }
 
     public void SetIsSatified(bool etat)
     {
+        var bar = GameObject.Find("Slider").GetComponent<SatisfactionBar>();
+        if (!etat) bar.removeSatisfaction();
+        else bar.addSatisfaction();
         isSatisfied = etat;
     }
     public bool IsSatified()
@@ -61,25 +65,25 @@ public class HouseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SendDatas();
+        
     }
 
     IEnumerator SendDatas()
     {
-        if(connectedCable != null) // une maison a besoin d'être connectée à un câble pour envoyer des données
-        {
-            CreateNewData();
-        }
-
+        Debug.Log("Waiting 5s ...");
         yield return new WaitForSeconds(sendDeltaTimeSeconds);
+        if (connectedCable == null) yield break;
+        Debug.Log("Creating a new Data...");
+        CreateNewData();
+        StartCoroutine(SendDatas());
     }
 
     /// <summary>
-    /// La maison crée des data pour les envoyer vers un datacenter
+    /// La maison crï¿½e des data pour les envoyer vers un datacenter
     /// </summary>
-    void CreateNewData()
-    {
-        /// TODO : Create data prefab
-        /// Send data
+    private void CreateNewData()
+    { 
+        Instantiate(dataPrefab, Vector3.zero, Quaternion.identity,transform);
+        Debug.Log("Data created");
     }
 }
