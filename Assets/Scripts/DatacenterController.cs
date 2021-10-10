@@ -114,7 +114,7 @@ public class DatacenterController : MonoBehaviour
         yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
         if (waitingLine.Count > 0)
         {
-            Debug.Log(waitingLine[0]);
+            Debug.Log("Process"+waitingLine[0]);
             OneDataProcessing(waitingLine[0]);
         }
         StartCoroutine(DatasProcessing());

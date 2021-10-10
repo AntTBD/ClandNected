@@ -36,18 +36,26 @@ public class DataController : MonoBehaviour {
         if (transform.position != objArrive.transform.position) return;
         if (direction) indexChild++;
         else indexChild--;
-        if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount) {
-            var endCable = objArrive.transform.parent.GetComponent<CableController>().GetEnd();
+        if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount)
+        {
+            
+            var cableController = objArrive.transform.parent.GetComponent<CableController>();
+            var endCable = direction ? cableController.GetEnd() : cableController.GetBegin();
+            Debug.Log(endCable.name);
             if (endCable.CompareTag ("Router")) {
                 //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
-                objArrive.transform.parent.GetComponent<CableController>().RemoveData(gameObject);
+                
+                cableController.RemoveData(gameObject);
                 objDepart = endCable;
-                objArrive = endCable.GetComponent<RouterController> ().GetShortestPath(dataCenter);
+                objArrive = endCable.GetComponent<RouterController>().GetShortestPath(dataCenter);
+                if (objArrive == null)
+                    Delete(false);
+                Debug.LogWarning("return path : " + objArrive.name);
                 indexChild = InitializeIndex ();
                 
             } else if (endCable.CompareTag ("DataCenter")) {
                 endCable.GetComponent<DatacenterController>().AddNewDataToWaitingList(this);
-                objArrive.transform.parent.GetComponent<CableController>().RemoveData(gameObject);
+                cableController.RemoveData(gameObject);
                 objArrive = null;
             }
             

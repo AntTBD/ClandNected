@@ -58,6 +58,7 @@ Note :
 
 public class CableController : MonoBehaviour
 {
+    [SerializeField]
     private GameObject objBegin;
     [SerializeField] private GameObject objEnd;
     private int level;
