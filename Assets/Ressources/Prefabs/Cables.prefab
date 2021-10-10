@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objBegin: {fileID: 0}
   objEnd: {fileID: 0}
-  nbMaxDatas: 0
+  nbMaxDatas: 10
   nbDatas: 0

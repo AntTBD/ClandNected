@@ -5,24 +5,24 @@ using UnityEngine;
 /*
 Portion de cable :
  - la portion de cable est contenue sur un case de notre grille, elle est toujours fille d'un cable
- - elle doit être construite conformément aux portions qui l'entourent
-   -> lors de sa construction le sprite affiché doit correspondre à la direction de la portion de cable
+ - elle doit ï¿½tre construite conformï¿½ment aux portions qui l'entourent
+   -> lors de sa construction le sprite affichï¿½ doit correspondre ï¿½ la direction de la portion de cable
 
 Attributs : 
- - réf ObjDepart ( encore une fois ça n'a pas d'importance )
- - réf ObjArrivee ( IDEM )
-   -> ces références servent à l'affichage de notre portion lors de sa création
- - Peut être autre chose ?
- - List de sprites pour les différents niveau
+ - rï¿½f ObjDepart ( encore une fois ï¿½a n'a pas d'importance )
+ - rï¿½f ObjArrivee ( IDEM )
+   -> ces rï¿½fï¿½rences servent ï¿½ l'affichage de notre portion lors de sa crï¿½ation
+ - Peut ï¿½tre autre chose ?
+ - List de sprites pour les diffï¿½rents niveau
  - 
 
 Methods :
  - Calcul du sprite en fonction de ObjDepart et objArrivee
 
 Note :
- - Attention à ne pas construire sur une case déjà occupée !
- - Attention à la connexion entre deux câbles cf -> Cable !
- - Honnetement je suis pas trop sûr de comment ça va se passer avec sa mais bon courage :D 
+ - Attention ï¿½ ne pas construire sur une case dï¿½jï¿½ occupï¿½e !
+ - Attention ï¿½ la connexion entre deux cï¿½bles cf -> Cable !
+ - Honnetement je suis pas trop sï¿½r de comment ï¿½a va se passer avec sa mais bon courage :D 
 */
 
 public class CableSectionController : MonoBehaviour
@@ -53,6 +53,7 @@ public class CableSectionController : MonoBehaviour
     public void SetActualSprite()
     {
         actualSprite = sprites[level];
+        Debug.Log("Level : "+level);
         transform.GetComponent<SpriteRenderer>().sprite = actualSprite;
     }
 
@@ -60,6 +61,8 @@ public class CableSectionController : MonoBehaviour
     {
         level++;
         SetActualSprite();
+
+
 
     }
 

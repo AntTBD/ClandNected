@@ -10,6 +10,7 @@ TagManager:
   - Maison
   - Undefined
   - Point
+  - Switch
   layers:
   - Default
   - TransparentFX

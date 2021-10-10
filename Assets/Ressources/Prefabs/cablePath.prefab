@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4296064747861570481}
   - component: {fileID: 7646857472654887914}
+  - component: {fileID: 4138463777243966905}
   m_Layer: 0
   m_Name: cablePath
-  m_TagString: Point
+  m_TagString: Cable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,3 +83,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4138463777243966905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410394984248234162}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3df7daac21b7ed4abd2d6334414219e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []

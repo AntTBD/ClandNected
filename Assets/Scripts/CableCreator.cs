@@ -30,7 +30,7 @@ public class CableCreator : MonoBehaviour {
 
         if (depart != null) {
             //Si on est sur point de départ recevable
-            if (Input.GetMouseButton(0) && grid.IsInGrid(mousePos) && depart.tag == "Maison") 
+            if (Input.GetMouseButton(0) && grid.IsInGrid(mousePos)) 
             {
                 DrawPointsPath();
             }
@@ -43,30 +43,45 @@ public class CableCreator : MonoBehaviour {
             lastDrawn = depart;
 
             //Si on est sur un point de départ recevable alors on crée un tuyau
-            if (depart != null && grid.IsInGrid (mousePos) && depart.CompareTag("Maison"))
+            if (depart != null && grid.IsInGrid (mousePos))
             {
                 currentFather = Instantiate(prefabCables,Vector3.zero, Quaternion.identity);
-                Debug.Log(currentFather.name);
                 _cableController = currentFather.GetComponent<CableController>();
-               _cableController.SetBegin(depart);
+                _cableController.SetBegin(depart);
             }
         }
 
         if (Input.GetMouseButtonUp (0)) {
-            Vector3 gridPosition = grid.GetXY (mousePos);
-            arrivee = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
             
-            if(arrivee != null)
+            Vector3 gridPosition = grid.GetXY (mousePos);            
+            
+            if( grid.IsInGrid (mousePos) )
+            {
+                arrivee = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
+            } 
+            else
+            {
+                arrivee = null;
+            }
+
+            if(arrivee != null && canDraw())
             {
                 _cableController.SetEnd(arrivee);
+                Debug.Log(arrivee.tag);
                 switch (arrivee.tag)
                 {
                     case "Maison":
-                    {
-                        if (!depart.CompareTag("Maison"))
+                    {   
+                        HouseController myTargetHouseController= arrivee.GetComponent<HouseController>();
+
+                        if ( !depart.CompareTag("Maison") && myTargetHouseController.GetConnectedCable()==null )
                         {
                             SetUpStartCable();
-                            arrivee.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount-1).gameObject);
+                            myTargetHouseController.ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount-1).gameObject);
+                        }
+                        else
+                        {
+                            Destroy(currentFather);
                         }
                         break;
                     }
@@ -80,11 +95,20 @@ public class CableCreator : MonoBehaviour {
                     case "DataCenter":
                     {
                         SetUpStartCable();
-                        Debug.Log("cc :"+_cableController);
-                        Debug.Log("ar :"+arrivee.GetComponent<DatacenterController>());
                         arrivee.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
                         break;
-                    };
+                    }
+
+                    case "Cable" :                        
+                        if(arrivee != currentFather.transform.GetChild( currentFather.transform.childCount - 1 ).gameObject)
+                        {
+                            SetUpStartCable();
+                        }
+                        else
+                        {
+                            Destroy(currentFather);
+                        }
+                        break;
 
                     default:
                         Destroy(currentFather);
@@ -115,7 +139,16 @@ public class CableCreator : MonoBehaviour {
             {
                 posPrev = depart.transform.position;
                 posCurrent = currentFather.transform.GetChild(i).position;
-                posNext = currentFather.transform.GetChild(i+1).position;
+
+                if(currentFather.transform.childCount == 1)
+                {
+                    Debug.Log("JE SUIS UN CABLE A UN SEUL TILE");
+                    posNext = arrivee.transform.position;
+                } 
+                else
+                {
+                    posNext = currentFather.transform.GetChild(i+1).position;
+                }
             }
             else if(i == currentFather.transform.childCount - 1)
             {
@@ -140,7 +173,10 @@ public class CableCreator : MonoBehaviour {
         string dir = "";
         SpriteRenderer sr = currentFather.transform.GetChild(index).gameObject.GetComponent<SpriteRenderer>();
         sr.color = new Color(0,0,0);
-        
+
+        prev = Vector3Int.RoundToInt(prev);
+        next = Vector3Int.RoundToInt(next);
+
         if( prev.x == current.x)
         {
             dir += prev.y > next.y ? "S" : prev.y < next.y ? "N" : "";
@@ -148,12 +184,13 @@ public class CableCreator : MonoBehaviour {
         }
         else
         {
+            Debug.Log("JAJAJAJAJA");
             dir += prev.x > next.x ? "O" : prev.x < next.x ? "E" : "";
             dir += prev.y > next.y ? "S" : prev.y < next.y ? "N" : "";
         }
 
         Debug.Log(dir);
-        Debug.Log(prev.x + " " + prev.y + " / " + next.x + " "+ next.y);
+        Debug.Log(prev.x + " " + prev.y + " / " + next.x + " " + next.y);
         switch(dir)
         {
             case "NE" :
@@ -255,8 +292,17 @@ public class CableCreator : MonoBehaviour {
         switch (depart.tag)
         {
             case "Maison":
-            {
-                depart.GetComponent<HouseController>().ConnectTo(currentFather.transform.GetChild(0).gameObject);
+            {   
+                HouseController myTargetHouseController = depart.GetComponent<HouseController>();
+
+                if ( !arrivee.CompareTag("Maison") && myTargetHouseController.GetConnectedCable()==null )
+                {
+                    myTargetHouseController.ConnectTo(currentFather.transform.GetChild(0).gameObject);
+                }
+                else
+                {
+                    Destroy(currentFather);
+                }
                 break;
             }
             case "Router":
