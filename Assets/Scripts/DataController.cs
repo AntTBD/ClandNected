@@ -40,9 +40,10 @@ public class DataController : MonoBehaviour {
         else indexChild--;
         if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount)
         {
-            
             var cableController = objArrive.transform.parent.GetComponent<CableController>();
             var endCable = direction ? cableController.GetEnd() : cableController.GetBegin();
+            transform.position = Vector3.MoveTowards(transform.position, endCable.transform.position, Single.PositiveInfinity);
+
             Debug.Log("End Cable name :"+endCable.name);
             if (endCable.CompareTag ("Router")) {
                 Debug.LogWarning("Data Arrived to Router");
@@ -60,7 +61,23 @@ public class DataController : MonoBehaviour {
                 objArrive = null;
             }
             
-        } else {
+        } 
+        else if (objArrive != null && (objArrive.CompareTag("Router") || objArrive.CompareTag("DataCenter")))
+        {
+            if (objArrive.CompareTag ("Router")) {
+                objDepart = objArrive;
+                objArrive = objArrive.GetComponent<RouterController>().GetShortestPath(dataCenter);
+                if (objArrive == null)
+                    Delete(false);
+                indexChild = InitializeIndex ();
+                
+            } else if (objArrive.CompareTag ("DataCenter")) {
+                Debug.LogWarning("Data Arrived to DataCenter");
+                objArrive.GetComponent<DatacenterController>().AddNewDataToWaitingList(this);
+                objArrive = null;
+            }
+        }
+        else {
             objArrive = objArrive.transform.parent.GetChild (indexChild).gameObject;
         }
 
