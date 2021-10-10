@@ -116,8 +116,12 @@ public class RouterController : MonoBehaviour
         CableController destinationCable = cable.GetComponent<CableController>();
         if (destinationCable.GetBegin() == gameObject)
         {
+            if (cable.transform.childCount == 0)
+                return destinationCable.GetEnd();
             return cable.transform.GetChild(0).gameObject;
         }
+        if (cable.transform.childCount == 0)
+            return destinationCable.GetBegin();
         return cable.transform.GetChild(cable.transform.childCount-1).gameObject;
     }
     public GameObject GetShortestPath(GameObject datacenter)

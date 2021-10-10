@@ -61,7 +61,23 @@ public class DataController : MonoBehaviour {
                 objArrive = null;
             }
             
-        } else {
+        } 
+        else if (objArrive != null && (objArrive.CompareTag("Router") || objArrive.CompareTag("DataCenter")))
+        {
+            if (objArrive.CompareTag ("Router")) {
+                objDepart = objArrive;
+                objArrive = objArrive.GetComponent<RouterController>().GetShortestPath(dataCenter);
+                if (objArrive == null)
+                    Delete(false);
+                indexChild = InitializeIndex ();
+                
+            } else if (objArrive.CompareTag ("DataCenter")) {
+                Debug.LogWarning("Data Arrived to DataCenter");
+                objArrive.GetComponent<DatacenterController>().AddNewDataToWaitingList(this);
+                objArrive = null;
+            }
+        }
+        else {
             objArrive = objArrive.transform.parent.GetChild (indexChild).gameObject;
         }
 
