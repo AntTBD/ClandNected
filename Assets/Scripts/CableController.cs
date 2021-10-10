@@ -136,19 +136,19 @@ public class CableController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //CheckSaturation();
+        CheckSaturation();
     }
 
     void CheckSaturation()
     {
-        if (IsOperational() == false)
-        {
+        //if (IsOperational() == false)
+       // {
             // change color foreach sections
             foreach (Transform section in transform)
             {
                 section.GetComponent<CableSectionController>().SetSatured(operational);
             }
-        }
+       // }
     }
 
     void UpdateOperational()

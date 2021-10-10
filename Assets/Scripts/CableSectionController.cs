@@ -31,31 +31,32 @@ public class CableSectionController : MonoBehaviour
     private int level;
     private Sprite actualSprite;
     [SerializeField] public List<Sprite> sprites;
-    private Color colorSatured, colorNonSatured;
+    [SerializeField] private Color colorSatured, colorNonSatured;
 
     private bool cableSatured;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {/*
         level = 0;
         name = "Section "+Random.Range(0, 1000).ToString();
-
+        
         if (sprites == null)
         {
             Debug.LogError("[CableSectionController] Sprites manquant !!!");
         }
         SetActualSprite();
-
-        colorSatured = new Color(255, 0, 0, 255 / 2f);
-        colorNonSatured = new Color(255, 255, 255, 255);
+        */
     }
 
     public void SetActualSprite()
     {
-        actualSprite = sprites[level];
-        Debug.Log("Level : "+level);
-        transform.GetComponent<SpriteRenderer>().sprite = actualSprite;
+        if (sprites != null && sprites[level] != null)
+        {
+            actualSprite = sprites[level];
+            Debug.Log("Level : " + level);
+            transform.GetComponent<SpriteRenderer>().sprite = actualSprite;
+        }
     }
 
     public void Upgrade()
@@ -73,6 +74,7 @@ public class CableSectionController : MonoBehaviour
     /// <param name="satured"></param>
     public void SetSatured(bool satured)
     {
+        Debug.Log("SetSatured");
         cableSatured = satured;
         if (cableSatured)
         {
