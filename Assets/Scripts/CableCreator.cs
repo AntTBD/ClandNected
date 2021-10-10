@@ -116,6 +116,7 @@ public class CableCreator : MonoBehaviour {
     {
         string dir = "";
         SpriteRenderer sr = currentFather.transform.GetChild(index).gameObject.GetComponent<SpriteRenderer>();
+        sr.color = new Color(0,0,0);
         
         if( prev.x == current.x)
         {
