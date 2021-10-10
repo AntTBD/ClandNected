@@ -8,6 +8,8 @@ TagManager:
   - DataCenter
   - HouseTemplate
   - Maison
+  - Undefined
+  - Point
   layers:
   - Default
   - TransparentFX

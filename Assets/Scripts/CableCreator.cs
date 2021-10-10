@@ -11,10 +11,14 @@ public class CableCreator : MonoBehaviour {
 
     public GameObject pieces;
     public GameObject maisonTest;
-    public GameObject currentFather;
-    public GameObject lastDrawn;
+    private GameObject currentFather;
+    private GameObject lastDrawn;
+
+    public Sprite straightCable;
+    public Sprite cornerCable;
 
     private GameObject depart = null;
+    private GameObject arrivee = null;
 
     void Start () {
         mousePos = GetMouseWorldPosition ();
@@ -50,29 +54,118 @@ public class CableCreator : MonoBehaviour {
 
         if (Input.GetMouseButtonUp (0)) {
             Vector3 gridPosition = grid.GetXY (mousePos);
-            GameObject arrivee = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
+            arrivee = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
             
-            Debug.Log(arrivee);
             if(arrivee != null)
             {
                 switch (arrivee.tag)
                 {
                     case "Maison":
-                        Debug.Log("Je suis arrivé à la maison !");
                         break;
 
                     default:
                         Destroy(currentFather);
                         break;
                 }
+                DrawCable();
             }
             else
             {
-                //Dessin
+                Destroy(currentFather);
             }
 
             depart = null;
             currentFather = null;
+        }
+    }
+
+    public void DrawCable()
+    {
+        //Dessin
+        for(int i = 0 ; i < currentFather.transform.childCount ; i++)
+        {
+            Vector3 posPrev;
+            Vector3 posCurrent;
+            Vector3 posNext;
+
+            if(i == 0)
+            {
+                posPrev = depart.transform.position;
+                posCurrent = currentFather.transform.GetChild(i).position;
+                posNext = currentFather.transform.GetChild(i+1).position;
+            }
+            else if(i == currentFather.transform.childCount - 1)
+            {
+                posPrev = currentFather.transform.GetChild(i-1).position;
+                posCurrent = currentFather.transform.GetChild(i).position;
+                posNext = arrivee.transform.position;
+            }
+            else
+            {
+                posPrev = currentFather.transform.GetChild(i-1).position;
+                posCurrent = currentFather.transform.GetChild(i).position;
+                posNext = currentFather.transform.GetChild(i+1).position;
+            }
+
+            ChooseSprite(posPrev, posCurrent, posNext, i);
+         }
+        
+    }
+
+    public void ChooseSprite(Vector3 prev, Vector3 current, Vector3 next, int index)
+    {
+        string dir = "";
+        SpriteRenderer sr = currentFather.transform.GetChild(index).gameObject.GetComponent<SpriteRenderer>();
+        
+        if( prev.x == current.x)
+        {
+            dir += prev.y > next.y ? "S" : prev.y < next.y ? "N" : "";
+            dir += prev.x > next.x ? "O" : prev.x < next.x ? "E" : "";
+        }
+        else
+        {
+            dir += prev.x > next.x ? "O" : prev.x < next.x ? "E" : "";
+            dir += prev.y > next.y ? "S" : prev.y < next.y ? "N" : "";
+        }
+
+        Debug.Log(dir);
+        Debug.Log(prev.x + " " + prev.y + " / " + next.x + " "+ next.y);
+        switch(dir)
+        {
+            case "NE" :
+            case "OS" :
+                sr.sprite = cornerCable;
+                currentFather.transform.GetChild(index).rotation = Quaternion.Euler( new Vector3(0, 0, -90));
+                break;
+            
+            case "SE" :
+            case "ON" :
+                sr.sprite = cornerCable;
+                currentFather.transform.GetChild(index).rotation = Quaternion.Euler( new Vector3(0, 0, 0));
+                break;
+
+            case "SO" :
+            case "EN" :
+                sr.sprite = cornerCable;
+                currentFather.transform.GetChild(index).rotation = Quaternion.Euler( new Vector3(0, 0, 90));
+                break;
+
+            case "NO" :
+            case "ES" :
+                sr.sprite = cornerCable;
+                currentFather.transform.GetChild(index).rotation = Quaternion.Euler( new Vector3(0, 0, 180));
+                break;
+
+            case "O" :
+            case "E" :
+                sr.sprite = straightCable;
+                break;
+
+            case "N" :
+            case "S" :
+                sr.sprite = straightCable;
+                currentFather.transform.GetChild(index).rotation = Quaternion.Euler(0, 0, 90);
+                break;
         }
     }
 
@@ -192,50 +285,10 @@ public class CableCreator : MonoBehaviour {
 
         if (grid.GetValue (mousePos) == null) {
             Place (mousePos, Quaternion.identity, new Vector2 (x, y), objectToPlace);
-
-            /*for (int i = 1; i < 5; i++)
-            {
-                Vector2 checkPos;
-
-                switch (i)
-                {
-                    default:
-                    case 1:
-                        // down
-                        checkPos = new Vector2(x, y - 1);
-                        break;
-                    case 2:
-                        // right
-                        checkPos = new Vector2(x + 1, y);
-                        break;
-                    case 3:
-                        // up
-                        checkPos = new Vector2(x, y + 1);
-                        break;
-                    case 4:
-                        // left
-                        checkPos = new Vector2(x - 1, y);
-                        break;
-                }
-
-                int checkX = (int)checkPos.x;
-                int checkY = (int)checkPos.y;
-
-                if (grid.GetValue(checkX, checkY) != null)
-                {
-                    if (grid.GetValue(checkX, checkY).name.Contains("Road"))
-                    {
-                        Vector3 thisPlacePos = grid.GetWorldPosition(checkX, checkY) + new Vector3(grid.GetCellSize(), 0, grid.GetCellSize()) * 0.5f;
-                        GameObject thisObjectToPlace = GetCableType(checkX, checkY);
-                        Place(thisPlacePos, Quaternion.Euler(0, grid.GetRotationAngle(dir), 0), checkPos, thisObjectToPlace);
-                    }
-                }
-            }*/
         }
     }
 
     private void InitialPlace (Vector3 placePos, Quaternion placeRot, Vector2 gridPos, GameObject objectToPlace) {
-        Debug.Log(grid.GetXY(placePos));
         GameObject placedObject = Instantiate (objectToPlace, grid.GetGridPosition(placePos), placeRot);
 
         //Adapte la taille du sprite aux cases
