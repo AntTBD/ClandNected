@@ -11,6 +11,7 @@ TagManager:
   - Undefined
   - Point
   - Switch
+  - Cable
   layers:
   - Default
   - TransparentFX

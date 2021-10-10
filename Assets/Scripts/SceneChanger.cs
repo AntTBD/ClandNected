@@ -16,14 +16,19 @@ public class SceneChanger : MonoBehaviour
         Application.Quit();
     }
     
-    public void Enter()
+    public void Play()
     {
-
+        LoadMap("CableTest");
     }
 
-    public void Out()
+    public void Credits()
     {
-        
+        LoadMap("Credits");
+    }
+
+    public void BackToMenu()
+    {
+        LoadMap("Menu");
     }
     
 }

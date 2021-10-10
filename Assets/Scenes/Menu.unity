@@ -542,17 +542,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1710238107541931220, guid: ee085f454778f9547b749b08df9e1ea6, type: 3}
   m_PrefabInstance: {fileID: 1710238107364027070}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 991151303}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa9460493cff9fe4ea98b3822460c87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &991151303 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1710238107541931223, guid: ee085f454778f9547b749b08df9e1ea6, type: 3}
-  m_PrefabInstance: {fileID: 1710238107364027070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1187662485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1047,7 @@ GameObject:
   - component: {fileID: 1782875555}
   - component: {fileID: 1782875558}
   m_Layer: 5
-  m_Name: ButtonToOption
+  m_Name: ButtonToCredits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1124,8 +1119,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 932933226}
         m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: LoadMap
-        m_Mode: 5
+        m_MethodName: Credits
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1347,13 +1342,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 991151303}
+      - m_Target: {fileID: 932933226}
         m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

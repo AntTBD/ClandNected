@@ -21,14 +21,13 @@ public class CableCreator : MonoBehaviour {
     void Start () {
         mousePos = GetMouseWorldPosition ();
         grid = gridManager.GetGrid ();
-        //InitialPlace(mousePos, Quaternion.identity, new Vector2 (3, 3), maisonTest);
     }
 
     // Update is called once per frame
     void Update () {
         mousePos = GetMouseWorldPosition ();
 
-        if (depart != null) {
+        if (depart != null && currentFather != null) {
             //Si on est sur point de départ recevable
             if (Input.GetMouseButton(0) && grid.IsInGrid(mousePos)) 
             {
@@ -52,9 +51,8 @@ public class CableCreator : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonUp (0)) {
-            
+            //Verification de la position de la souris lorsque l'on relache le bouton
             Vector3 gridPosition = grid.GetXY (mousePos);            
-            
             if( grid.IsInGrid (mousePos) )
             {
                 arrivee = grid.gridArray[(int) gridPosition.x, (int) gridPosition.y];
@@ -99,8 +97,12 @@ public class CableCreator : MonoBehaviour {
                         break;
                     }
 
-                    case "Cable" :                        
-                        if(arrivee != currentFather.transform.GetChild( currentFather.transform.childCount - 1 ).gameObject)
+                    case "Cable" : 
+                        if( currentFather.transform.childCount == 0 )
+                        {
+                            //Creation routeur adjacent ?
+                        }                      
+                        else if(arrivee != currentFather.transform.GetChild( currentFather.transform.childCount - 1 ).gameObject)
                         {
                             SetUpStartCable();
                         }
@@ -315,7 +317,10 @@ public class CableCreator : MonoBehaviour {
             {
                 depart.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
                 break;
-            };
+            }
+            case "Cable" :                        
+                //Faire section
+                break;
 
             default:
                 Destroy(currentFather);
