@@ -25,7 +25,7 @@ public class DataController : MonoBehaviour {
         dataCenter = SelectRandomDataCenter ();
         Debug.Log("I need to go to :"+dataCenter.name);
         Debug.Log(name+" :"+trs.position);
-        GetComponent<SpriteRenderer> ().sortingOrder = 2;
+        GetComponent<SpriteRenderer> ().sortingOrder = 4;
         InitializeIndex ();
         Debug.Log("End Init Data for "+name);
     }
