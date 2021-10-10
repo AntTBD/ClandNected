@@ -16,5 +16,14 @@ public class SceneChanger : MonoBehaviour
         Application.Quit();
     }
     
+    public void Enter()
+    {
+
+    }
+
+    public void Out()
+    {
+        
+    }
     
 }
