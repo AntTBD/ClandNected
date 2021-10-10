@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,17 +13,21 @@ public class DataController : MonoBehaviour {
     [SerializeField]
     private float speed = 2f;
     private void Start () {
+        Debug.Log("I just got born, help !");
         var trs = transform;
+        name = Random.Range(0, 1000).ToString()+"'s data";
         //Initial objDepart is it's parent aka HouseObject
         objDepart = trs.parent.gameObject;
         trs.position = objDepart.transform.position;
         objArrive = objDepart.GetComponent<HouseController> ().GetConnectedCable ();
         dataCenter = SelectRandomDataCenter ();
-        Debug.Log ("Iniatlization finished");
+        Debug.Log("I need to go to :"+dataCenter.name);
+        Debug.Log(name+" :"+trs.position);
         GetComponent<SpriteRenderer> ().sortingOrder = 1;
         InitializeIndex ();
+        Debug.Log("End Init Data for "+name);
     }
-    public void FixedUpdate () {
+    private void FixedUpdate () {
         if (objArrive == null)
             return;
         var step = speed * Time.deltaTime;
@@ -32,15 +37,20 @@ public class DataController : MonoBehaviour {
         if (direction) indexChild++;
         else indexChild--;
         if (indexChild < 0 || indexChild >= objArrive.transform.parent.childCount) {
-            var endCable = objArrive.transform.parent.GetComponent<CableController> ().GetEnd ();
+            var endCable = objArrive.transform.parent.GetComponent<CableController>().GetEnd();
             if (endCable.CompareTag ("Router")) {
                 //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
+                objArrive.transform.parent.GetComponent<CableController>().RemoveData(gameObject);
                 objDepart = endCable;
                 objArrive = endCable.GetComponent<RouterController> ().redirectTo;
                 indexChild = InitializeIndex ();
+                
             } else if (endCable.CompareTag ("DataCenter")) {
-                Debug.Log ("Winner");
+                endCable.GetComponent<DatacenterController>().AddNewDataToWaitingList(this);
+                objArrive.transform.parent.GetComponent<CableController>().RemoveData(gameObject);
+                objArrive = null;
             }
+            
         } else {
             objArrive = objArrive.transform.parent.GetChild (indexChild).gameObject;
         }
@@ -57,13 +67,20 @@ public class DataController : MonoBehaviour {
         if (objArrive == null)
             return 0;
         var parentObj = objArrive.transform.parent;
+        parentObj.GetComponent<CableController>().AddData(gameObject);
         direction = objArrive.Equals (parentObj.GetChild (0).gameObject);
         return direction ? 0 : parentObj.childCount;
     }
 
-    public void Delete () {
-        transform.parent.GetComponent<HouseController> ().SetIsSatified (false);
+    public void Delete (bool isSatisfate) {
+        Debug.Log("Deleting "+name);
+        transform.parent.GetComponent<HouseController> ().SetIsSatified (isSatisfate);
         Destroy (gameObject);
 
+    }
+
+    public void OnDestroy()
+    {
+        Debug.Log(name+"destroyed");
     }
 }
