@@ -50,7 +50,6 @@ public class DataController : MonoBehaviour {
                 objArrive = endCable.GetComponent<RouterController>().GetShortestPath(dataCenter);
                 if (objArrive == null)
                     Delete(false);
-                Debug.LogWarning("return path : " + objArrive.name);
                 indexChild = InitializeIndex ();
                 
             } else if (endCable.CompareTag ("DataCenter")) {
