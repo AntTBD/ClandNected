@@ -136,19 +136,19 @@ public class CableController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //CheckSaturation();
+        CheckSaturation();
     }
 
     void CheckSaturation()
     {
-        if (IsOperational() == false)
-        {
+        //if (IsOperational() == false)
+       // {
             // change color foreach sections
             foreach (Transform section in transform)
             {
                 section.GetComponent<CableSectionController>().SetSatured(operational);
             }
-        }
+       // }
     }
 
     void UpdateOperational()
@@ -193,7 +193,7 @@ public class CableController : MonoBehaviour
         Debug.Log("Remove Data :"+data.name+" nbData :"+nbDatas);
         nbDatas--;
         Debug.Log(datas.Count);
-        datas.RemoveAt(0);
+        if(datas.Count>0) datas.RemoveAt(0);
         UpdateOperational();
         UpdateWeight();
 
