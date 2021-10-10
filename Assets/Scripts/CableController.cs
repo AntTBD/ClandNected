@@ -63,16 +63,16 @@ public class CableController : MonoBehaviour
     [SerializeField] private GameObject objEnd;
     private int level;
     [SerializeField]
-    private int nbMaxDatas;
+    private int nbMaxDatas=10;
     [SerializeField]
     private int nbDatas;
     private float weight;
-    private bool operational = false;
+    private bool operational=true;
     private List<DataController> datas;
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         level = 1;
         CheckAndUpdateMaxData();
@@ -98,7 +98,7 @@ public class CableController : MonoBehaviour
         return objEnd;
     }
 
-    public void setOperational(bool test)
+    public void SetOperational(bool test)
     {
         operational = test;
     }
@@ -110,7 +110,7 @@ public class CableController : MonoBehaviour
     void CheckAndUpdateMaxData()
     {
         /// TODO : to improve
-        nbMaxDatas = level * transform.childCount;
+        nbMaxDatas = 10;
     }
 
     public void UpgradeLevel()

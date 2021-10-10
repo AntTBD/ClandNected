@@ -23,7 +23,7 @@ public class DataController : MonoBehaviour {
         dataCenter = SelectRandomDataCenter ();
         Debug.Log("I need to go to :"+dataCenter.name);
         Debug.Log(name+" :"+trs.position);
-        GetComponent<SpriteRenderer> ().sortingOrder = 1;
+        GetComponent<SpriteRenderer> ().sortingOrder = 2;
         InitializeIndex ();
         Debug.Log("End Init Data for "+name);
     }
@@ -41,10 +41,9 @@ public class DataController : MonoBehaviour {
             
             var cableController = objArrive.transform.parent.GetComponent<CableController>();
             var endCable = direction ? cableController.GetEnd() : cableController.GetBegin();
-            Debug.Log(endCable.name);
+            Debug.Log("End Cable name :"+endCable.name);
             if (endCable.CompareTag ("Router")) {
-                //::TODO : Implémenter la méthode du Routeur qui donne le bon bout de cable
-                
+                Debug.LogWarning("Data Arrived to Router");
                 cableController.RemoveData(gameObject);
                 objDepart = endCable;
                 objArrive = endCable.GetComponent<RouterController>().GetShortestPath(dataCenter);
@@ -53,6 +52,7 @@ public class DataController : MonoBehaviour {
                 indexChild = InitializeIndex ();
                 
             } else if (endCable.CompareTag ("DataCenter")) {
+                Debug.LogWarning("Data Arrived to DataCenter");
                 endCable.GetComponent<DatacenterController>().AddNewDataToWaitingList(this);
                 cableController.RemoveData(gameObject);
                 objArrive = null;

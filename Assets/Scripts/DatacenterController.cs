@@ -98,7 +98,7 @@ public class DatacenterController : MonoBehaviour
         SetCanPullCable();
     }
 
-    void ConnectNewCable(CableController cable)
+    public void ConnectNewCable(CableController cable)
     {
         connectedCables.Add(cable);
         nbPortsUsed++;
