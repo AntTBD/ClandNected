@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5c8644738cd4a4893c9a795e3e1f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  processingSpeed: 6
+  processingSpeed: 0.5
   nbPortsMax: 4
   connectedCables: []
   waitingLine: []

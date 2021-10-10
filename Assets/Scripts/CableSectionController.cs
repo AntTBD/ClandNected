@@ -79,12 +79,12 @@ public class CableSectionController : MonoBehaviour
         if (cableSatured)
         {
             // add color indicator (transparent red)
-            transform.GetComponent<SpriteRenderer>().color = colorSatured;
+            transform.GetComponent<SpriteRenderer>().color = colorNonSatured;
         }
         else
         {
             // remove color indicator
-            transform.GetComponent<SpriteRenderer>().color = colorNonSatured;
+            transform.GetComponent<SpriteRenderer>().color = colorSatured;
         }
     }
 
