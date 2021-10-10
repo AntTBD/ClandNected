@@ -27,10 +27,7 @@ public class BuildingSpawner : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyUp (KeyCode.Space)) {
-            //SpawnDatacenter();
-            SpawnHouse ();
-        }
+        
     }
 
     // Coroutine de spawn des houses
@@ -52,6 +49,10 @@ public class BuildingSpawner : MonoBehaviour {
             //Debug.Log ("Random pos : " + pos);
             if (_grid.GetValue (pos) == null && !IsTooCloseFromDatacenters (pos)) {
                 _grid.SetValue (pos, Instantiate (datacenterGO, _grid.GetGridPosition (pos), Quaternion.identity, dataCenters));
+                foreach (GameObject router in GameObject.FindGameObjectsWithTag("Router"))
+                {
+                    router.GetComponent<RouterController>().addDatacenter();
+                }
                 break;
             }
         }

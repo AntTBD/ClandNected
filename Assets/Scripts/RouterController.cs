@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,17 +26,26 @@ public class RouterController : MonoBehaviour
         _routingTable = new List<Route>(_datacenters.transform.childCount);
         foreach (Transform unused in _datacenters.transform)
         {
-            _routingTable.Add(new Route(null, 0));
+            _routingTable.Add(new Route(null, Single.PositiveInfinity));
         }
     }
 
     void Start()
     {
-        UpdateTable();
+        StartCoroutine(AutoUpdate());
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            UpdateTable();
+        }
     }
 
     public void UpdateTable()
     {
+        Debug.Log(gameObject.name + " updating");
         foreach (GameObject cable in _ports)
         {
             RouterController routerController = null;
@@ -66,18 +76,15 @@ public class RouterController : MonoBehaviour
                     datacenter = cableController.GetBegin();
                 }
             }
-            Debug.LogWarning("datacenter on cable : " + datacenter.name);
             
             if (portTargetTag.Equals("DataCenter") && datacenter != null)
             {
                 int datacenterID = GetDataCenterIdFromGameObject(datacenter);
-                Debug.LogWarning("Datacenter ID : " + datacenterID);
                 if (datacenterID == -1)
                     continue;
-                if (_routingTable[datacenterID].Port == null || cableController.GetWeight() < _routingTable[datacenterID].Cout)
+                if ((_routingTable[datacenterID].Port == null) || (cableController.GetWeight() < _routingTable[datacenterID].Cout))
                 {
                     _routingTable[datacenterID] = new Route(cable, cableController.GetWeight());
-                    Debug.LogWarning("Added to route");
                 }
             }
             else if (portTargetTag.Equals("Router") && routerController != null)
@@ -87,20 +94,33 @@ public class RouterController : MonoBehaviour
                 {
                     if (_routingTable[j].Port == null || routerPath[j].Cout + cableController.GetWeight() < _routingTable[j].Cout)
                     {
-                        _routingTable[j] = routerPath[j];
+                        _routingTable[j] = new Route(cable, routerPath[j].Cout + cableController.GetWeight());
                     }
                 }
             }
         }
 
-        int i = 0;
+        /*int i = 0;
         foreach (Route route in _routingTable)
         {
             if (route.Port != null)
-                Debug.LogWarning("Route ["+i+"]: " + route.Port.name + " Cout : " + route.Cout);
-            else Debug.LogWarning("Route Cout : " + route.Cout);
+                //Debug.LogWarning(gameObject.name+" Route ["+i+"]: " + route.Port.name + " Cout : " + route.Cout);
             i++;
+        }*/
+    }
+
+    private IEnumerator AutoUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10.0f);
+            UpdateTable();
         }
+        // ReSharper disable once IteratorNeverReturns
+    }
+    public void addDatacenter()
+    {
+        _routingTable.Add(new Route(null, Single.PositiveInfinity));
     }
 
     public List<Route> GetTable()
@@ -109,7 +129,6 @@ public class RouterController : MonoBehaviour
     }
     public GameObject GetShortestPath(int datacenterID)
     {
-        Debug.LogWarning("Datacenter search id :" + datacenterID);
         GameObject cable = _routingTable[datacenterID].Port;
         if (cable == null)
             return null;
@@ -125,7 +144,6 @@ public class RouterController : MonoBehaviour
         int id = GetDataCenterIdFromGameObject(datacenter);
         if (id == -1)
         {
-            Debug.LogError("Can't find datacenter in datacenters");
             return null;
         }
         return GetShortestPath(id);
