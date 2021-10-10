@@ -152,87 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b570a5814ce88489483a44aad45d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cableTypes:
-  - cablePrefab: {fileID: 6645366873023906927, guid: 306da37378a00944fbebcac17d8f34a7, type: 3}
-    down: 1
-    right: 0
-    up: 1
-    left: 0
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 1
-    right: 0
-    up: 0
-    left: 1
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 1
-    right: 1
-    up: 0
-    left: 0
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 0
-    right: 0
-    up: 1
-    left: 1
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 0
-    right: 1
-    up: 1
-    left: 0
-  - cablePrefab: {fileID: 2292369470543537463, guid: f98d18ff62bae96438806009f3e29b31, type: 3}
-    down: 0
-    right: 0
-    up: 0
-    left: 0
-  - cablePrefab: {fileID: 2292369470543537463, guid: f98d18ff62bae96438806009f3e29b31, type: 3}
-    down: 1
-    right: 0
-    up: 0
-    left: 0
-  - cablePrefab: {fileID: 2292369470543537463, guid: f98d18ff62bae96438806009f3e29b31, type: 3}
-    down: 0
-    right: 1
-    up: 0
-    left: 0
-  - cablePrefab: {fileID: 2292369470543537463, guid: f98d18ff62bae96438806009f3e29b31, type: 3}
-    down: 0
-    right: 0
-    up: 1
-    left: 0
-  - cablePrefab: {fileID: 2292369470543537463, guid: f98d18ff62bae96438806009f3e29b31, type: 3}
-    down: 0
-    right: 0
-    up: 0
-    left: 1
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 1
-    right: 0
-    up: 1
-    left: 1
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 1
-    right: 1
-    up: 1
-    left: 0
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 0
-    right: 1
-    up: 1
-    left: 1
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 1
-    right: 1
-    up: 0
-    left: 1
-  - cablePrefab: {fileID: 3524060124759140697, guid: 5b48435759bad4c4892ce50457c6336c, type: 3}
-    down: 1
-    right: 1
-    up: 1
-    left: 1
-  dir: 3
-  tempObject: {fileID: 6925759753458750352, guid: ad08587473e3eee4a97131a29b4b02db, type: 3}
-  height: 7
-  width: 13
   gridManager: {fileID: 1137505126}
+  cableStraight: {fileID: 2292369470543537463, guid: f98d18ff62bae96438806009f3e29b31, type: 3}
+  cableCorner: {fileID: 2079087644246874764, guid: 3abe37910b7dc7245ad67b1999bdc443, type: 3}
+  startPoint: {fileID: 6925759753458750352, guid: ad08587473e3eee4a97131a29b4b02db, type: 3}
 --- !u!4 &790260335
 Transform:
   m_ObjectHideFlags: 0

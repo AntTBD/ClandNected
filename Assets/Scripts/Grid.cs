@@ -13,8 +13,6 @@ public class Grid<TGridObject>
 
     private TextMesh[,] debugTextArray;
 
-    public enum Direction { Down, Right, Up, Left };
-
     public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false)
     {
         this.width = width;
@@ -93,9 +91,7 @@ public class Grid<TGridObject>
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
-
             this.gridArray[x, y] = value;
-            //this.debugTextArray[x, y].text = gridArray[x, y].ToString ();
         }
         else
         {
@@ -164,27 +160,6 @@ public class Grid<TGridObject>
         return this.cellSize;
     }
 
-    public float GetRotationAngle(Direction dir)
-    {
-        if (dir == Direction.Down)
-        {
-            return 90;
-        }
-        else if (dir == Direction.Right)
-        {
-            return 0;
-        }
-        else if (dir == Direction.Up)
-        {
-            return 90;
-        }
-        else if (dir == Direction.Left)
-        {
-            return 0;
-        }
-
-        return 0;
-    }
 
     public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = 0)
     {

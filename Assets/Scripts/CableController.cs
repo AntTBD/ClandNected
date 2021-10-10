@@ -64,7 +64,7 @@ public class CableController : MonoBehaviour
     private int nbMaxDatas;
     private int nbDatas;
     private float weight;
-    private bool operational;
+    private bool operational = false;
     private List<DataController> datas;
 
 
@@ -73,7 +73,6 @@ public class CableController : MonoBehaviour
     {
         level = 0;
         CheckAndUpdateMaxData();
-        UpdateOperational();
         weight = 0f;
         datas = new List<DataController>();
     }
@@ -96,6 +95,10 @@ public class CableController : MonoBehaviour
         return objEnd;
     }
 
+    public void setOperational(bool test)
+    {
+        operational = test;
+    }
 
     /// <summary>
     /// Upgrade max capacity of data<br/>
