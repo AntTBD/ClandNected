@@ -3,8 +3,10 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class DataController : MonoBehaviour {
-    private GameObject objDepart;
 
+    [SerializeField] private GameObject objDepart;
+
+    [SerializeField]
     private GameObject objArrive;
 
     private GameObject dataCenter;

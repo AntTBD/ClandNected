@@ -73,6 +73,7 @@ public class CableController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        name = "Cable " + Random.Range(0, 1000).ToString();
         level = 1;
         CheckAndUpdateMaxData();
         weight = 0f;
@@ -224,10 +225,8 @@ public class CableController : MonoBehaviour
 
     public void Diviser(GameObject router, GameObject prefabCableController)
     {
-        Debug.LogWarning("diviser begin");
         // create new cable
         GameObject newCable = Instantiate(prefabCableController, Vector3.zero, Quaternion.identity);
-        Debug.LogWarning("diviser instantiated");
         // parcourir le cable actuel
         bool firstCable = true;
         Transform middleSection = null;
@@ -239,7 +238,7 @@ public class CableController : MonoBehaviour
                 if (section.transform.position == router.transform.position)
                 {
                     // suprime la section correspondant au router et changer de cable
-                    Debug.Log("section " + section.name);
+                    Debug.Log("section to be delete" + section.name);
                     middleSection = section;
                     firstCable = false;
                 }
@@ -256,17 +255,13 @@ public class CableController : MonoBehaviour
             newCable.GetComponent<CableController>().AddSection(temp);
         }
         middleSection.GetComponent<CableSectionController>().Delete();
-        Debug.LogWarning("diviser delete middle");
         newCable.GetComponent<CableController>().SetBegin(router);// set begin of new cable
         newCable.GetComponent<CableController>().SetEnd(objEnd);// set end of new cable
         objEnd = router; // set end of this cable
 
         router.GetComponent<RouterController>().addPort(newCable);// newCable first section
-        Debug.LogWarning("diviser set newCable first section ok");
-        Debug.LogWarning("game object" + this.gameObject);
         router.GetComponent<RouterController>().addPort(gameObject);// thisCable last section
 
-        Debug.LogWarning("diviser set ports ok");
 
     }
 }

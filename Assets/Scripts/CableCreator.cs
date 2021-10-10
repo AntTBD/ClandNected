@@ -87,31 +87,28 @@ public class CableCreator : MonoBehaviour {
                     case "DataCenter":
                     {
                         SetUpStartCable();
-                        Debug.Log("cc :"+_cableController);
-                        Debug.Log("ar :"+arrivee.GetComponent<DatacenterController>());
+                        //Debug.Log("cc :"+_cableController);
+                        //Debug.Log("ar :"+arrivee.GetComponent<DatacenterController>());
                         arrivee.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
                         DrawCable();
                         break;
                     }
-
-
 
                     case "Cable":
                     {
                         SetUpStartCable();
 
                         GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
-                            Debug.LogWarning("diviser");
+                        _cableController.SetEnd(newRouter);
                         arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
 
                         grid.SetValue(arrivee.transform.position, newRouter);
                         arrivee = grid.GetValue(arrivee.transform.position);
-                            Debug.LogWarning("_cableController.SetEnd(arrivee);");
+
                         _cableController.SetEnd(arrivee);
 
                         arrivee.GetComponent<RouterController>().addPort(_cableController.gameObject);
                         DrawCable();
-                        // marche pas ...arrivee.GetComponent<RouterController>().addPort(currentFather.transform.GetChild(currentFather.transform.childCount - 1).gameObject);
                         break;
                     }
 

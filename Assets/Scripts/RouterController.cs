@@ -31,7 +31,7 @@ public class RouterController : MonoBehaviour
 
     void Start()
     {
-        //UpdateTable();
+        UpdateTable();
     }
 
     public void UpdateTable()
@@ -66,7 +66,7 @@ public class RouterController : MonoBehaviour
                     datacenter = cableController.GetBegin();
                 }
             }
-            Debug.LogWarning("datacenter on cable : " + datacenter.name);
+            //if(datacenter!=null) Debug.LogWarning("datacenter on cable : " + datacenter.name);
             
             if (portTargetTag.Equals("DataCenter") && datacenter != null)
             {
@@ -87,7 +87,7 @@ public class RouterController : MonoBehaviour
                 {
                     if (_routingTable[j].Port == null || routerPath[j].Cout + cableController.GetWeight() < _routingTable[j].Cout)
                     {
-                        _routingTable[j] = routerPath[j];
+                        _routingTable[j] = new Route(cable, routerPath[j].Cout + cableController.GetWeight());
                     }
                 }
             }
