@@ -42,8 +42,8 @@ public class SatisfactionBar : MonoBehaviour
             UpdateHealthBar();
             return true;
         }
-        // TODO : Implement game over here
-        Debug.Log("GAME OVER !!!!");
+        // game over
+        GameObject.Find("SceneChangerObject").GetComponent<SceneChanger>().LoadMap("End");
         return false;
     }
 
