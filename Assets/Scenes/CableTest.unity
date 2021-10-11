@@ -190,66 +190,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3188860297708867250, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_Text
-      value: "Spawn Datacenter \n(cost 100 $)"
-      objectReference: {fileID: 0}
-    - target: {fileID: 3188860297708867250, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_FontData.m_MaxSize
-      value: 49
-      objectReference: {fileID: 0}
-    - target: {fileID: 3188860297708867250, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 864912711}
-    - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SpawnDatacenter
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BuildingSpawner, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4015399126075178424, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4236283832426160731, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 301.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 4236283832426160731, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 103.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4236283832426160731, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -172.95996
-      objectReference: {fileID: 0}
-    - target: {fileID: 4236283832426160731, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 73.899994
-      objectReference: {fileID: 0}
-    - target: {fileID: 4969714684270165559, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.000091552734
-      objectReference: {fileID: 0}
     - target: {fileID: 5275707539479412585, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_Camera
       value: 
@@ -341,6 +285,18 @@ PrefabInstance:
     - target: {fileID: 5275707539479412590, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_Name
       value: InGameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692759088597844505, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
+      propertyPath: m_Value
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692759088597844505, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692759088597844505, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7692759089867360146, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_AnchorMax.x
@@ -890,7 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc44a28ebafb80b4186d64c2ea3b1d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fill: {fileID: 0}
+  fill: {fileID: 0}
   maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
   minHealthColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1530889548 stripped

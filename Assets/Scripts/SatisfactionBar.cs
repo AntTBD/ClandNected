@@ -12,19 +12,23 @@ public class SatisfactionBar : MonoBehaviour
 
     public const int MAXHEALTH = 100;
 
+    [SerializeField]
     private Slider slider;
 
     private int curSatisfaction;
 
-    public Image Fill; // assign in the editor the "Fill"
+    public Image fill; // assign in the editor the "Fill"
 
     public Color maxHealthColor = Color.green;
 
     public Color minHealthColor = Color.red;
 
+    public Text valueText;
+
     private void Awake()
     {
-        slider = gameObject.GetComponent<Slider>();
+        if (slider == null)
+            slider = gameObject.GetComponent<Slider>();
         curSatisfaction = STARTHEALTH; // just for testing purposes
     }
 
@@ -34,10 +38,14 @@ public class SatisfactionBar : MonoBehaviour
         slider.minValue = 0f;
         slider.maxValue = MAXHEALTH;
         slider.value = STARTHEALTH; // start with half health
+        if (fill == null)
+            fill = GameObject.Find("Fill").GetComponent<Image>();
     }
 
-        public bool removeSatisfaction (int cost = UNSATISFIED_VAL) {
-        if (curSatisfaction - cost >= 0) {
+    public bool removeSatisfaction(int cost = UNSATISFIED_VAL)
+    {
+        if (curSatisfaction - cost >= 0)
+        {
             this.curSatisfaction -= cost;
             UpdateHealthBar();
             return true;
@@ -47,25 +55,32 @@ public class SatisfactionBar : MonoBehaviour
         return false;
     }
 
-    public bool addSatisfaction (int income = SATISFIED_VAL) {
-        if(curSatisfaction + income <= 100)
-            curSatisfaction += income;
+    public void OnSliderChanger(float value)
+    {
+        valueText.text = value.ToString();
+    }
+
+    public bool addSatisfaction(int income = SATISFIED_VAL)
+    {
+        if (curSatisfaction + income <= 100)
+            curSatisfaction += income * 5;
         UpdateHealthBar();
         return true;
     }
 
     //TODO Remove this !
-    private void Update () {
-        if (Input.GetKeyDown (KeyCode.RightArrow))
-            this.addSatisfaction ();
-        if (Input.GetKeyDown (KeyCode.LeftArrow))
-            this.removeSatisfaction ();
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            this.addSatisfaction();
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            this.removeSatisfaction();
     }
 
     private void UpdateHealthBar()
     {
         slider.value = curSatisfaction;
-        Fill.color =
-            Color.Lerp(minHealthColor, maxHealthColor, (float) curSatisfaction / MAXHEALTH);
+        GameObject.Find("DebugText").GetComponent<Text>().text = "" + curSatisfaction;
+        fill.color = Color.Lerp(minHealthColor, maxHealthColor, (float)curSatisfaction / MAXHEALTH);
     }
 }

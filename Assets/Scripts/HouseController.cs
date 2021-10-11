@@ -42,7 +42,7 @@ public class HouseController : MonoBehaviour
 
     public void SetIsSatified(bool etat)
     {
-        var bar = GameObject.Find("Slider").GetComponent<SatisfactionBar>();
+        SatisfactionBar bar = GameObject.Find("Slider").GetComponent<SatisfactionBar>();
         if (!etat) bar.removeSatisfaction();
         else bar.addSatisfaction();
         isSatisfied = etat;

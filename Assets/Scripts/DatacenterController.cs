@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /*
 Datacenter :
  - le datacenter accueille les data pour g�n�rer de l'argent au joueur                                          // TODO
@@ -45,8 +44,6 @@ public class DatacenterController : MonoBehaviour
     [SerializeField]
     private List<DataController> waitingLine;
     [SerializeField] private int waitingLineMaxCapacity;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -111,14 +108,16 @@ public class DatacenterController : MonoBehaviour
     /// <returns></returns>
     IEnumerator DatasProcessing()
     {
-        yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
-        if (waitingLine.Count > 0)
+        while (true)
         {
-            Debug.Log("Process" + waitingLine[0]);
-            OneDataProcessing(waitingLine[0]);
+            if (waitingLine.Count > 0)
+            {
+                Debug.Log("Process" + waitingLine[0]);
+                OneDataProcessing(waitingLine[0]);
+            }
+            //StartCoroutine("DatasProcessing");
+            yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
         }
-        StartCoroutine("DatasProcessing");
-
     }
 
     /// <summary>

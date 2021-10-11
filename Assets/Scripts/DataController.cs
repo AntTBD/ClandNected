@@ -104,9 +104,9 @@ public class DataController : MonoBehaviour
 
     public void Delete(bool isSatisfate)
     {
-        transform.parent.GetComponent<HouseController>().SetIsSatified(isSatisfate);
-        Destroy(gameObject);
 
+        gameObject.GetComponentInParent<HouseController>().SetIsSatified(isSatisfate);
+        Destroy(this.gameObject);
     }
 
     public void OnDestroy()
