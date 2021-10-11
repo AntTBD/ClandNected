@@ -65,17 +65,15 @@ public class HouseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     IEnumerator SendDatas()
     {
-        while(true){
-            Debug.Log("Waiting 2s ...");
+        while (true)
+        {
             yield return new WaitForSeconds(sendDeltaTimeSeconds);
-            Debug.LogWarning(connectedCable);
             //if (connectedCable == null) yield break;
-            Debug.Log("Creating a new Data...");
             CreateNewData();
         }
 
@@ -85,8 +83,7 @@ public class HouseController : MonoBehaviour
     /// La maison cr�e des data pour les envoyer vers un datacenter
     /// </summary>
     private void CreateNewData()
-    { 
-        Instantiate(dataPrefab, Vector3.zero, Quaternion.identity,transform);
-        Debug.Log("Data created");
+    {
+        Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
     }
 }

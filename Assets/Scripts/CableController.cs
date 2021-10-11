@@ -63,11 +63,11 @@ public class CableController : MonoBehaviour
     [SerializeField] private GameObject objEnd;
     private int level;
     [SerializeField]
-    private int nbMaxDatas=10;
+    private int nbMaxDatas = 10;
     [SerializeField]
     private int nbDatas;
     private float weight;
-    private bool operational=true;
+    private bool operational = true;
     private List<DataController> datas;
 
     // Start is called before the first frame update
@@ -110,14 +110,14 @@ public class CableController : MonoBehaviour
     void CheckAndUpdateMaxData()
     {
         /// TODO : to improve
-        nbMaxDatas = level*2;
+        nbMaxDatas = level * 2;
     }
 
     public void UpgradeLevel()
     {
         level++;
         CheckAndUpdateMaxData();
-        foreach(Transform section in transform)
+        foreach (Transform section in transform)
         {
             /// TODO : call function to upgarde section
             section.GetComponent<CableSectionController>().Upgrade();
@@ -142,13 +142,13 @@ public class CableController : MonoBehaviour
     void CheckSaturation()
     {
         //if (IsOperational() == false)
-       // {
-            // change color foreach sections
-            foreach (Transform section in transform)
-            {
-                section.GetComponent<CableSectionController>().SetSatured(operational);
-            }
-       // }
+        // {
+        // change color foreach sections
+        foreach (Transform section in transform)
+        {
+            section.GetComponent<CableSectionController>().SetSatured(operational);
+        }
+        // }
     }
 
     void UpdateOperational()
@@ -190,10 +190,8 @@ public class CableController : MonoBehaviour
 
     public void RemoveData(GameObject data)
     {
-        Debug.Log("Remove Data :"+data.name+" nbData :"+nbDatas);
         nbDatas--;
-        Debug.Log(datas.Count);
-        if(datas.Count>0) datas.RemoveAt(0);
+        if (datas.Count > 0) datas.RemoveAt(0);
         UpdateOperational();
         UpdateWeight();
 
@@ -238,7 +236,6 @@ public class CableController : MonoBehaviour
                 if (section.transform.position == router.transform.position)
                 {
                     // suprime la section correspondant au router et changer de cable
-                    Debug.Log("section to be delete" + section.name);
                     middleSection = section;
                     firstCable = false;
                 }

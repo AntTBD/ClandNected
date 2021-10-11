@@ -96,5 +96,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites: []
-  colorSatured: {r: 0, g: 0, b: 0, a: 0.78039217}
+  colorSatured: {r: 1, g: 0, b: 0, a: 0.78039217}
   colorNonSatured: {r: 0, g: 0, b: 0, a: 1}

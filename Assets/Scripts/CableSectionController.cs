@@ -35,26 +35,11 @@ public class CableSectionController : MonoBehaviour
 
     private bool cableSatured;
 
-    // Start is called before the first frame update
-    void Start()
-    {/*
-        level = 0;
-        name = "Section "+Random.Range(0, 1000).ToString();
-        
-        if (sprites == null)
-        {
-            Debug.LogError("[CableSectionController] Sprites manquant !!!");
-        }
-        SetActualSprite();
-        */
-    }
-
     public void SetActualSprite()
     {
         if (sprites != null && sprites[level] != null)
         {
             actualSprite = sprites[level];
-            Debug.Log("Level : " + level);
             transform.GetComponent<SpriteRenderer>().sprite = actualSprite;
         }
     }
@@ -75,7 +60,6 @@ public class CableSectionController : MonoBehaviour
     /// <param name="satured"></param>
     public void SetSatured(bool satured)
     {
-        Debug.Log("SetSatured");
         cableSatured = satured;
         if (cableSatured)
         {

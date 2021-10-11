@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class RouterController : MonoBehaviour
 {
-    
-    [Serializable] public struct Route
+
+    [Serializable]
+    public struct Route
     {
         public Route(GameObject port, float cout)
         {
@@ -67,17 +68,15 @@ public class RouterController : MonoBehaviour
                 }
             }
             //if(datacenter!=null) Debug.LogWarning("datacenter on cable : " + datacenter.name);
-            
+
             if (portTargetTag.Equals("DataCenter") && datacenter != null)
             {
                 int datacenterID = GetDataCenterIdFromGameObject(datacenter);
-                Debug.LogWarning("Datacenter ID : " + datacenterID);
                 if (datacenterID == -1)
                     continue;
                 if (_routingTable[datacenterID].Port == null || cableController.GetWeight() < _routingTable[datacenterID].Cout)
                 {
                     _routingTable[datacenterID] = new Route(cable, cableController.GetWeight());
-                    Debug.LogWarning("Added to route");
                 }
             }
             else if (portTargetTag.Equals("Router") && routerController != null)
@@ -97,7 +96,7 @@ public class RouterController : MonoBehaviour
         foreach (Route route in _routingTable)
         {
             if (route.Port != null)
-                Debug.LogWarning("Route ["+i+"]: " + route.Port.name + " Cout : " + route.Cout);
+                Debug.LogWarning("Route [" + i + "]: " + route.Port.name + " Cout : " + route.Cout);
             else Debug.LogWarning("Route Cout : " + route.Cout);
             i++;
         }
@@ -109,7 +108,6 @@ public class RouterController : MonoBehaviour
     }
     public GameObject GetShortestPath(int datacenterID)
     {
-        Debug.LogWarning("Datacenter search id :" + datacenterID);
         GameObject cable = _routingTable[datacenterID].Port;
         if (cable == null)
             return null;
@@ -122,7 +120,7 @@ public class RouterController : MonoBehaviour
         }
         if (cable.transform.childCount == 0)
             return destinationCable.GetBegin();
-        return cable.transform.GetChild(cable.transform.childCount-1).gameObject;
+        return cable.transform.GetChild(cable.transform.childCount - 1).gameObject;
     }
     public GameObject GetShortestPath(GameObject datacenter)
     {
@@ -139,10 +137,9 @@ public class RouterController : MonoBehaviour
         int i = 0;
         int datacenterID = -1;
         Transform allDatacenters = GameObject.Find("DataCenters").transform;
-        //Debug.LogError("Datacenters : " + allDatacenters.name);
+
         foreach (Transform oneDatacenter in allDatacenters)
         {
-            //Debug.LogError("i : " + i);
             if (oneDatacenter.gameObject == datacenter)
             {
                 datacenterID = i;

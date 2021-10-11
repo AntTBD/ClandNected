@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid<TGridObject> 
+public class Grid<TGridObject>
 {
     private int width;
     private int height;
@@ -26,7 +26,6 @@ public class Grid<TGridObject>
         gridArray = new TGridObject[width, height];
         debugTextArray = new TextMesh[width, height];
 
-        //Debug.Log (this.width + " " + this.height);
         bool showDebug = true;
 
         if (showDebug)
@@ -61,8 +60,8 @@ public class Grid<TGridObject>
     {
         int x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         int y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
-        
-        return new Vector3(x,y,0);
+
+        return new Vector3(x, y, 0);
     }
 
     public Vector3 GetGridPosition(Vector3 position)
