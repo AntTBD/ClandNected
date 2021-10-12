@@ -15,15 +15,13 @@ public class SatisfactionBar : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
-    private int curSatisfaction;
+    private static int curSatisfaction;
 
     public Image fill; // assign in the editor the "Fill"
 
     public Color maxHealthColor = Color.green;
 
     public Color minHealthColor = Color.red;
-
-    public Text valueText;
 
     private void Awake()
     {
@@ -46,7 +44,7 @@ public class SatisfactionBar : MonoBehaviour
     {
         if (curSatisfaction - cost >= 0)
         {
-            this.curSatisfaction -= cost;
+            curSatisfaction -= cost;
             UpdateHealthBar();
             return true;
         }
@@ -55,15 +53,10 @@ public class SatisfactionBar : MonoBehaviour
         return false;
     }
 
-    public void OnSliderChanger(float value)
-    {
-        valueText.text = value.ToString();
-    }
-
     public bool addSatisfaction(int income = SATISFIED_VAL)
     {
         if (curSatisfaction + income <= 100)
-            curSatisfaction += income * 5;
+            curSatisfaction += income;
         UpdateHealthBar();
         return true;
     }
@@ -75,12 +68,12 @@ public class SatisfactionBar : MonoBehaviour
             this.addSatisfaction();
         if (Input.GetKeyDown(KeyCode.LeftArrow))
             this.removeSatisfaction();
+
+        slider.value = curSatisfaction;
     }
 
     private void UpdateHealthBar()
     {
-        slider.value = curSatisfaction;
-        GameObject.Find("DebugText").GetComponent<Text>().text = "" + curSatisfaction;
         fill.color = Color.Lerp(minHealthColor, maxHealthColor, (float)curSatisfaction / MAXHEALTH);
     }
 }
