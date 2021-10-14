@@ -61,16 +61,19 @@ public class CableController : MonoBehaviour
     [SerializeField]
     private GameObject objBegin;
     [SerializeField] private GameObject objEnd;
-    private int level;
+    [SerializeField] private int level;
+    const int LEVEL_MAX = 4;
     [SerializeField]
     private int nbMaxDatas = 10;
     [SerializeField]
     private int nbDatas;
-    private float weight;
+    [SerializeField] private float weight;
     private bool operational = true;
     private List<DataController> datas;
 
     private bool previousOperational = false;
+    private const int CABLECOST = 2;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -111,19 +114,29 @@ public class CableController : MonoBehaviour
     void CheckAndUpdateMaxData()
     {
         /// TODO : to improve
-        nbMaxDatas = level * 2;
+        nbMaxDatas = level * 5;
     }
 
     public void UpgradeLevel()
     {
-        level++;
-        CheckAndUpdateMaxData();
-        foreach (Transform section in transform)
+        bool upgraded = false;
+        if (level <= LEVEL_MAX && GameObject.Find("MoneyManager").GetComponent<MoneyManager>().removeMoney(CABLECOST * level * (transform.childCount + 1)))
         {
-            /// TODO : call function to upgarde section
-            section.GetComponent<CableSectionController>().Upgrade();
+            foreach (Transform section in transform)
+            {
+                /// call function to upgarde section
+                upgraded = section.GetComponent<CableSectionController>().Upgrade();
+                if (upgraded == false)
+                    break;
+            }
+            if (upgraded)
+            {
+                level++;
+                CheckAndUpdateMaxData();
+
+                UpdateWeight();
+            }
         }
-        UpdateWeight();
     }
     public float GetWeight()
     {
@@ -138,6 +151,31 @@ public class CableController : MonoBehaviour
     void Update()
     {
         CheckSaturation();
+        CheckForUpgrade();
+        UpdateWeight();
+    }
+
+    void CheckForUpgrade()
+    {
+        if (Input.GetMouseButtonDown(1)) // right clic
+        {
+            if (grid != null)
+            {
+                Vector3 mousePos = grid.GetGridPosition(GetMouseWorldPosition());
+                if (grid.IsInGrid(mousePos))
+                {
+                    foreach (Transform section in transform)
+                    {
+                        if (mousePos == section.position)
+                        {
+                            UpgradeLevel();
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
     void CheckSaturation()
@@ -162,7 +200,8 @@ public class CableController : MonoBehaviour
     {
         /// TODO : calcul du poid
         ///  On calcul en fonction de la taille du c�ble et de sa saturation 
-        weight = transform.childCount * ((float)nbMaxDatas / (float)nbDatas);
+        //weight = transform.childCount * ((float)nbMaxDatas - (float)nbDatas);
+        weight = (transform.childCount+1 + nbDatas)*(LEVEL_MAX-(level-1));
     }
 
     public void AddSection(CableSectionController section)

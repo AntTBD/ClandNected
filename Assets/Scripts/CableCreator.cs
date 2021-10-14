@@ -15,8 +15,6 @@ public class CableCreator : MonoBehaviour
     private GameObject currentFather;
     private GameObject lastDrawn;
     private CableController _cableController;
-    public Sprite straightCable;
-    public Sprite cornerCable;
     private GameObject depart = null;
     private GameObject arrivee = null;
 
@@ -190,8 +188,7 @@ public class CableCreator : MonoBehaviour
     public void ChooseSprite(Vector3 prev, Vector3 current, Vector3 next, int index)
     {
         string dir = "";
-        SpriteRenderer sr = currentFather.transform.GetChild(index).gameObject.GetComponent<SpriteRenderer>();
-        sr.color = new Color(0, 0, 0);
+        CableSectionController sr = currentFather.transform.GetChild(index).gameObject.GetComponent<CableSectionController>();
 
         prev = Vector3Int.RoundToInt(prev);
         next = Vector3Int.RoundToInt(next);
@@ -210,37 +207,46 @@ public class CableCreator : MonoBehaviour
         {
             case "NE":
             case "OS":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, -90));
                 break;
 
             case "SE":
             case "ON":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 break;
 
             case "SO":
             case "EN":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                 break;
 
             case "NO":
             case "ES":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 180));
                 break;
 
             case "O":
             case "E":
-                sr.sprite = straightCable;
+                sr.isCorner = false;
+                sr.SetActualSprite(true);
                 break;
 
             case "N":
             case "S":
-                sr.sprite = straightCable;
+                sr.isCorner = false;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            default:
+                Debug.LogError(currentFather.transform.GetChild(index).name +": cable section orientation error!");
                 break;
         }
     }

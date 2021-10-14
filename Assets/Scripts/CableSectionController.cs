@@ -28,30 +28,64 @@ Note :
 public class CableSectionController : MonoBehaviour
 {
 
-    private int level;
+    [SerializeField] private int level;
     private Sprite actualSprite;
     [SerializeField] public List<Sprite> sprites;
     [SerializeField] private Color colorSatured, colorNonSatured;
 
     private bool cableSatured;
 
-    public void SetActualSprite()
+    [SerializeField] public bool isCorner;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        if (sprites != null && sprites[level] != null)
+        //name = "Section "+Random.Range(0, 1000).ToString();
+        level = 0;
+
+
+        if (sprites == null)
         {
-            actualSprite = sprites[level];
-            transform.GetComponent<SpriteRenderer>().sprite = actualSprite;
+            Debug.LogError("[CableSectionController] Sprites manquant !!!");
+        }
+        isCorner = true;
+        //default sprite = 0
+        transform.GetComponent<SpriteRenderer>().sprite = sprites[level];
+    }
+
+    
+
+    public void SetActualSprite(bool firstTime=false)
+    {
+        if (firstTime) level++;
+        if (level > 0)
+        {
+            int idSprite = isCorner ? level + 1 : level;// decale de 1 pour eviter de prendre le premier
+
+
+            if (sprites != null && idSprite < sprites.Count)
+            {
+                actualSprite = sprites[idSprite];
+                transform.GetComponent<SpriteRenderer>().sprite = actualSprite;
+            }
         }
     }
 
-    public void Upgrade()
+    public int GetMaxLevel()
     {
-        level++;
-        SetActualSprite();
-        cableSatured = false;
+        return (sprites.Count - 1) / 2;
+    }
 
-
-
+    public bool Upgrade()
+    {
+        if ((level + 1) + 2 < sprites.Count)
+        {
+            level += 2;
+            SetActualSprite();
+            SetSatured(false);
+            return true;
+        }
+        return false;
     }
 
     /// <summary>

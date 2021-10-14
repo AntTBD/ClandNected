@@ -95,6 +95,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3df7daac21b7ed4abd2d6334414219e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: []
+  level: 0
+  sprites:
+  - {fileID: 3898678609041400644, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: -5754115646117064191, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: -2479864553485166416, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: 3698564625718002573, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: 2797951960719475283, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: -7457750814827155575, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: -4833163755317637070, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: -3628116116246206442, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: 2715954550200411452, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
   colorSatured: {r: 1, g: 0, b: 0, a: 0.78039217}
   colorNonSatured: {r: 0, g: 0, b: 0, a: 1}
+  isCorner: 0
