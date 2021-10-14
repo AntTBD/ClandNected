@@ -43,13 +43,17 @@ public class SceneChanger : MonoBehaviour
     {
         GameObject dataSaver = GameObject.Find("DataSaver");
         if (dataSaver != null) dataSaver.GetComponent<DataSaver>().SaveValues();
+
         LoadMap(SCENE_END);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))// echap = gameover
-            GameOver();
+        if (SceneManager.GetActiveScene().name == SCENE_GAME)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))// echap = gameover
+                GameOver();
+        }
     }
 
 }
