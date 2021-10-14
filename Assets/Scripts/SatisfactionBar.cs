@@ -15,7 +15,7 @@ public class SatisfactionBar : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
-    private int curSatisfaction;
+    private float curSatisfaction;
 
     public Image fill; // assign in the editor the "Fill"
 
@@ -46,7 +46,7 @@ public class SatisfactionBar : MonoBehaviour
     {
         if (curSatisfaction - cost >= 0)
         {
-            this.curSatisfaction -= cost;
+            curSatisfaction -= cost;
             UpdateHealthBar();
             return true;
         }
@@ -55,15 +55,10 @@ public class SatisfactionBar : MonoBehaviour
         return false;
     }
 
-    public void OnSliderChanger(float value)
-    {
-        valueText.text = value.ToString();
-    }
-
     public bool addSatisfaction(int income = SATISFIED_VAL)
     {
         if (curSatisfaction + income <= 100)
-            curSatisfaction += income * 5;
+            curSatisfaction += income;
         UpdateHealthBar();
         return true;
     }
@@ -75,6 +70,7 @@ public class SatisfactionBar : MonoBehaviour
             this.addSatisfaction();
         if (Input.GetKeyDown(KeyCode.LeftArrow))
             this.removeSatisfaction();
+        slider.value = curSatisfaction;
     }
 
     private void UpdateHealthBar()
