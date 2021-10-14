@@ -38,5 +38,11 @@ public class SceneChanger : MonoBehaviour
     {
         LoadMap("End");
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))// echap = gameover
+            GameOver();
+    }
+
 }
