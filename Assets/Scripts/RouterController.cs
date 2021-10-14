@@ -32,6 +32,7 @@ public class RouterController : MonoBehaviour
 
     void Start()
     {
+        name = "Router " + UnityEngine.Random.Range(0, 1000).ToString();
         UpdateTable();
     }
 

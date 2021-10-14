@@ -48,6 +48,7 @@ public class DatacenterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        name = "Datacenter " + Random.Range(0, 1000).ToString();
         nbPortsUsed = 0;
         SetCanPullCable();
         connectedCables = new List<CableController>();

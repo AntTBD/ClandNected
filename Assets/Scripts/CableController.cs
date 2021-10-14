@@ -77,7 +77,7 @@ public class CableController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        name = "Cable " + Random.Range(0, 1000).ToString();
+        name = "Cable " + Random.Range(0, 10000).ToString();
         level = 1;
         CheckAndUpdateMaxData();
         weight = 0f;
@@ -207,7 +207,7 @@ public class CableController : MonoBehaviour
     public void AddSection(CableSectionController section)
     {
         section.transform.parent = transform; // add section as a child
-
+        section.name = name + "_" + transform.childCount;
         UpdateWeight();
     }
 

@@ -18,7 +18,7 @@ public class DataController : MonoBehaviour
     private void Start()
     {
         var trs = transform;
-        name = Random.Range(0, 1000).ToString() + "'s data";
+        name = "Data " + Random.Range(0, 10000).ToString();
         //Initial objDepart is it's parent aka HouseObject
         objDepart = trs.parent.gameObject;
         trs.position = objDepart.transform.position;

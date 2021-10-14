@@ -39,6 +39,7 @@ public class HouseController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        name = "House " + Random.Range(0, 1000).ToString();
         isSatisfied = false;
         if (useSpritesIndicateSatisfaction)
         {
