@@ -92,7 +92,7 @@ public class CableCreator : MonoBehaviour
                             if (!depart.CompareTag("Maison") && myTargetHouseController.GetConnectedCable() == null)
                             {
                                 SetUpStartCable();
-                                myTargetHouseController.ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount - 1).gameObject);
+                                myTargetHouseController.ConnectTo(currentFather);
                             }
                             else
                             {
@@ -103,7 +103,7 @@ public class CableCreator : MonoBehaviour
                     case "Router":
                         {
                             SetUpStartCable();
-                            arrivee.GetComponent<RouterController>().addPort(currentFather);
+                            arrivee.GetComponent<RouterController>().addPort(_cableController.gameObject);
                             break;
                         }
 
@@ -350,7 +350,7 @@ public class CableCreator : MonoBehaviour
 
                     if (!arrivee.CompareTag("Maison") && myTargetHouseController.GetConnectedCable() == null)
                     {
-                        myTargetHouseController.ConnectTo(currentFather.transform.GetChild(0).gameObject);
+                        myTargetHouseController.ConnectTo(currentFather);
                     }
                     else
                     {

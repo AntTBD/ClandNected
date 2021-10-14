@@ -151,7 +151,7 @@ public class RouterController : MonoBehaviour
             cable = _routingTable[datacenterID].Port;
         if (cable == null)
             return null;
-        CableController destinationCable = cable.GetComponent<CableController>();
+        /*CableController destinationCable = cable.GetComponent<CableController>();
         if (destinationCable.GetBegin() == gameObject)
         {
             if (cable.transform.childCount == 0)
@@ -160,7 +160,9 @@ public class RouterController : MonoBehaviour
         }
         if (cable.transform.childCount == 0)
             return destinationCable.GetBegin();
-        return cable.transform.GetChild(cable.transform.childCount - 1).gameObject;
+        else
+            return cable.transform.GetChild(cable.transform.childCount - 1).gameObject;*/
+        return cable;
     }
     public GameObject GetShortestPath(GameObject datacenter)
     {
