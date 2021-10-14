@@ -159,7 +159,7 @@ public class DatacenterController : MonoBehaviour
     /// <param name="data"></param>
     public void AddNewDataToWaitingList(DataController data)
     {
-        if (waitingLine.Count <= waitingLineMaxCapacity)
+        if (waitingLine.Count <= waitingLineMaxCapacity && data.GetDatacenterOfDestination() == gameObject)
         {
             waitingLine.Add(data);
         }
