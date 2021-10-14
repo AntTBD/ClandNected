@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,18 +7,18 @@ public class RouterController : MonoBehaviour
 {
 
     [Serializable]
-    public struct Route
+    public class Route
     {
         public Route(GameObject port, float cout)
         {
             Port = port;
             Cout = cout;
         }
-        public GameObject Port { get; }
-        public float Cout { get; }
+        [field: SerializeField] public GameObject Port;// { get; private set; }
+        [field: SerializeField] public float Cout;// { get; private set; }
     }
     [SerializeField] private List<GameObject> _ports = new List<GameObject>(4);
-    [SerializeField] private List<Route> _routingTable;
+    [SerializeField] private List<Route> _routingTable=new List<Route>();
     private GameObject _datacenters;
     // Start is called before the first frame update
     void Awake()
@@ -102,6 +103,7 @@ public class RouterController : MonoBehaviour
             }
         }
 
+        /*
         int i = 0;
         foreach (Route route in _routingTable)
         {
@@ -110,6 +112,7 @@ public class RouterController : MonoBehaviour
             else Debug.LogWarning("Route Cout : " + route.Cout);
             i++;
         }
+        */
     }
     private IEnumerator AutoUpdate()
     {
@@ -166,7 +169,6 @@ public class RouterController : MonoBehaviour
             }
             i++;
         }
-
         return datacenterID;
     }
 
