@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utils;
 
 /*
 Cable :
@@ -72,6 +73,8 @@ public class CableController : MonoBehaviour
     private List<DataController> datas;
 
     private bool previousOperational = false;
+
+    private Grid<GameObject> grid;
     private const int CABLECOST = 2;
 
     // Start is called before the first frame update
@@ -82,6 +85,8 @@ public class CableController : MonoBehaviour
         CheckAndUpdateMaxData();
         weight = 0f;
         datas = new List<DataController>();
+
+        grid = GameObject.Find("GridManager").GetComponent<GridManager>().GetGrid();
     }
 
     public void SetBegin(GameObject begin)
@@ -231,8 +236,11 @@ public class CableController : MonoBehaviour
 
     public void RemoveData(GameObject data)
     {
-        nbDatas--;
-        if (datas.Count > 0) datas.RemoveAt(0);
+        if (datas.Count > 0)
+        {
+            datas.RemoveAt(0);
+            nbDatas--;
+        }
         UpdateOperational();
         UpdateWeight();
 
