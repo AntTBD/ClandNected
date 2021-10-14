@@ -28,15 +28,6 @@ public class CableCreator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        try// test if currentFaher was destroy => in this cas, recreate it
-        {
-            if (currentFather.gameObject == null) currentFather = new GameObject();
-        }
-        catch (Exception)
-        {
-            currentFather = new GameObject();
-        }
-
         mousePos = GetMouseWorldPosition();
 
         if (depart != null && currentFather != null)
@@ -67,7 +58,7 @@ public class CableCreator : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && currentFather != null)
         {
             //Verification de la position de la souris lorsque l'on relache le bouton
             Vector3 gridPosition = grid.GetXY(mousePos);
