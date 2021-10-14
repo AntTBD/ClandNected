@@ -115,16 +115,37 @@ public class CableCreator : MonoBehaviour
                         }
 
                     case "CableSection":
+
                         if (currentFather.transform.childCount == 0)
                         {
                         }
                         //Creation routeur adjacent ?
                         else if (arrivee != currentFather.transform.GetChild(currentFather.transform.childCount - 1).gameObject)
                         {
+                            // si house deja connectee on ne fait rien
+                            if (_cableController.GetBegin().CompareTag("Maison") && _cableController.GetBegin().GetComponent<HouseController>().GetConnectedCable() != null)
+                            {
+                                Destroy(currentFather);
+                                break;
+                            }
                             SetUpStartCable();
+                            // test if currentFather was destroyed in SetUpStartCable()
+                            try
+                            {
+                                if (currentFather.gameObject == null) break;
+                            }
+                            catch (Exception)
+                            {
+                                break;
+                            }
                             GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
                             _cableController.SetEnd(newRouter);
-                            arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
+                            if(arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables))
+                            {
+                                Debug.LogError("Division failed");
+                                Destroy(newRouter);
+                                break;
+                            }
 
                             grid.SetValue(arrivee.transform.position, newRouter);
                             arrivee = grid.GetValue(arrivee.transform.position);
@@ -291,28 +312,32 @@ public class CableCreator : MonoBehaviour
 
     public bool canDraw()
     {
-        int lastDrawnX, lastDrawnY;
-
-        Vector3 gridPosition = grid.GetXY(mousePos);
-        int mouseX = (int)gridPosition.x;
-        int mouseY = (int)gridPosition.y;
-
-        if (currentFather.transform.childCount != 0)
+        if (currentFather != null)
         {
-            Transform lastDrawnTransform = currentFather.transform.GetChild(currentFather.transform.childCount - 1);
-            Vector3 lastDrawnPosition = lastDrawnTransform.position;
-            Vector3 lastDrawnGridPosition = grid.GetXY(lastDrawnPosition);
-            lastDrawnX = (int)lastDrawnGridPosition.x;
-            lastDrawnY = (int)lastDrawnGridPosition.y;
-        }
-        else
-        {
-            Vector3 lastDrawnGridPosition = grid.GetXY(depart.transform.position);
-            lastDrawnX = (int)lastDrawnGridPosition.x;
-            lastDrawnY = (int)lastDrawnGridPosition.y;
-        }
+            int lastDrawnX, lastDrawnY;
 
-        return isAdjacent(mouseX, mouseY, lastDrawnX, lastDrawnY);
+            Vector3 gridPosition = grid.GetXY(mousePos);
+            int mouseX = (int)gridPosition.x;
+            int mouseY = (int)gridPosition.y;
+
+            if (currentFather.transform.childCount != 0)
+            {
+                Transform lastDrawnTransform = currentFather.transform.GetChild(currentFather.transform.childCount - 1);
+                Vector3 lastDrawnPosition = lastDrawnTransform.position;
+                Vector3 lastDrawnGridPosition = grid.GetXY(lastDrawnPosition);
+                lastDrawnX = (int)lastDrawnGridPosition.x;
+                lastDrawnY = (int)lastDrawnGridPosition.y;
+            }
+            else
+            {
+                Vector3 lastDrawnGridPosition = grid.GetXY(depart.transform.position);
+                lastDrawnX = (int)lastDrawnGridPosition.x;
+                lastDrawnY = (int)lastDrawnGridPosition.y;
+            }
+
+            return isAdjacent(mouseX, mouseY, lastDrawnX, lastDrawnY);
+        }
+        return false;
     }
 
     private void SetUpStartCable()
@@ -345,8 +370,26 @@ public class CableCreator : MonoBehaviour
                     break;
                 }
             case "CableSection":
-                //Faire section
+                {
+                    // si house deja connectee on ne fait rien
+                    if (_cableController.GetEnd().CompareTag("Maison") && _cableController.GetEnd().GetComponent<HouseController>().GetConnectedCable() != null)
+                    {
+                        Destroy(currentFather);
+                        break;
+                    }
+                    //Faire section
+                    GameObject newRouter = Instantiate(prefabRouter, depart.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
+                    _cableController.SetBegin(newRouter);
+                    depart.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
+
+                    grid.SetValue(depart.transform.position, newRouter);
+                    depart = grid.GetValue(depart.transform.position);
+                    _cableController.SetBegin(depart);
+                    newRouter.GetComponent<RouterController>().addPort(_cableController.gameObject);
+
+                }
                 break;
+
 
             default:
                 Destroy(currentFather);

@@ -270,8 +270,10 @@ public class CableController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Diviser(GameObject router, GameObject prefabCableController)
+    public bool Diviser(GameObject router, GameObject prefabCableController)
     {
+        // get size of cable to compare success or not
+        int cableSizeTemp = transform.childCount;
         // create new cable
         GameObject newCable = Instantiate(prefabCableController, Vector3.zero, Quaternion.identity);
         // parcourir le cable actuel
@@ -308,6 +310,6 @@ public class CableController : MonoBehaviour
         router.GetComponent<RouterController>().addPort(newCable);// newCable first section
         router.GetComponent<RouterController>().addPort(gameObject);// thisCable last section
 
-
+        return newCable.transform.childCount + transform.childCount == cableSizeTemp-1;
     }
 }
