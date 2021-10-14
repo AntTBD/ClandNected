@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ public class SatisfactionBar : MonoBehaviour
 
     public Color minHealthColor = Color.red;
 
-    public Text valueText;
+    public TextMeshProUGUI valueText;
 
     private void Awake()
     {
@@ -75,8 +76,8 @@ public class SatisfactionBar : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        slider.value = curSatisfaction;
-        GameObject.Find("DebugText").GetComponent<Text>().text = "" + curSatisfaction;
+        //slider.value = curSatisfaction;
+        //GameObject.Find("DebugText").GetComponent<Text>().text = "" + curSatisfaction;
         fill.color = Color.Lerp(minHealthColor, maxHealthColor, (float)curSatisfaction / MAXHEALTH);
     }
 }
