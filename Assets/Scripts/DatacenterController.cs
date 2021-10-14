@@ -109,6 +109,12 @@ public class DatacenterController : MonoBehaviour
         nbPortsUsed++;
         SetCanPullCable();
     }
+    public void RemoveCable(CableController cable)
+    {
+        connectedCables.Remove(cable);
+        nbPortsUsed--;
+        SetCanPullCable();
+    }
 
     /// <summary>
     /// Traitement des donn�es toute les [processingSpeed] secondes

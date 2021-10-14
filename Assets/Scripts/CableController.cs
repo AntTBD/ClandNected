@@ -209,7 +209,7 @@ public class CableController : MonoBehaviour
         weight = (transform.childCount+1 + nbDatas)*(LEVEL_MAX-(level-1));
     }
 
-    public void AddSection(CableSectionController section)
+    public void AddSection(GameObject section)
     {
         section.transform.parent = transform; // add section as a child
         section.name = name + "_" + transform.childCount;
@@ -276,10 +276,12 @@ public class CableController : MonoBehaviour
         int cableSizeTemp = transform.childCount;
         // create new cable
         GameObject newCable = Instantiate(prefabCableController, Vector3.zero, Quaternion.identity);
+        CableController newCableController = newCable.GetComponent<CableController>();
+
         // parcourir le cable actuel
         bool firstCable = true;
         Transform middleSection = null;
-        List<CableSectionController> listTemp = new List<CableSectionController>();
+        List<GameObject> listTemp = new List<GameObject>();
         foreach (Transform section in transform)
         {
             if (firstCable == true)
@@ -294,17 +296,47 @@ public class CableController : MonoBehaviour
             else
             {
                 // add section to new cable (auto change parent)
-                listTemp.Add(section.GetComponent<CableSectionController>());
+                listTemp.Add(section.gameObject);
             }
         }
         // on change le parent apres
-        foreach (CableSectionController temp in listTemp)
+        foreach (GameObject temp in listTemp)
         {
-            newCable.GetComponent<CableController>().AddSection(temp);
+            newCableController.AddSection(temp);
         }
         middleSection.GetComponent<CableSectionController>().Delete();
-        newCable.GetComponent<CableController>().SetBegin(router);// set begin of new cable
-        newCable.GetComponent<CableController>().SetEnd(objEnd);// set end of new cable
+        newCableController.SetBegin(router);// set begin of new cable
+        newCableController.SetEnd(objEnd);// set end of new cable
+        newCableController.level = level;
+        //newCableController.UpgradeLevel();
+        newCableController.CheckAndUpdateMaxData();
+        newCableController.UpdateWeight();
+        newCableController.UpdateOperational();
+
+        if(newCableController.GetEnd().tag == "Router")
+        {
+            RouterController routerEndCable = newCableController.GetEnd().GetComponent<RouterController>();
+            routerEndCable.removePort(gameObject);//remove this cable
+            routerEndCable.addPort(newCable);// add new
+        }
+        else if (newCableController.GetEnd().tag == "Maison")
+        {
+            HouseController houseEndCable = newCableController.GetEnd().GetComponent<HouseController>();
+            houseEndCable.ConnectTo(newCable);
+        }
+        else if (newCableController.GetEnd().tag == "DataCenter")
+        {
+            DatacenterController datacenterEndCable = newCableController.GetEnd().GetComponent<DatacenterController>();
+            datacenterEndCable.RemoveCable(gameObject.GetComponent<CableController>());
+            datacenterEndCable.ConnectNewCable(newCableController);
+        }
+        if (newCableController.GetBegin().tag == "Router")
+        {
+            RouterController routerEndCable = newCableController.GetBegin().GetComponent<RouterController>();
+            routerEndCable.removePort(gameObject);//remove this cable
+            //routerEndCable.addPort(gameObject);// add new
+        }
+
         objEnd = router; // set end of this cable
 
         router.GetComponent<RouterController>().addPort(newCable);// newCable first section

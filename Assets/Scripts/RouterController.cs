@@ -197,6 +197,13 @@ public class RouterController : MonoBehaviour
         _ports.Add(port);
         UpdateTable();
     }
+
+    public void removePort(GameObject port)
+    {
+        _ports.Remove(port);
+        UpdateTable();
+    }
+
     private void OnDestroy()
     {
         StopCoroutine(AutoUpdate());

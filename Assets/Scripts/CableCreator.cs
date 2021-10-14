@@ -478,7 +478,8 @@ public class CableCreator : MonoBehaviour
         //Adapte la taille du sprite aux cases
         placedObject.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512);
 
-        placedObject.transform.parent = currentFather.transform;
+        //placedObject.transform.parent = currentFather.transform;
+        currentFather.GetComponent<CableController>().AddSection(placedObject);
         grid.SetValue(placePos, placedObject);
     }
 
