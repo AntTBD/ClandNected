@@ -27,16 +27,24 @@ Note :
 
 public class HouseController : MonoBehaviour
 {
-    private bool isSatisfied;
+    [SerializeField] private bool isSatisfied;
     [SerializeField] private GameObject connectedCable;
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
     [SerializeField] private GameObject dataPrefab;
+
+    [SerializeField] private bool useSpritesIndicateSatisfaction;
+    [SerializeField] private Sprite satisfiedSprite, unsatisfiedSprite;
     // Start is called before the first frame update
     void Start()
     {
         isSatisfied = false;
+        if (useSpritesIndicateSatisfaction)
+        {
+            if (satisfiedSprite == null) Debug.LogWarning(name + " No satisfied sprite set !");
+            if (unsatisfiedSprite == null) Debug.LogWarning(name + " No unsatisfied sprite set !");
+        }
         StartCoroutine(SendDatas());
     }
 
@@ -46,6 +54,11 @@ public class HouseController : MonoBehaviour
         if (!etat) bar.removeSatisfaction();
         else bar.addSatisfaction();
         isSatisfied = etat;
+
+        if (useSpritesIndicateSatisfaction)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isSatisfied ? satisfiedSprite : unsatisfiedSprite;
+        }
     }
     public bool IsSatified()
     {
@@ -62,12 +75,6 @@ public class HouseController : MonoBehaviour
         return connectedCable;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     IEnumerator SendDatas()
     {
         while (true)
@@ -76,7 +83,6 @@ public class HouseController : MonoBehaviour
             //if (connectedCable == null) yield break;
             CreateNewData();
         }
-
     }
 
     /// <summary>
