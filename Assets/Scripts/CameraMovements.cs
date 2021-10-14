@@ -44,19 +44,19 @@ public class CameraMovements : MonoBehaviour
         // dragging
         // https://faramira.com/implement-camera-pan-and-zoom-controls-in-unity2d/
         // Save the position in worldspace.
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(2))
         {
             dragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
             mDragging = true;
         }
 
-        if (Input.GetMouseButton(1) && mDragging)
+        if (Input.GetMouseButton(2) && mDragging)
         {
             Vector3 diff = dragOrigin - camera.ScreenToWorldPoint(Input.mousePosition);
             diff.z = 0.0f;
             camera.transform.position += diff;
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(2))
         {
             mDragging = false;
         }
