@@ -106,7 +106,7 @@ public class CableCreator : MonoBehaviour
                             break;
                         }
 
-                    case "Cable":
+                    case "CableSection":
                         if (currentFather.transform.childCount == 0)
                         {
                         }
@@ -336,7 +336,7 @@ public class CableCreator : MonoBehaviour
                     depart.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
                     break;
                 }
-            case "Cable":
+            case "CableSection":
                 //Faire section
                 break;
 
