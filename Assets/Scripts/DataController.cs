@@ -178,10 +178,10 @@ public class DataController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void OnDestroy()
+    /*public void OnDestroy()
     {
         Debug.Log(name + " destroyed");
-    }
+    }*/
 
     public GameObject GetDatacenterOfDestination()
     {

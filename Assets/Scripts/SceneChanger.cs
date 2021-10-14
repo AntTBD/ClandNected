@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
+    public string SCENE_GAME = "CableTest";
+    public string SCENE_MENU = "Menu";
+    public string SCENE_CREDITS = "Credits";
+    public string SCENE_END = "End";
+
     public void LoadMap(String sceneToLoad)
     {
         SceneManager.LoadScene(sceneToLoad);
@@ -22,21 +27,23 @@ public class SceneChanger : MonoBehaviour
     
     public void Play()
     {
-        LoadMap("CableTest");
+        LoadMap(SCENE_GAME);
     }
 
     public void Credits()
     {
-        LoadMap("Credits");
+        LoadMap(SCENE_CREDITS);
     }
 
     public void BackToMenu()
     {
-        LoadMap("Menu");
+        LoadMap(SCENE_MENU);
     }
     public void GameOver()
     {
-        LoadMap("End");
+        GameObject dataSaver = GameObject.Find("DataSaver");
+        if (dataSaver != null) dataSaver.GetComponent<DataSaver>().SaveValues();
+        LoadMap(SCENE_END);
     }
 
     private void Update()
