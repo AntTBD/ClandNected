@@ -10,9 +10,10 @@ public class DataController : MonoBehaviour
     [SerializeField]
     private GameObject objArrive;
 
-    private GameObject dataCenter;
-    private int indexChild = 0;
-    private bool direction;
+
+    [SerializeField] private GameObject dataCenter;
+    [SerializeField] private int indexChild = 0;
+    [SerializeField] private bool direction;
     [SerializeField]
     private float speed = 2f;
     private void Start()
@@ -107,11 +108,16 @@ public class DataController : MonoBehaviour
     {
 
         gameObject.GetComponentInParent<HouseController>().SetIsSatified(isSatisfate);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     public void OnDestroy()
     {
-        Debug.Log(name + "destroyed");
+        Debug.Log(name + " destroyed");
+    }
+
+    public GameObject GetDatacenterOfDestination()
+    {
+        return dataCenter;
     }
 }

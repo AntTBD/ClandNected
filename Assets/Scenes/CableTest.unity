@@ -341,8 +341,6 @@ MonoBehaviour:
   prefabCables: {fileID: 846738545951428417, guid: c61b7a8694562124d82f3ee8159fc9e0, type: 3}
   prefabRouter: {fileID: 8349618484923305132, guid: 3723589ad69f65f4fb978f68e6f62a51, type: 3}
   pieces: {fileID: 1410394984248234162, guid: fd0f4c7483b75d84c9464f837f3421d5, type: 3}
-  straightCable: {fileID: 565750913899466560, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  cornerCable: {fileID: -1280098665169262832, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
 --- !u!4 &790260335
 Transform:
   m_ObjectHideFlags: 0

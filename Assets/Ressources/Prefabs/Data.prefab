@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objDepart: {fileID: 0}
   objArrive: {fileID: 0}
+  dataCenter: {fileID: 0}
   speed: 2
 --- !u!61 &6578243236683127509
 BoxCollider2D:

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,15 @@ public class CableCreator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        try// test if currentFaher was destroy => in this cas, recreate it
+        {
+            if (currentFather.gameObject == null) currentFather = new GameObject();
+        }
+        catch (Exception)
+        {
+            currentFather = new GameObject();
+        }
+
         mousePos = GetMouseWorldPosition();
 
         if (depart != null && currentFather != null)
@@ -94,7 +104,6 @@ public class CableCreator : MonoBehaviour
                         {
                             SetUpStartCable();
                             arrivee.GetComponent<RouterController>().addPort(currentFather);
-                            DrawCable();
                             break;
                         }
 
@@ -102,7 +111,6 @@ public class CableCreator : MonoBehaviour
                         {
                             SetUpStartCable();
                             arrivee.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
-                            DrawCable();
                             break;
                         }
 
