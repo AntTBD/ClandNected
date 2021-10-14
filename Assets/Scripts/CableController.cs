@@ -70,6 +70,7 @@ public class CableController : MonoBehaviour
     private bool operational = true;
     private List<DataController> datas;
 
+    private bool previousOperational = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -141,14 +142,15 @@ public class CableController : MonoBehaviour
 
     void CheckSaturation()
     {
-        //if (IsOperational() == false)
-        // {
-        // change color foreach sections
-        foreach (Transform section in transform)
+        if (IsOperational() != previousOperational)// change color if state is different
         {
-            section.GetComponent<CableSectionController>().SetSatured(operational);
+            previousOperational = operational;
+            // change color foreach sections
+            foreach (Transform section in transform)
+            {
+                section.GetComponent<CableSectionController>().SetSatured(! operational);
+            }
         }
-        // }
     }
 
     void UpdateOperational()
