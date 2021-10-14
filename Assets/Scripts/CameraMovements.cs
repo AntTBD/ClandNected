@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMovements : MonoBehaviour
 {
     public float dragSpeed = 2;
     private Vector3 dragOrigin;
-    private Camera camera;
+    private new Camera camera;
 
     [SerializeField]
     private GridManager gridManager;
@@ -17,19 +18,16 @@ public class CameraMovements : MonoBehaviour
     private const int MINSIZE = 4;
     private const int MAXSIZE = 13;
 
+    private bool mDragging;
+
     private void Start()
     {
-        this.camera = this.gameObject.GetComponent<Camera>();
+        camera = this.gameObject.GetComponent<Camera>();
     }
 
     void Update()
     {
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            dragOrigin = Input.mousePosition;
-            return;
-        }
+        // zoom
         size -= Input.GetAxis("Mouse ScrollWheel");
         if (size < MINSIZE)
         {
@@ -43,18 +41,24 @@ public class CameraMovements : MonoBehaviour
 
         this.camera.orthographicSize = size;
 
-        if (!Input.GetMouseButton(1)) return;
+        // dragging
+        // https://faramira.com/implement-camera-pan-and-zoom-controls-in-unity2d/
+        // Save the position in worldspace.
+        if (Input.GetMouseButtonDown(1))
+        {
+            dragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
+            mDragging = true;
+        }
 
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        Vector3 move = new Vector3(pos.x * dragSpeed, pos.y * dragSpeed, 0);
-
-        transform.Translate(move, Space.World);
-        int width = gridManager.GetGrid().GetWidth();
-        int height = gridManager.GetGrid().GetHeight();
-        Vector3 originPosition = gridManager.GetGrid().GetOriginPosition();
-        float x = Mathf.Clamp(transform.position.x, originPosition.x, originPosition.x + width);
-        float y = Mathf.Clamp(transform.position.y, originPosition.y, originPosition.y + height);
-        transform.position = new Vector3(x, y, -10);
-
+        if (Input.GetMouseButton(1) && mDragging)
+        {
+            Vector3 diff = dragOrigin - camera.ScreenToWorldPoint(Input.mousePosition);
+            diff.z = 0.0f;
+            camera.transform.position += diff;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            mDragging = false;
+        }
     }
 }
