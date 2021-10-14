@@ -25,6 +25,7 @@ public class DataController : MonoBehaviour
         objArrive = objDepart.GetComponent<HouseController>().GetConnectedCable();
         dataCenter = SelectRandomDataCenter();
         GetComponent<SpriteRenderer>().sortingOrder = 4;
+        GetComponent<SpriteRenderer>().color = dataCenter.GetComponent<DatacenterController>().datasColor;
         InitializeIndex();
     }
     private void FixedUpdate()

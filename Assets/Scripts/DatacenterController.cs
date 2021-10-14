@@ -45,6 +45,9 @@ public class DatacenterController : MonoBehaviour
     private List<DataController> waitingLine;
     [SerializeField] private int waitingLineMaxCapacity;
 
+    [SerializeField] private bool changeSpriteColor; 
+    public Color datasColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +57,9 @@ public class DatacenterController : MonoBehaviour
         connectedCables = new List<CableController>();
         waitingLine = new List<DataController>(waitingLineMaxCapacity);
 
+        datasColor = Color.HSVToRGB((int)(Random.Range(0f, 1f)*100)/100f, 1f, 1f);
+        if (changeSpriteColor)
+            GetComponent<SpriteRenderer>().color = datasColor; // change border color
         StartCoroutine(DatasProcessing());
     }
 
