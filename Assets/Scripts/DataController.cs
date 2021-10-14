@@ -6,9 +6,7 @@ public class DataController : MonoBehaviour
 {
 
     [SerializeField] private GameObject objDepart;
-
-    [SerializeField]
-    private GameObject objArrive;
+    [SerializeField] private GameObject objArrive;
 
 
     [SerializeField] private GameObject dataCenter;
@@ -16,6 +14,7 @@ public class DataController : MonoBehaviour
     [SerializeField] private bool direction;
     [SerializeField]
     private float speed = 2f;
+
     private void Start()
     {
         var trs = transform;
@@ -40,8 +39,8 @@ public class DataController : MonoBehaviour
             case 0:
                 {
                     //Debug.Log(name + "Etat 0");
-                    CableController cable = objArrive.GetComponent<CableController>();
-                    /*if (cable.transform.childCount - 1 > indexChild)
+                    /*CableController cable = objArrive.GetComponent<CableController>();
+                    if (cable.transform.childCount - 1 > indexChild)
                     {
                         cable.AddData(gameObject);
                         direction = cable.GetBegin().Equals(objDepart);// debut du cable == obj de départ
@@ -54,8 +53,8 @@ public class DataController : MonoBehaviour
                     {
                         //Debug.Log(name + " Etat 0 | index : " + indexChildTemp + " = size:" + (objArrive.transform.childCount - 1) + " - id:" + indexChild);
                         // movement dans le cable
-                        transform.position = Vector3.MoveTowards(transform.position, objArrive.transform.GetChild(indexChildTemp).transform.position, step);
-                        if (transform.position != objArrive.transform.GetChild(indexChildTemp).transform.position)
+                        transform.position = Vector3.MoveTowards(transform.position, objArrive.transform.GetChild(indexChildTemp).position, step);
+                        if (transform.position != objArrive.transform.GetChild(indexChildTemp).position)
                         {
                             return;
                         }
@@ -115,10 +114,10 @@ public class DataController : MonoBehaviour
     }
 
     /// <summary>
-    /// 3 = arrived at router or datacenter
-    /// 2 = arrive at the end of the cable
-    /// 1 = in cable with 0 sections
-    /// 0 = in cable
+    /// 3 = arrived at router or datacenter<br/>
+    /// 2 = arrive at the end of the cable<br/>
+    /// 1 = in cable with 0 sections<br/>
+    /// 0 = in cable<br/>
     /// -1 = error
     /// </summary>
     /// <returns></returns>

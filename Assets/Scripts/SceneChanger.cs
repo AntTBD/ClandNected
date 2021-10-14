@@ -34,5 +34,9 @@ public class SceneChanger : MonoBehaviour
     {
         LoadMap("Menu");
     }
+    public void GameOver()
+    {
+        LoadMap("End");
+    }
     
 }

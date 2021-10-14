@@ -74,7 +74,7 @@ public class CableController : MonoBehaviour
 
     private bool previousOperational = false;
 
-    private Grid<GameObject> grid;
+    public Grid<GameObject> grid { get; private set; }
     private const int CABLECOST = 2;
 
     // Start is called before the first frame update

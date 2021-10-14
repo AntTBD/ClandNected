@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,6 +21,8 @@ public class BuildingSpawner : MonoBehaviour
     private int maxX;
     private int maxY;
 
+    [SerializeField] private TextMeshProUGUI datacenterNumberValue;
+
     void Start()
     {
         _grid = gridManager.GetGrid();
@@ -28,6 +31,9 @@ public class BuildingSpawner : MonoBehaviour
 
         houseGO.transform.localScale = new Vector3(_grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512);
         datacenterGO.transform.localScale = new Vector3(_grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512);
+
+        if (!datacenterNumberValue)
+            datacenterNumberValue = GameObject.Find("datacenterNumberValue").GetComponent<TextMeshProUGUI>();
 
         this.SpawnDatacenter(true);
         StartCoroutine(CoroutineSpawnHouse());
@@ -69,6 +75,7 @@ public class BuildingSpawner : MonoBehaviour
                 if (_grid.GetValue(pos) == null && !IsTooCloseFromDatacenters(pos))
                 {
                     _grid.SetValue(pos, Instantiate(datacenterGO, _grid.GetGridPosition(pos), Quaternion.identity, dataCenters));
+                    datacenterNumberValue.text = dataCenters.childCount.ToString();
                     break;
                 }
             }

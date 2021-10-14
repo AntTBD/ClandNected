@@ -52,7 +52,7 @@ public class SatisfactionBar : MonoBehaviour
             return true;
         }
         // game over
-        GameObject.Find("SceneChangerObject").GetComponent<SceneChanger>().LoadMap("End");
+        GameObject.Find("SceneChangerObject").GetComponent<SceneChanger>().GameOver();
         return false;
     }
 
