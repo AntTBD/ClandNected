@@ -81,7 +81,6 @@ public class HouseController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(sendDeltaTimeSeconds);
-            //if (connectedCable == null) yield break;
             CreateNewData();
         }
     }
@@ -91,7 +90,12 @@ public class HouseController : MonoBehaviour
     /// </summary>
     private void CreateNewData()
     {
-        Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
+        if (connectedCable != null)
+            Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
+        else
+        {
+            SetIsSatified(false);// if not connected, decreases satisfaction
+        }
     }
     private void OnDestroy()
     {
