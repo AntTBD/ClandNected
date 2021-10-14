@@ -93,4 +93,8 @@ public class HouseController : MonoBehaviour
     {
         Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
     }
+    private void OnDestroy()
+    {
+        StopCoroutine(SendDatas());
+    }
 }

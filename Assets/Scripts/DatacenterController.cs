@@ -53,7 +53,8 @@ public class DatacenterController : MonoBehaviour
         SetCanPullCable();
         connectedCables = new List<CableController>();
         waitingLine = new List<DataController>(waitingLineMaxCapacity);
-        StartCoroutine("DatasProcessing");
+
+        StartCoroutine(DatasProcessing());
     }
 
     /// <summary>
@@ -116,7 +117,6 @@ public class DatacenterController : MonoBehaviour
                 Debug.Log("Process" + waitingLine[0]);
                 OneDataProcessing(waitingLine[0]);
             }
-            //StartCoroutine("DatasProcessing");
             yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
         }
     }
@@ -155,5 +155,10 @@ public class DatacenterController : MonoBehaviour
         {
             data.Delete(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(DatasProcessing());
     }
 }

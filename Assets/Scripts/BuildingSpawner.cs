@@ -30,7 +30,7 @@ public class BuildingSpawner : MonoBehaviour
         datacenterGO.transform.localScale = new Vector3(_grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512);
 
         this.SpawnDatacenter(true);
-        StartCoroutine("coroutineSpawnHouse");
+        StartCoroutine(CoroutineSpawnHouse());
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class BuildingSpawner : MonoBehaviour
 
     // Coroutine de spawn des houses
 
-    IEnumerator coroutineSpawnHouse()
+    IEnumerator CoroutineSpawnHouse()
     {
         //TODO : Change that by while game is running
         while (true)
@@ -103,5 +103,10 @@ public class BuildingSpawner : MonoBehaviour
             }
 
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(CoroutineSpawnHouse());
     }
 }

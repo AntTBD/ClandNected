@@ -33,8 +33,17 @@ public class RouterController : MonoBehaviour
     void Start()
     {
         name = "Router " + UnityEngine.Random.Range(0, 1000).ToString();
-        UpdateTable();
+        StartCoroutine(AutoUpdate());
     }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            UpdateTable();
+        }
+    }
+
 
     public void UpdateTable()
     {
@@ -102,6 +111,15 @@ public class RouterController : MonoBehaviour
             i++;
         }
     }
+    private IEnumerator AutoUpdate()
+    {
+        while (true)
+        {
+            UpdateTable();
+            yield return new WaitForSeconds(1f);
+        }
+        // ReSharper disable once IteratorNeverReturns
+    }
 
     public List<Route> GetTable()
     {
@@ -156,5 +174,9 @@ public class RouterController : MonoBehaviour
     {
         _ports.Add(port);
         UpdateTable();
+    }
+    private void OnDestroy()
+    {
+        StopCoroutine(AutoUpdate());
     }
 }
