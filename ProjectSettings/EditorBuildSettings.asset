@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/CableTest.unity
     guid: c2aa15a97900c0e4da7acfc0e328427d
   - enabled: 1
+    path: Assets/Scenes/HowToPlay.unity
+    guid: 23f91c767c7d8234ea75c840d4cbe40a
+  - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: fea70f26bcd56f543a8efbf66d1c4c09
   - enabled: 1

@@ -10,6 +10,7 @@ public class SceneChanger : MonoBehaviour
     public string SCENE_MENU = "Menu";
     public string SCENE_CREDITS = "Credits";
     public string SCENE_END = "End";
+    public string SCENE_HOWTOPLAY = "HowToPlay";
 
     public void LoadMap(String sceneToLoad)
     {
@@ -33,6 +34,11 @@ public class SceneChanger : MonoBehaviour
     public void Credits()
     {
         LoadMap(SCENE_CREDITS);
+    }
+
+    public void HowToPlay()
+    {
+        LoadMap(SCENE_HOWTOPLAY);
     }
 
     public void BackToMenu()
