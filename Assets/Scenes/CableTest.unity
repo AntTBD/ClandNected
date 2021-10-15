@@ -202,6 +202,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 879871066}
+    - target: {fileID: 5275707539479412585, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5275707539479412586, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -917,6 +921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyValueGO: {fileID: 2068525528}
   datacentersValueGO: {fileID: 724021594}
+  renderTexture: {fileID: 0}
 --- !u!4 &2018302642
 Transform:
   m_ObjectHideFlags: 0

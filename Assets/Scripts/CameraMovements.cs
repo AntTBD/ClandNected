@@ -29,17 +29,7 @@ public class CameraMovements : MonoBehaviour
     {
         // zoom
         size -= Input.GetAxis("Mouse ScrollWheel");
-        if (size < MINSIZE)
-        {
-            size = MINSIZE;
-        }
-        if (size > MAXSIZE)
-        {
-            size = MAXSIZE;
-            transform.position = new Vector3(0, 0, -10);
-        }
-
-        this.camera.orthographicSize = size;
+        zoom(size);
 
         // dragging
         // https://faramira.com/implement-camera-pan-and-zoom-controls-in-unity2d/
@@ -60,5 +50,27 @@ public class CameraMovements : MonoBehaviour
         {
             mDragging = false;
         }
+    }
+
+    private void zoom(float size)
+    {
+        if (size < MINSIZE)
+        {
+            size = MINSIZE;
+        }
+        if (size > MAXSIZE)
+        {
+            size = MAXSIZE;
+            transform.position = new Vector3(0, 0, -10);
+        }
+        
+        this.size = size;//save size
+
+        this.camera.orthographicSize = this.size;
+    }
+
+    public void ResetCam()
+    {
+        zoom(999);
     }
 }

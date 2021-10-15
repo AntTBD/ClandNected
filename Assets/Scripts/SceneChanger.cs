@@ -48,8 +48,8 @@ public class SceneChanger : MonoBehaviour
     public void GameOver()
     {
         GameObject dataSaver = GameObject.Find("DataSaver");
-        if (dataSaver != null) dataSaver.GetComponent<DataSaver>().SaveValues();
-
+        if (dataSaver != null)
+            dataSaver.GetComponent<DataSaver>().SaveValues();
         LoadMap(SCENE_END);
     }
 
@@ -61,5 +61,6 @@ public class SceneChanger : MonoBehaviour
                 GameOver();
         }
     }
+
 
 }
