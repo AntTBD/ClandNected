@@ -946,7 +946,7 @@ MonoBehaviour:
     <b>Mouse wheel click</b> + <b>Drag</b>
     to <u>move the map</u>.
 
-    <b>Right click of mouse</b> to <u>upgrade cable</u>
+    <b>Right Mouse Click</b> to <u>upgrade cable</u>
     if you have enough money (increases maximum data capacity).
 
 
@@ -955,7 +955,7 @@ MonoBehaviour:
     does it work?</u></b>
 
     <b>Houses</b> <u>send data</u> every 5 seconds, choosing
-    a data center at random. If it is not connected or if data is lost before joining
+    a data center randomly. If it is not connected or if data is lost before joining
     the data center, you will lose satisfaction.
 
     <b>Routers</b> <u>redirect
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52.5
+  m_fontSize: 40.45
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
