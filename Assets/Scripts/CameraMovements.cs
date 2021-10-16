@@ -20,14 +20,14 @@ public class CameraMovements : MonoBehaviour
 
     private bool mDragging;
 
-#if UNITY_ANDROID || UNITY_IOS
+    [Header("Smartphone Settings")]
     // variables for camera pan
     public float speedPan = 0.01f;
 
     // variables for camera zoom in and out
     public float perspectiveZoomSpeed = 0.01f;
     public float orthoZoomSpeed = 0.01f;
-#endif
+
 
     private void Start()
     {
