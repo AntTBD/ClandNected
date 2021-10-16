@@ -2,29 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Grid<TGridObject>
 {
-    private int width;
-    private int height;
-    public TGridObject[,] gridArray;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] public TGridObject[,] gridArray;
 
-    private float cellSize;
-    private Vector3 originPosition;
+    [SerializeField] private float cellSize;
+    [SerializeField] private Vector3 originPosition;
 
     private TextMesh[,] debugTextArray;
 
-    public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false)
+    [SerializeField] float androidCoeff = 1f;
+
+    public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false, float androidCoeff = 1f)
     {
-        this.width = width;
-        this.height = height;
-        this.cellSize = cellSize;
+#if UNITY_ANDROID || UNITY_IOS
+        this.androidCoeff = androidCoeff; // disable AndroidCoeff
+#endif
+        this.width = Mathf.FloorToInt(width / this.androidCoeff);
+        this.height = Mathf.FloorToInt(height / this.androidCoeff);
+        this.cellSize = cellSize * this.androidCoeff;
+
         if (isCenter)
-            this.originPosition = originPosition - new Vector3(width / 2f, height / 2f, 0) * cellSize;
+            this.originPosition = originPosition - new Vector3(this.width / 2f, this.height / 2f, 0) * this.cellSize;
         else
             this.originPosition = originPosition;
 
-        gridArray = new TGridObject[width, height];
-        debugTextArray = new TextMesh[width, height];
+        gridArray = new TGridObject[this.width, this.height];
+        debugTextArray = new TextMesh[this.width, this.height];
 
         bool showDebug = true;
 
@@ -35,16 +42,16 @@ public class Grid<TGridObject>
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
                     //debugTextArray[x, y] = CreateWorldText (gridArray[x, y].ToString (), null, GetWorldPosition (x, y) + new Vector3 (cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.gray, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.gray, 100f);
                 }
             }
-            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+            Debug.DrawLine(GetWorldPosition(0, this.height), GetWorldPosition(this.width, this.height), Color.gray, 100f);
+            Debug.DrawLine(GetWorldPosition(this.width, 0), GetWorldPosition(this.width, this.height), Color.gray, 100f);
         }
     }
 
-    public Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(float x, float y)
     {
         return new Vector3(x, y) * cellSize + originPosition;
     }

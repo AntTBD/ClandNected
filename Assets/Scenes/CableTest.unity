@@ -528,6 +528,9 @@ MonoBehaviour:
   dragSpeed: 0.1
   gridManager: {fileID: 1137505126}
   size: 20
+  speedPan: 0.01
+  perspectiveZoomSpeed: 0.01
+  orthoZoomSpeed: 0.01
 --- !u!114 &1029133401 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 577855304378108892, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
@@ -761,8 +764,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3344f53a1101c4b4b85c688b2d3432c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _grid:
+    width: 0
+    height: 0
+    cellSize: 0
+    originPosition: {x: 0, y: 0, z: 0}
+    androidCoeff: 0
   height: 25
   width: 25
+  androidCoeff: 1.75
 --- !u!4 &1137505128
 Transform:
   m_ObjectHideFlags: 0
