@@ -77,6 +77,9 @@ public class CableController : MonoBehaviour
     public Grid<GameObject> grid { get; private set; }
     private const int CABLECOST = 2;
 
+
+    private bool wantToUpgrade = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -162,22 +165,31 @@ public class CableController : MonoBehaviour
 
     void CheckForUpgrade()
     {
-        if (Input.GetMouseButtonDown(1)) // right clic
+        if ((Input.touchCount > 0 && Input.GetTouch(0).tapCount == 2) || Input.GetMouseButtonDown(1)) // double tap OR right clic down
         {
-            if (grid != null)
-            {
-                Vector3 mousePos = grid.GetGridPosition(GetMouseWorldPosition());
-                if (grid.IsInGrid(mousePos))
-                {
-                    foreach (Transform section in transform)
-                    {
-                        if (mousePos == section.position)
-                        {
-                            UpgradeLevel();
-                            break;
-                        }
-                    }
+            wantToUpgrade = true;
+        }
 
+        if (wantToUpgrade)
+        {
+            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp(1)) // double tap end OR right clic relaché
+            {
+                wantToUpgrade = false;
+                if (grid != null)
+                {
+                    Vector3 mousePos = grid.GetGridPosition(GetMouseWorldPosition());
+                    if (grid.IsInGrid(mousePos))
+                    {
+                        foreach (Transform section in transform)
+                        {
+                            if (mousePos == section.position)
+                            {
+                                UpgradeLevel();
+                                break;
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -313,24 +325,24 @@ public class CableController : MonoBehaviour
         newCableController.UpdateWeight();
         newCableController.UpdateOperational();
 
-        if(newCableController.GetEnd().tag == "Router")
+        if(newCableController.GetEnd().CompareTag("Router"))
         {
             RouterController routerEndCable = newCableController.GetEnd().GetComponent<RouterController>();
             routerEndCable.removePort(gameObject);//remove this cable
             routerEndCable.addPort(newCable);// add new
         }
-        else if (newCableController.GetEnd().tag == "Maison")
+        else if (newCableController.GetEnd().CompareTag("Maison"))
         {
             HouseController houseEndCable = newCableController.GetEnd().GetComponent<HouseController>();
             houseEndCable.ConnectTo(newCable);
         }
-        else if (newCableController.GetEnd().tag == "DataCenter")
+        else if (newCableController.GetEnd().CompareTag("DataCenter"))
         {
             DatacenterController datacenterEndCable = newCableController.GetEnd().GetComponent<DatacenterController>();
             datacenterEndCable.RemoveCable(gameObject.GetComponent<CableController>());
             datacenterEndCable.ConnectNewCable(newCableController);
         }
-        if (newCableController.GetBegin().tag == "Router")
+        if (newCableController.GetBegin().CompareTag("Router"))
         {
             RouterController routerEndCable = newCableController.GetBegin().GetComponent<RouterController>();
             routerEndCable.removePort(gameObject);//remove this cable

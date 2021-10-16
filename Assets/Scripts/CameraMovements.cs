@@ -20,6 +20,15 @@ public class CameraMovements : MonoBehaviour
 
     private bool mDragging;
 
+#if UNITY_ANDROID || UNITY_IOS
+    // variables for camera pan
+    public float speedPan = 0.01f;
+
+    // variables for camera zoom in and out
+    public float perspectiveZoomSpeed = 0.01f;
+    public float orthoZoomSpeed = 0.01f;
+#endif
+
     private void Start()
     {
         camera = this.gameObject.GetComponent<Camera>();
@@ -27,28 +36,31 @@ public class CameraMovements : MonoBehaviour
 
     void Update()
     {
-        // zoom
-        size -= Input.GetAxis("Mouse ScrollWheel");
-        zoom(size);
+        if (IfAndroidIsUsed() == false)
+        {
+            // zoom
+            size -= Input.GetAxis("Mouse ScrollWheel");
+            zoom(size);
 
-        // dragging
-        // https://faramira.com/implement-camera-pan-and-zoom-controls-in-unity2d/
-        // Save the position in worldspace.
-        if (Input.GetMouseButtonDown(2))
-        {
-            dragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
-            mDragging = true;
-        }
+            // dragging
+            // https://faramira.com/implement-camera-pan-and-zoom-controls-in-unity2d/
+            // Save the position in worldspace.
+            if (Input.GetMouseButtonDown(2))
+            {
+                dragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
+                mDragging = true;
+            }
 
-        if (Input.GetMouseButton(2) && mDragging)
-        {
-            Vector3 diff = dragOrigin - camera.ScreenToWorldPoint(Input.mousePosition);
-            diff.z = 0.0f;
-            camera.transform.position += diff;
-        }
-        if (Input.GetMouseButtonUp(2))
-        {
-            mDragging = false;
+            if (Input.GetMouseButton(2) && mDragging)
+            {
+                Vector3 diff = dragOrigin - camera.ScreenToWorldPoint(Input.mousePosition);
+                diff.z = 0.0f;
+                camera.transform.position += diff;
+            }
+            if (Input.GetMouseButtonUp(2))
+            {
+                mDragging = false;
+            }
         }
     }
 
@@ -72,5 +84,49 @@ public class CameraMovements : MonoBehaviour
     public void ResetCam()
     {
         zoom(999);
+    }
+
+    // https://forum.unity.com/threads/mobile-touch-to-orbit-pan-and-zoom-camera-without-fix-target-in-one-script.522607/
+    private bool IfAndroidIsUsed()
+    {
+        bool androidUsed = false;
+        // This part is for camera pan only & for 2 fingers stationary gesture
+        if (Input.touchCount > 0 && Input.GetTouch(1).phase == TouchPhase.Moved)
+        {
+            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+            transform.Translate(-touchDeltaPosition.x * speedPan, -touchDeltaPosition.y * speedPan, 0);
+            androidUsed = true;
+        }
+
+        //this part is for zoom in and out 
+        if (Input.touchCount == 2)
+        {
+
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            Vector2 touchZeroPreviousPosition = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePreviousPosition = touchOne.position - touchOne.deltaPosition;
+
+
+            float prevTouchDeltaMag = (touchZeroPreviousPosition - touchOnePreviousPosition).magnitude;
+            float TouchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+            float deltaMagDiff = prevTouchDeltaMag - TouchDeltaMag;
+
+            if (camera.orthographic)
+            {
+                //camera.orthographicSize += deltaMagDiff * orthoZoomSpeed;
+                //camera.orthographicSize = Mathf.Max(camera.orthographicSize, .1f);
+                zoom(camera.orthographicSize + (deltaMagDiff * orthoZoomSpeed));
+            }
+            else
+            {
+                camera.fieldOfView += deltaMagDiff * perspectiveZoomSpeed;
+                camera.fieldOfView = Mathf.Clamp(camera.fieldOfView, .1f, 179.9f);
+            }
+            androidUsed = true;
+        }
+        return androidUsed;
     }
 }
