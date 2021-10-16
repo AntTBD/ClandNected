@@ -770,8 +770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20dee227c34ff4bbb95a9dc66fe41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myText: {fileID: 0}
-  myTextMesh: {fileID: 0}
 --- !u!114 &780980258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,8 +944,8 @@ MonoBehaviour:
     <b>Mouse wheel click</b> + <b>Drag</b>
     to <u>move the map</u>.
 
-    <b>Right Mouse Click</b> to <u>upgrade cable</u>
-    if you have enough money (increases maximum data capacity).
+    <b>Right Mouse Click</b> or <b>Double Tap</b> to
+    <u>upgrade cable</u> if you have enough money (increases maximum data capacity).
 
 
 
@@ -992,7 +990,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.45
+  m_fontSize: 51.05
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1

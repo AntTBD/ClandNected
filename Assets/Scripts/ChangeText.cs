@@ -5,8 +5,8 @@ using UnityEngine;
  
  public class ChangeText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-    [SerializeField] private Text myText;
-    [SerializeField] private TextMeshProUGUI myTextMesh;
+    private Text myText;
+    private TextMeshProUGUI myTextMesh;
 
     void Start (){
         myText = GetComponentInChildren<Text>();
