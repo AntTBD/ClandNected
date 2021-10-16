@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.16509432, g: 1, b: 0.22588295, a: 1}
+  m_Color: {r: 1, g: 0.972549, b: 0.8627451, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,6 +99,8 @@ MonoBehaviour:
   objDepart: {fileID: 0}
   objArrive: {fileID: 0}
   dataCenter: {fileID: 0}
+  indexChild: 0
+  direction: 0
   speed: 2
 --- !u!61 &6578243236683127509
 BoxCollider2D:

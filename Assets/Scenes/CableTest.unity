@@ -202,10 +202,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 879871066}
-    - target: {fileID: 5275707539479412585, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5275707539479412586, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -293,14 +289,6 @@ PrefabInstance:
     - target: {fileID: 5275707539479412590, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_Name
       value: InGameUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5275707539479412590, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5275707540706317012, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6576353379596388362, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_text
@@ -478,7 +466,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 0.9725491, b: 0.86274517, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.9725491, b: 0.86274517, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

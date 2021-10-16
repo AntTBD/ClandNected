@@ -24,10 +24,12 @@ public class MiniMap : MonoBehaviour
         miniMaptexture.texture = mapTexture;
         SizeToParent(miniMaptexture);
 
+        bigMiniMapParent.gameObject.SetActive(true);//hide big map
+        bigMiniMapParent.GetComponent<AspectRatioFitter>().aspectRatio = mapTexture.width / (float)mapTexture.height;
         bigMiniMaptexture.texture = mapTexture;
         SizeToParent(bigMiniMaptexture);
+        bigMiniMapParent.gameObject.SetActive(false);//hide big map
 
-        bigMiniMapParent.GetComponent<AspectRatioFitter>().aspectRatio = mapTexture.width / (float)mapTexture.height;
     }
 
     public void OnMiniMapClick()
