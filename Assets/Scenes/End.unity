@@ -664,8 +664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20dee227c34ff4bbb95a9dc66fe41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myText: {fileID: 0}
-  myTextMesh: {fileID: 0}
 --- !u!114 &932933226 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1710238107541931220, guid: ee085f454778f9547b749b08df9e1ea6, type: 3}
@@ -1083,8 +1081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20dee227c34ff4bbb95a9dc66fe41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myText: {fileID: 0}
-  myTextMesh: {fileID: 0}
 --- !u!1001 &1659446838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1504,8 +1500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20dee227c34ff4bbb95a9dc66fe41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myText: {fileID: 0}
-  myTextMesh: {fileID: 0}
 --- !u!1 &1983860988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,8 +1736,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20dee227c34ff4bbb95a9dc66fe41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myText: {fileID: 0}
-  myTextMesh: {fileID: 0}
 --- !u!1001 &164795235458249944
 PrefabInstance:
   m_ObjectHideFlags: 0
