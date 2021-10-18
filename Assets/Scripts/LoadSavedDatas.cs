@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class LoadSavedDatas : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI moneyText, datacentersText;
+    [SerializeField] private TextMeshProUGUI moneyText, datacentersText, housesText;
     [SerializeField] private RenderTexture mapTexture;
     [SerializeField] private MiniMap miniMap;
     // Start is called before the first frame update
     void Start()
     {
         GameObject dataSaver = GameObject.Find("DataSaver");
-        if (dataSaver != null) mapTexture = dataSaver.GetComponent<DataSaver>().LoadValues(moneyText, datacentersText);
+        if (dataSaver != null) mapTexture = dataSaver.GetComponent<DataSaver>().LoadValues(moneyText, datacentersText, housesText);
 
         if (miniMap != null && mapTexture != null) miniMap.SetTexture(mapTexture);
     }

@@ -24,8 +24,12 @@ public class DataController : MonoBehaviour
         trs.position = objDepart.transform.position;
         objArrive = objDepart.GetComponent<HouseController>().GetConnectedCable();//recuperation du premier cable
         dataCenter = SelectRandomDataCenter();
-        GetComponent<SpriteRenderer>().sortingOrder = 4;
         GetComponent<SpriteRenderer>().color = dataCenter.GetComponent<DatacenterController>().datasColor;
+
+        Grid<GameObject> _grid = GameObject.Find("GridManager").GetComponent<GridManager>().GetGrid();
+        //Adapte la taille du sprite aux cases
+        transform.localScale = new Vector3(_grid.GetCellSize(), _grid.GetCellSize(), 1);
+
         InitializeIndex();
     }
     private void FixedUpdate()

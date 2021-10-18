@@ -18,12 +18,16 @@ public class Grid<TGridObject>
 
     public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false, float androidCoeff = 1f)
     {
+
 #if UNITY_ANDROID || UNITY_IOS
         this.androidCoeff = androidCoeff; // disable AndroidCoeff
 #endif
-        this.width = Mathf.FloorToInt(width / this.androidCoeff);
-        this.height = Mathf.FloorToInt(height / this.androidCoeff);
         this.cellSize = cellSize * this.androidCoeff;
+        this.width = width;
+        this.height = height;
+        SetWithHeightFromScreenSizeAndCellSize();// rewrite width/height
+        //this.width = Mathf.FloorToInt(this.width / this.androidCoeff);
+        //this.height = Mathf.FloorToInt(this.height / this.androidCoeff);
 
         if (isCenter)
             this.originPosition = originPosition - new Vector3(this.width / 2f, this.height / 2f, 0) * this.cellSize;
@@ -48,6 +52,22 @@ public class Grid<TGridObject>
             }
             Debug.DrawLine(GetWorldPosition(0, this.height), GetWorldPosition(this.width, this.height), Color.gray, 100f);
             Debug.DrawLine(GetWorldPosition(this.width, 0), GetWorldPosition(this.width, this.height), Color.gray, 100f);
+        }
+    }
+    private void SetWithHeightFromScreenSizeAndCellSize()
+    {
+        try { 
+            Camera.main.GetComponent<CameraMovements>().ResetCam();
+            this.height = (int)((Camera.main.orthographicSize * 2f - 5f /this.androidCoeff) / this.cellSize);
+            this.width = (int)((Camera.main.orthographicSize * ((float)Screen.width / Screen.height) * 2f - 5f / this.androidCoeff) / this.cellSize);
+            if (this.height < 5) this.height = 5;
+            if (this.width < 5) this.width = 5;
+        }
+        catch
+        {
+            if (this.height < 5) this.height = 5;
+            if (this.width < 5) this.width = 5;
+            return;
         }
     }
 
@@ -95,7 +115,7 @@ public class Grid<TGridObject>
 
     public void SetValue(int x, int y, TGridObject value)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height)
+        if (IsInGrid(x, y))
         {
             this.gridArray[x, y] = value;
         }
@@ -108,7 +128,7 @@ public class Grid<TGridObject>
 
     public TGridObject GetValue(int x, int y)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height)
+        if (IsInGrid(x, y))
         {
             return this.gridArray[x, y];
         }

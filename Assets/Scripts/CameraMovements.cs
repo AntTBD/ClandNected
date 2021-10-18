@@ -29,7 +29,7 @@ public class CameraMovements : MonoBehaviour
     public float orthoZoomSpeed = 0.01f;
 
 
-    private void Start()
+    private void Awake()
     {
         camera = this.gameObject.GetComponent<Camera>();
     }

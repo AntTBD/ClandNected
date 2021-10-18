@@ -9,10 +9,15 @@ public class DataSaver : MonoBehaviour
 {
     private static bool created = false;
 
+    [Header("GameObjects")]
     [SerializeField] private GameObject moneyValueGO;
     [SerializeField] private GameObject datacentersValueGO;
-    private int moneyValue;
-    private int datacentersValue;
+    [SerializeField] private GameObject housesValueGO;
+    [SerializeField] private GameObject hiddenElement;
+    [Header("Values")]
+    [SerializeField] private int moneyValue;
+    [SerializeField] private int datacentersValue;
+    [SerializeField] private int housesValue;
 
     [SerializeField] RenderTexture renderTexture;
 
@@ -34,6 +39,15 @@ public class DataSaver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (moneyValueGO == null || datacentersValueGO == null || housesValueGO == null || hiddenElement == null)
+        {
+            SetAllGameObjects();
+        }
+    }
+
+    private void SetAllGameObjects()
+    {
+        Debug.Log("Set All GameObjects");
         if (moneyValueGO == null)
         {
             moneyValueGO = GameObject.Find("moneyValue");
@@ -44,10 +58,25 @@ public class DataSaver : MonoBehaviour
             datacentersValueGO = GameObject.Find("datacenterNumberValue");
             if (datacentersValueGO == null) Debug.LogWarning("DataSaver : Can't find datacenterNumberValue !");
         }
+        if (housesValueGO == null)
+        {
+            housesValueGO = GameObject.Find("houseNumberValue");
+            if (housesValueGO == null) Debug.LogWarning("House : Can't find houseNumberValue !");
+        }
+        if (hiddenElement == null)
+        {
+            hiddenElement = GameObject.Find("InGameUI");
+            if (hiddenElement == null) Debug.LogWarning("HiddenElement : Can't find InGameUI !");
+        }
     }
 
     public void SaveValues()
     {
+        if (moneyValueGO == null || datacentersValueGO == null || housesValueGO == null || hiddenElement == null)
+        {
+            SetAllGameObjects();
+        }
+
         if (moneyValueGO != null)
         {
             string s = moneyValueGO.GetComponent<TextMeshProUGUI>().text;
@@ -59,18 +88,25 @@ public class DataSaver : MonoBehaviour
             string result = datacentersValueGO.GetComponent<TextMeshProUGUI>().text;
             datacentersValue = int.Parse(result);
         }
+        if (housesValueGO != null)
+        {
+            string result = housesValueGO.GetComponent<TextMeshProUGUI>().text;
+            housesValue = int.Parse(result);
+        }
 
         // get last render image : https://stackoverflow.com/questions/56783654/how-to-capture-frames-from-the-unity3d-camera-and-display-them-on-another-rawima
         CaptureScreen();
     }
 
-    public RenderTexture LoadValues(TextMeshProUGUI money, TextMeshProUGUI datacenters)
+    public RenderTexture LoadValues(TextMeshProUGUI money, TextMeshProUGUI datacenters, TextMeshProUGUI houses)
     {
         if (money != null)
             money.text = moneyValue.ToString() + " $";
         if (datacenters != null)
             datacenters.text = datacentersValue.ToString();
-        
+        if (houses != null)
+            houses.text = housesValue.ToString();
+
         return GetSnapShot();
     }
 
@@ -81,10 +117,10 @@ public class DataSaver : MonoBehaviour
     public void CaptureScreen()
     {
         // Wait till the last possible moment before screen rendering to hide the UI
-        GameObject.Find("InGameUI").GetComponent<Canvas>().enabled = false;
+        if (hiddenElement != null) hiddenElement.SetActive(false);
 
         // Wait for screen rendering to complete
-        //new WaitForEndOfFrame();
+        new WaitForEndOfFrame();
 
         // reset cam position
         Camera.main.GetComponent<CameraMovements>().ResetCam();
@@ -93,7 +129,7 @@ public class DataSaver : MonoBehaviour
         SaveScreenshot();
 
         // Show UI after we're done
-        GameObject.Find("InGameUI").GetComponent<Canvas>().enabled = true;
+        if (hiddenElement != null) hiddenElement.SetActive(true);
     }
 
     // https://answers.unity.com/questions/22954/how-to-save-a-picture-take-screenshot-from-a-camer.html

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1410394984248234162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -69,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1668563215
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -97,15 +97,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   sprites:
-  - {fileID: 3898678609041400644, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: -5754115646117064191, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: -2479864553485166416, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: 3698564625718002573, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: 2797951960719475283, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: -7457750814827155575, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: -4833163755317637070, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: -3628116116246206442, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
-  - {fileID: 2715954550200411452, guid: 36175a90292f0eb45969d7bdff5ca772, type: 3}
+  - {fileID: 8493733510796071021, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: 7545353451675413637, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: -2056967790805490297, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: 6382509387083461168, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: 2181597431098579920, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: 6399137217976694725, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: 5201457661546944167, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: 1596387256739585554, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
+  - {fileID: -310464053396276154, guid: 4dff17d0f37b0d64485773f7277c2e20, type: 3}
   colorSatured: {r: 1, g: 0, b: 0, a: 0.78039217}
   colorNonSatured: {r: 0, g: 0, b: 0, a: 1}
   isCorner: 0

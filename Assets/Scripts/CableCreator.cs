@@ -131,7 +131,7 @@ public class CableCreator : MonoBehaviour
                             }
                             GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
                             //Adapte la taille du sprite aux cases
-                            newRouter.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, 1);
+                            newRouter.transform.localScale = new Vector3(grid.GetCellSize() * 1.3f, grid.GetCellSize() * 1.3f, 1);
 
                             _cableController.SetEnd(newRouter);
                             if(arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables))
@@ -372,7 +372,7 @@ public class CableCreator : MonoBehaviour
                     //Faire section
                     GameObject newRouter = Instantiate(prefabRouter, depart.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
                     //Adapte la taille du sprite aux cases
-                    newRouter.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, 1);
+                    newRouter.transform.localScale = new Vector3(grid.GetCellSize() * 1.3f, grid.GetCellSize() * 1.3f, 1);
                     _cableController.SetBegin(newRouter);
                     depart.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
 
@@ -460,7 +460,7 @@ public class CableCreator : MonoBehaviour
         GameObject placedObject = Instantiate(objectToPlace, grid.GetGridPosition(placePos), placeRot);
 
         //Adapte la taille du sprite aux cases
-        placedObject.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, 1);
+        placedObject.transform.localScale = new Vector3(grid.GetCellSize(), grid.GetCellSize(), 1);
 
         grid.SetValue(placePos, placedObject);
     }
@@ -470,7 +470,7 @@ public class CableCreator : MonoBehaviour
         GameObject placedObject = Instantiate(objectToPlace, grid.GetGridPosition(mousePos), placeRot);
 
         //Adapte la taille du sprite aux cases
-        placedObject.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, 1);
+        placedObject.transform.localScale = new Vector3(grid.GetCellSize(), grid.GetCellSize(), 1);
 
         //placedObject.transform.parent = currentFather.transform;
         currentFather.GetComponent<CableController>().AddSection(placedObject);

@@ -50,3 +50,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UI
+    uniqueID: 990092391
+    locked: 0
+  - name: cables
+    uniqueID: 2626404081
+    locked: 0
+  - name: houses
+    uniqueID: 4237027927
+    locked: 0
+  - name: routers
+    uniqueID: 1405090423
+    locked: 0
+  - name: datacenters
+    uniqueID: 344561449
+    locked: 0
+  - name: datas
+    uniqueID: 2862453629
+    locked: 0

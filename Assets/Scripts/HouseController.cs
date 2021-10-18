@@ -36,6 +36,7 @@ public class HouseController : MonoBehaviour
 
     [SerializeField] private bool useSpritesIndicateSatisfaction;
     [SerializeField] private Sprite satisfiedSprite, unsatisfiedSprite;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,10 @@ public class HouseController : MonoBehaviour
             if (satisfiedSprite == null) Debug.LogWarning(name + " No satisfied sprite set !");
             if (unsatisfiedSprite == null) Debug.LogWarning(name + " No unsatisfied sprite set !");
         }
+
+        // add little random
+        sendDeltaTimeSeconds = Random.Range(sendDeltaTimeSeconds, sendDeltaTimeSeconds + 3);
+
         StartCoroutine(SendDatas());
     }
 
@@ -91,7 +96,9 @@ public class HouseController : MonoBehaviour
     private void CreateNewData()
     {
         if (connectedCable != null)
+        {
             Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
+        }
         else
         {
             SetIsSatified(false);// if not connected, decreases satisfaction
