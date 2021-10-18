@@ -124,6 +124,7 @@ public class DatacenterController : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(processingSpeed);
             if (waitingLine.Count > 0)
             {
                 //Debug.Log("Process " + waitingLine[0]);

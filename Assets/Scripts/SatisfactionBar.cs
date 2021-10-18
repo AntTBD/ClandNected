@@ -16,7 +16,7 @@ public class SatisfactionBar : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
-    private float curSatisfaction;
+    private static int curSatisfaction;
 
     public Image fill; // assign in the editor the "Fill"
 
@@ -71,13 +71,12 @@ public class SatisfactionBar : MonoBehaviour
             this.addSatisfaction();
         if (Input.GetKeyDown(KeyCode.LeftArrow))
             this.removeSatisfaction();
+
         slider.value = curSatisfaction;
     }
 
     private void UpdateHealthBar()
     {
-        //slider.value = curSatisfaction;
-        //GameObject.Find("DebugText").GetComponent<Text>().text = "" + curSatisfaction;
         fill.color = Color.Lerp(minHealthColor, maxHealthColor, (float)curSatisfaction / MAXHEALTH);
     }
 }
