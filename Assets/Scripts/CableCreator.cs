@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,6 @@ public class CableCreator : MonoBehaviour
     private GameObject currentFather;
     private GameObject lastDrawn;
     private CableController _cableController;
-    public Sprite straightCable;
-    public Sprite cornerCable;
     private GameObject depart = null;
     private GameObject arrivee = null;
 
@@ -59,7 +58,7 @@ public class CableCreator : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && currentFather != null)
         {
             //Verification de la position de la souris lorsque l'on relache le bouton
             Vector3 gridPosition = grid.GetXY(mousePos);
@@ -84,7 +83,7 @@ public class CableCreator : MonoBehaviour
                             if (!depart.CompareTag("Maison") && myTargetHouseController.GetConnectedCable() == null)
                             {
                                 SetUpStartCable();
-                                myTargetHouseController.ConnectTo(currentFather.transform.GetChild(currentFather.transform.childCount - 1).gameObject);
+                                myTargetHouseController.ConnectTo(currentFather);
                             }
                             else
                             {
@@ -95,8 +94,7 @@ public class CableCreator : MonoBehaviour
                     case "Router":
                         {
                             SetUpStartCable();
-                            arrivee.GetComponent<RouterController>().addPort(currentFather);
-                            DrawCable();
+                            arrivee.GetComponent<RouterController>().addPort(_cableController.gameObject);
                             break;
                         }
 
@@ -104,21 +102,44 @@ public class CableCreator : MonoBehaviour
                         {
                             SetUpStartCable();
                             arrivee.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
-                            DrawCable();
                             break;
                         }
 
-                    case "Cable":
+                    case "CableSection":
+
                         if (currentFather.transform.childCount == 0)
                         {
                         }
                         //Creation routeur adjacent ?
                         else if (arrivee != currentFather.transform.GetChild(currentFather.transform.childCount - 1).gameObject)
                         {
+                            // si house deja connectee on ne fait rien
+                            if (_cableController.GetBegin().CompareTag("Maison") && _cableController.GetBegin().GetComponent<HouseController>().GetConnectedCable() != null)
+                            {
+                                Destroy(currentFather);
+                                break;
+                            }
                             SetUpStartCable();
+                            // test if currentFather was destroyed in SetUpStartCable()
+                            try
+                            {
+                                if (currentFather.gameObject == null) break;
+                            }
+                            catch (Exception)
+                            {
+                                break;
+                            }
                             GameObject newRouter = Instantiate(prefabRouter, arrivee.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
+                            //Adapte la taille du sprite aux cases
+                            newRouter.transform.localScale = new Vector3(grid.GetCellSize() * 1.3f, grid.GetCellSize() * 1.3f, 1);
+
                             _cableController.SetEnd(newRouter);
-                            arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
+                            if(arrivee.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables))
+                            {
+                                Debug.LogError("Division failed");
+                                Destroy(newRouter);
+                                break;
+                            }
 
                             grid.SetValue(arrivee.transform.position, newRouter);
                             arrivee = grid.GetValue(arrivee.transform.position);
@@ -190,11 +211,8 @@ public class CableCreator : MonoBehaviour
     public void ChooseSprite(Vector3 prev, Vector3 current, Vector3 next, int index)
     {
         string dir = "";
-        SpriteRenderer sr = currentFather.transform.GetChild(index).gameObject.GetComponent<SpriteRenderer>();
-        sr.color = new Color(0, 0, 0);
-
-        prev = Vector3Int.RoundToInt(prev);
-        next = Vector3Int.RoundToInt(next);
+        CableSectionController sr = currentFather.transform.GetChild(index).gameObject.GetComponent<CableSectionController>();
+        currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 
         if (prev.x == current.x)
         {
@@ -210,37 +228,46 @@ public class CableCreator : MonoBehaviour
         {
             case "NE":
             case "OS":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, -90));
                 break;
 
             case "SE":
             case "ON":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 break;
 
             case "SO":
             case "EN":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                 break;
 
             case "NO":
             case "ES":
-                sr.sprite = cornerCable;
+                sr.isCorner = true;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(new Vector3(0, 0, 180));
                 break;
 
             case "O":
             case "E":
-                sr.sprite = straightCable;
+                sr.isCorner = false;
+                sr.SetActualSprite(true);
                 break;
 
             case "N":
             case "S":
-                sr.sprite = straightCable;
+                sr.isCorner = false;
+                sr.SetActualSprite(true);
                 currentFather.transform.GetChild(index).rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            default:
+                Debug.LogError(currentFather.transform.GetChild(index).name +": cable section orientation error!");
                 break;
         }
     }
@@ -277,28 +304,32 @@ public class CableCreator : MonoBehaviour
 
     public bool canDraw()
     {
-        int lastDrawnX, lastDrawnY;
-
-        Vector3 gridPosition = grid.GetXY(mousePos);
-        int mouseX = (int)gridPosition.x;
-        int mouseY = (int)gridPosition.y;
-
-        if (currentFather.transform.childCount != 0)
+        if (currentFather != null)
         {
-            Transform lastDrawnTransform = currentFather.transform.GetChild(currentFather.transform.childCount - 1);
-            Vector3 lastDrawnPosition = lastDrawnTransform.position;
-            Vector3 lastDrawnGridPosition = grid.GetXY(lastDrawnPosition);
-            lastDrawnX = (int)lastDrawnGridPosition.x;
-            lastDrawnY = (int)lastDrawnGridPosition.y;
-        }
-        else
-        {
-            Vector3 lastDrawnGridPosition = grid.GetXY(depart.transform.position);
-            lastDrawnX = (int)lastDrawnGridPosition.x;
-            lastDrawnY = (int)lastDrawnGridPosition.y;
-        }
+            int lastDrawnX, lastDrawnY;
 
-        return isAdjacent(mouseX, mouseY, lastDrawnX, lastDrawnY);
+            Vector3 gridPosition = grid.GetXY(mousePos);
+            int mouseX = (int)gridPosition.x;
+            int mouseY = (int)gridPosition.y;
+
+            if (currentFather.transform.childCount != 0)
+            {
+                Transform lastDrawnTransform = currentFather.transform.GetChild(currentFather.transform.childCount - 1);
+                Vector3 lastDrawnPosition = lastDrawnTransform.position;
+                Vector3 lastDrawnGridPosition = grid.GetXY(lastDrawnPosition);
+                lastDrawnX = (int)lastDrawnGridPosition.x;
+                lastDrawnY = (int)lastDrawnGridPosition.y;
+            }
+            else
+            {
+                Vector3 lastDrawnGridPosition = grid.GetXY(depart.transform.position);
+                lastDrawnX = (int)lastDrawnGridPosition.x;
+                lastDrawnY = (int)lastDrawnGridPosition.y;
+            }
+
+            return isAdjacent(mouseX, mouseY, lastDrawnX, lastDrawnY);
+        }
+        return false;
     }
 
     private void SetUpStartCable()
@@ -311,7 +342,7 @@ public class CableCreator : MonoBehaviour
 
                     if (!arrivee.CompareTag("Maison") && myTargetHouseController.GetConnectedCable() == null)
                     {
-                        myTargetHouseController.ConnectTo(currentFather.transform.GetChild(0).gameObject);
+                        myTargetHouseController.ConnectTo(currentFather);
                     }
                     else
                     {
@@ -330,9 +361,29 @@ public class CableCreator : MonoBehaviour
                     depart.GetComponent<DatacenterController>().ConnectNewCable(_cableController);
                     break;
                 }
-            case "Cable":
-                //Faire section
+            case "CableSection":
+                {
+                    // si house deja connectee on ne fait rien
+                    if (_cableController.GetEnd().CompareTag("Maison") && _cableController.GetEnd().GetComponent<HouseController>().GetConnectedCable() != null)
+                    {
+                        Destroy(currentFather);
+                        break;
+                    }
+                    //Faire section
+                    GameObject newRouter = Instantiate(prefabRouter, depart.transform.position, Quaternion.identity, GameObject.Find("Routers").transform);
+                    //Adapte la taille du sprite aux cases
+                    newRouter.transform.localScale = new Vector3(grid.GetCellSize() * 1.3f, grid.GetCellSize() * 1.3f, 1);
+                    _cableController.SetBegin(newRouter);
+                    depart.transform.parent.GetComponent<CableController>().Diviser(newRouter, prefabCables);
+
+                    grid.SetValue(depart.transform.position, newRouter);
+                    depart = grid.GetValue(depart.transform.position);
+                    _cableController.SetBegin(depart);
+                    newRouter.GetComponent<RouterController>().addPort(_cableController.gameObject);
+
+                }
                 break;
+
 
             default:
                 Destroy(currentFather);
@@ -409,7 +460,7 @@ public class CableCreator : MonoBehaviour
         GameObject placedObject = Instantiate(objectToPlace, grid.GetGridPosition(placePos), placeRot);
 
         //Adapte la taille du sprite aux cases
-        placedObject.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512);
+        placedObject.transform.localScale = new Vector3(grid.GetCellSize(), grid.GetCellSize(), 1);
 
         grid.SetValue(placePos, placedObject);
     }
@@ -419,9 +470,10 @@ public class CableCreator : MonoBehaviour
         GameObject placedObject = Instantiate(objectToPlace, grid.GetGridPosition(mousePos), placeRot);
 
         //Adapte la taille du sprite aux cases
-        placedObject.transform.localScale = new Vector3(grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512, grid.GetCellSize() * 100 / 512);
+        placedObject.transform.localScale = new Vector3(grid.GetCellSize(), grid.GetCellSize(), 1);
 
-        placedObject.transform.parent = currentFather.transform;
+        //placedObject.transform.parent = currentFather.transform;
+        currentFather.GetComponent<CableController>().AddSection(placedObject);
         grid.SetValue(placePos, placedObject);
     }
 

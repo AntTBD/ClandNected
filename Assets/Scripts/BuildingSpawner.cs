@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,20 +18,28 @@ public class BuildingSpawner : MonoBehaviour
     [SerializeField] private int dataCenterPrice = 100;
     private Grid<GameObject> _grid;
 
-    private int maxX;
-    private int maxY;
+    private float maxX;
+    private float maxY;
+
+    [SerializeField] private TextMeshProUGUI datacenterNumberValue;
+    [SerializeField] private TextMeshProUGUI houseNumberValue;
 
     void Start()
     {
         _grid = gridManager.GetGrid();
-        maxX = Mathf.FloorToInt(_grid.GetWidth() / 2.0f);
-        maxY = Mathf.FloorToInt(_grid.GetHeight() / 2.0f);
+        maxX = _grid.GetWidth() / 2.0f;
+        maxY = _grid.GetHeight() / 2.0f;
 
-        houseGO.transform.localScale = new Vector3(_grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512);
-        datacenterGO.transform.localScale = new Vector3(_grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512, _grid.GetCellSize() * 100 / 512);
+        houseGO.transform.localScale = new Vector3(_grid.GetCellSize() * 1.3f, _grid.GetCellSize() * 1.3f, 1);
+        datacenterGO.transform.localScale = new Vector3(_grid.GetCellSize() * 1.3f, _grid.GetCellSize() * 1.3f, 1);
+
+        if (!datacenterNumberValue)
+            datacenterNumberValue = GameObject.Find("datacenterNumberValue").GetComponent<TextMeshProUGUI>();
+        if (!houseNumberValue)
+            houseNumberValue = GameObject.Find("houseNumberValue").GetComponent<TextMeshProUGUI>();
 
         this.SpawnDatacenter(true);
-        StartCoroutine("coroutineSpawnHouse");
+        StartCoroutine(CoroutineSpawnHouse());
     }
 
     void Update()
@@ -44,7 +53,7 @@ public class BuildingSpawner : MonoBehaviour
 
     // Coroutine de spawn des houses
 
-    IEnumerator coroutineSpawnHouse()
+    IEnumerator CoroutineSpawnHouse()
     {
         //TODO : Change that by while game is running
         while (true)
@@ -63,12 +72,13 @@ public class BuildingSpawner : MonoBehaviour
             for (int i = 0; i < 1000; i++)
             {
                 Vector3 pos = new Vector3(
-                    Random.Range(-maxX, maxX + 1),
-                    Random.Range(-maxY, maxY + 1),
+                    Random.Range(-maxX, maxX),
+                    Random.Range(-maxY, maxY),
                     0);
                 if (_grid.GetValue(pos) == null && !IsTooCloseFromDatacenters(pos))
                 {
                     _grid.SetValue(pos, Instantiate(datacenterGO, _grid.GetGridPosition(pos), Quaternion.identity, dataCenters));
+                    datacenterNumberValue.text = dataCenters.childCount.ToString();
                     break;
                 }
             }
@@ -99,9 +109,15 @@ public class BuildingSpawner : MonoBehaviour
             if (_grid.IsInGrid(pos) && _grid.GetValue(pos) == null)
             {
                 _grid.SetValue(pos, Instantiate(houseGO, _grid.GetGridPosition(pos), Quaternion.identity, houses));
+                houseNumberValue.text = houses.childCount.ToString();
                 break;
             }
 
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(CoroutineSpawnHouse());
     }
 }

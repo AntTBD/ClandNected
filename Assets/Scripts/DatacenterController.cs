@@ -45,14 +45,22 @@ public class DatacenterController : MonoBehaviour
     private List<DataController> waitingLine;
     [SerializeField] private int waitingLineMaxCapacity;
 
+    [SerializeField] private bool changeSpriteColor;
+    public Color datasColor;
+
     // Start is called before the first frame update
     void Start()
     {
+        name = "Datacenter " + Random.Range(0, 1000).ToString();
         nbPortsUsed = 0;
         SetCanPullCable();
         connectedCables = new List<CableController>();
         waitingLine = new List<DataController>(waitingLineMaxCapacity);
-        StartCoroutine("DatasProcessing");
+
+        datasColor = Color.HSVToRGB((int)(Random.Range(0f, 1f) * 100) / 100f, 1f, 1f);
+        if (changeSpriteColor)
+            GetComponent<SpriteRenderer>().color = datasColor; // change border color
+        StartCoroutine(DatasProcessing());
     }
 
     /// <summary>
@@ -101,6 +109,12 @@ public class DatacenterController : MonoBehaviour
         nbPortsUsed++;
         SetCanPullCable();
     }
+    public void RemoveCable(CableController cable)
+    {
+        connectedCables.Remove(cable);
+        nbPortsUsed--;
+        SetCanPullCable();
+    }
 
     /// <summary>
     /// Traitement des donn�es toute les [processingSpeed] secondes
@@ -110,15 +124,12 @@ public class DatacenterController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(processingSpeed);
             if (waitingLine.Count > 0)
             {
-                Debug.Log("Process" + waitingLine[0]);
+                //Debug.Log("Process " + waitingLine[0]);
                 OneDataProcessing(waitingLine[0]);
             }
-            //StartCoroutine("DatasProcessing");
-            // il a une vitesse de traitement des data lorsqu'il les re�oit
-            yield return null;
+            yield return new WaitForSeconds(processingSpeed);// il a une vitesse de traitement des data lorsqu'il les re�oit
         }
     }
 
@@ -148,7 +159,7 @@ public class DatacenterController : MonoBehaviour
     /// <param name="data"></param>
     public void AddNewDataToWaitingList(DataController data)
     {
-        if (waitingLine.Count <= waitingLineMaxCapacity)
+        if (waitingLine.Count <= waitingLineMaxCapacity && data.GetDatacenterOfDestination() == gameObject)
         {
             waitingLine.Add(data);
         }
@@ -156,5 +167,10 @@ public class DatacenterController : MonoBehaviour
         {
             data.Delete(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(DatasProcessing());
     }
 }

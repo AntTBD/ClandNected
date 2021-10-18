@@ -1,0 +1,11 @@
+\/ : remove money
+^ : add money
+< : remove satisfaction
+> : add satisfaction
+
+SPACE : spawn house
+SPACE : Update routers table
+ESCAPE : gameover
+
+Mouse scroll wheel: camera zoom
+Mouse scroll wheel click + drag : move camera

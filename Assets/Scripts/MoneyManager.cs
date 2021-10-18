@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,7 +39,7 @@ public class MoneyManager : MonoBehaviour {
     }
 
     private void displayMoney () {
-        this.moneyValue.GetComponent<Text> ().text = this.ToString ();
+        this.moneyValue.GetComponent<TextMeshProUGUI> ().text = this.ToString ();
     }
 
     public override string ToString () {

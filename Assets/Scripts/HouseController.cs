@@ -27,16 +27,30 @@ Note :
 
 public class HouseController : MonoBehaviour
 {
-    private bool isSatisfied;
+    [SerializeField] private bool isSatisfied;
     [SerializeField] private GameObject connectedCable;
 
     [SerializeField] private float sendDeltaTimeSeconds;
 
     [SerializeField] private GameObject dataPrefab;
+
+    [SerializeField] private bool useSpritesIndicateSatisfaction;
+    [SerializeField] private Sprite satisfiedSprite, unsatisfiedSprite;
+
     // Start is called before the first frame update
     void Start()
     {
+        name = "House " + Random.Range(0, 1000).ToString();
         isSatisfied = false;
+        if (useSpritesIndicateSatisfaction)
+        {
+            if (satisfiedSprite == null) Debug.LogWarning(name + " No satisfied sprite set !");
+            if (unsatisfiedSprite == null) Debug.LogWarning(name + " No unsatisfied sprite set !");
+        }
+
+        // add little random
+        sendDeltaTimeSeconds = Random.Range(sendDeltaTimeSeconds, sendDeltaTimeSeconds + 3);
+
         StartCoroutine(SendDatas());
     }
 
@@ -46,6 +60,11 @@ public class HouseController : MonoBehaviour
         if (!etat) bar.removeSatisfaction();
         else bar.addSatisfaction();
         isSatisfied = etat;
+
+        if (useSpritesIndicateSatisfaction)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isSatisfied ? satisfiedSprite : unsatisfiedSprite;
+        }
     }
     public bool IsSatified()
     {
@@ -62,21 +81,13 @@ public class HouseController : MonoBehaviour
         return connectedCable;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     IEnumerator SendDatas()
     {
         while (true)
         {
             yield return new WaitForSeconds(sendDeltaTimeSeconds);
-            //if (connectedCable == null) yield break;
             CreateNewData();
         }
-
     }
 
     /// <summary>
@@ -84,6 +95,17 @@ public class HouseController : MonoBehaviour
     /// </summary>
     private void CreateNewData()
     {
-        Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
+        if (connectedCable != null)
+        {
+            Instantiate(dataPrefab, Vector3.zero, Quaternion.identity, transform);
+        }
+        else
+        {
+            SetIsSatified(false);// if not connected, decreases satisfaction
+        }
+    }
+    private void OnDestroy()
+    {
+        StopCoroutine(SendDatas());
     }
 }

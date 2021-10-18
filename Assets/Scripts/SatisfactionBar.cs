@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,8 @@ public class SatisfactionBar : MonoBehaviour
     public Color maxHealthColor = Color.green;
 
     public Color minHealthColor = Color.red;
+
+    public TextMeshProUGUI valueText;
 
     private void Awake()
     {
@@ -49,7 +52,7 @@ public class SatisfactionBar : MonoBehaviour
             return true;
         }
         // game over
-        GameObject.Find("SceneChangerObject").GetComponent<SceneChanger>().LoadMap("End");
+        GameObject.Find("SceneChangerObject").GetComponent<SceneChanger>().GameOver();
         return false;
     }
 

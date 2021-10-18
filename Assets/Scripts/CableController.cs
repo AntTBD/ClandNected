@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utils;
 
 /*
 Cable :
@@ -61,23 +62,34 @@ public class CableController : MonoBehaviour
     [SerializeField]
     private GameObject objBegin;
     [SerializeField] private GameObject objEnd;
-    private int level;
+    [SerializeField] private int level;
+    const int LEVEL_MAX = 4;
     [SerializeField]
     private int nbMaxDatas = 10;
     [SerializeField]
     private int nbDatas;
-    private float weight;
+    [SerializeField] private float weight;
     private bool operational = true;
     private List<DataController> datas;
+
+    private bool previousOperational = false;
+
+    public Grid<GameObject> grid { get; private set; }
+    private const int CABLECOST = 2;
+
+
+    private bool wantToUpgrade = false;
 
     // Start is called before the first frame update
     void Awake()
     {
-        name = "Cable " + Random.Range(0, 1000).ToString();
+        name = "Cable " + Random.Range(0, 10000).ToString();
         level = 1;
         CheckAndUpdateMaxData();
         weight = 0f;
         datas = new List<DataController>();
+
+        grid = GameObject.Find("GridManager").GetComponent<GridManager>().GetGrid();
     }
 
     public void SetBegin(GameObject begin)
@@ -110,19 +122,29 @@ public class CableController : MonoBehaviour
     void CheckAndUpdateMaxData()
     {
         /// TODO : to improve
-        nbMaxDatas = level * 2;
+        nbMaxDatas = level * 5;
     }
 
     public void UpgradeLevel()
     {
-        level++;
-        CheckAndUpdateMaxData();
-        foreach (Transform section in transform)
+        bool upgraded = false;
+        if (level <= LEVEL_MAX && GameObject.Find("MoneyManager").GetComponent<MoneyManager>().removeMoney(CABLECOST * level * (transform.childCount + 1)))
         {
-            /// TODO : call function to upgarde section
-            section.GetComponent<CableSectionController>().Upgrade();
+            foreach (Transform section in transform)
+            {
+                /// call function to upgarde section
+                upgraded = section.GetComponent<CableSectionController>().Upgrade();
+                if (upgraded == false)
+                    break;
+            }
+            if (upgraded)
+            {
+                level++;
+                CheckAndUpdateMaxData();
+
+                UpdateWeight();
+            }
         }
-        UpdateWeight();
     }
     public float GetWeight()
     {
@@ -137,18 +159,53 @@ public class CableController : MonoBehaviour
     void Update()
     {
         CheckSaturation();
+        CheckForUpgrade();
+        UpdateWeight();
+    }
+
+    void CheckForUpgrade()
+    {
+        if ((Input.touchCount > 0 && Input.GetTouch(0).tapCount == 2) || Input.GetMouseButtonDown(1)) // double tap OR right clic down
+        {
+            wantToUpgrade = true;
+        }
+
+        if (wantToUpgrade)
+        {
+            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp(1)) // double tap end OR right clic relaché
+            {
+                wantToUpgrade = false;
+                if (grid != null)
+                {
+                    Vector3 mousePos = grid.GetGridPosition(GetMouseWorldPosition());
+                    if (grid.IsInGrid(mousePos))
+                    {
+                        foreach (Transform section in transform)
+                        {
+                            if (mousePos == section.position)
+                            {
+                                UpgradeLevel();
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
     }
 
     void CheckSaturation()
     {
-        //if (IsOperational() == false)
-        // {
-        // change color foreach sections
-        foreach (Transform section in transform)
+        if (IsOperational() != previousOperational)// change color if state is different
         {
-            section.GetComponent<CableSectionController>().SetSatured(operational);
+            previousOperational = operational;
+            // change color foreach sections
+            foreach (Transform section in transform)
+            {
+                section.GetComponent<CableSectionController>().SetSatured(! operational);
+            }
         }
-        // }
     }
 
     void UpdateOperational()
@@ -160,13 +217,14 @@ public class CableController : MonoBehaviour
     {
         /// TODO : calcul du poid
         ///  On calcul en fonction de la taille du c�ble et de sa saturation 
-        weight = transform.childCount * ((float)nbMaxDatas / (float)nbDatas);
+        //weight = transform.childCount * ((float)nbMaxDatas - (float)nbDatas);
+        weight = (transform.childCount+1 + nbDatas)*(LEVEL_MAX-(level-1));
     }
 
-    public void AddSection(CableSectionController section)
+    public void AddSection(GameObject section)
     {
         section.transform.parent = transform; // add section as a child
-
+        section.name = name + "_" + transform.childCount;
         UpdateWeight();
     }
 
@@ -190,8 +248,11 @@ public class CableController : MonoBehaviour
 
     public void RemoveData(GameObject data)
     {
-        nbDatas--;
-        if (datas.Count > 0) datas.RemoveAt(0);
+        if (datas.Count > 0)
+        {
+            datas.RemoveAt(0);
+            nbDatas--;
+        }
         UpdateOperational();
         UpdateWeight();
 
@@ -221,14 +282,18 @@ public class CableController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Diviser(GameObject router, GameObject prefabCableController)
+    public bool Diviser(GameObject router, GameObject prefabCableController)
     {
+        // get size of cable to compare success or not
+        int cableSizeTemp = transform.childCount;
         // create new cable
         GameObject newCable = Instantiate(prefabCableController, Vector3.zero, Quaternion.identity);
+        CableController newCableController = newCable.GetComponent<CableController>();
+
         // parcourir le cable actuel
         bool firstCable = true;
         Transform middleSection = null;
-        List<CableSectionController> listTemp = new List<CableSectionController>();
+        List<GameObject> listTemp = new List<GameObject>();
         foreach (Transform section in transform)
         {
             if (firstCable == true)
@@ -243,22 +308,52 @@ public class CableController : MonoBehaviour
             else
             {
                 // add section to new cable (auto change parent)
-                listTemp.Add(section.GetComponent<CableSectionController>());
+                listTemp.Add(section.gameObject);
             }
         }
         // on change le parent apres
-        foreach (CableSectionController temp in listTemp)
+        foreach (GameObject temp in listTemp)
         {
-            newCable.GetComponent<CableController>().AddSection(temp);
+            newCableController.AddSection(temp);
         }
         middleSection.GetComponent<CableSectionController>().Delete();
-        newCable.GetComponent<CableController>().SetBegin(router);// set begin of new cable
-        newCable.GetComponent<CableController>().SetEnd(objEnd);// set end of new cable
+        newCableController.SetBegin(router);// set begin of new cable
+        newCableController.SetEnd(objEnd);// set end of new cable
+        newCableController.level = level;
+        //newCableController.UpgradeLevel();
+        newCableController.CheckAndUpdateMaxData();
+        newCableController.UpdateWeight();
+        newCableController.UpdateOperational();
+
+        if(newCableController.GetEnd().CompareTag("Router"))
+        {
+            RouterController routerEndCable = newCableController.GetEnd().GetComponent<RouterController>();
+            routerEndCable.removePort(gameObject);//remove this cable
+            routerEndCable.addPort(newCable);// add new
+        }
+        else if (newCableController.GetEnd().CompareTag("Maison"))
+        {
+            HouseController houseEndCable = newCableController.GetEnd().GetComponent<HouseController>();
+            houseEndCable.ConnectTo(newCable);
+        }
+        else if (newCableController.GetEnd().CompareTag("DataCenter"))
+        {
+            DatacenterController datacenterEndCable = newCableController.GetEnd().GetComponent<DatacenterController>();
+            datacenterEndCable.RemoveCable(gameObject.GetComponent<CableController>());
+            datacenterEndCable.ConnectNewCable(newCableController);
+        }
+        if (newCableController.GetBegin().CompareTag("Router"))
+        {
+            RouterController routerEndCable = newCableController.GetBegin().GetComponent<RouterController>();
+            routerEndCable.removePort(gameObject);//remove this cable
+            //routerEndCable.addPort(gameObject);// add new
+        }
+
         objEnd = router; // set end of this cable
 
         router.GetComponent<RouterController>().addPort(newCable);// newCable first section
         router.GetComponent<RouterController>().addPort(gameObject);// thisCable last section
 
-
+        return newCable.transform.childCount + transform.childCount == cableSizeTemp-1;
     }
 }
