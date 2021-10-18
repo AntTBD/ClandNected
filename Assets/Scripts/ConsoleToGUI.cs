@@ -11,6 +11,7 @@ public class ConsoleToGUI : MonoBehaviour
     void Update() { if (Input.GetKeyDown(KeyCode.F12)) { doShow = !doShow; } }
     public void Log(string logString, string stackTrace, LogType type)
     {
+        if (!doShow) { return; }
         // for onscreen...
         myLog = myLog + "\n" + logString;
         if (myLog.Length > kChars) { myLog = myLog.Substring(myLog.Length - kChars); }
