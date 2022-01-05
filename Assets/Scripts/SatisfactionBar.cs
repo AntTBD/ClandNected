@@ -16,7 +16,7 @@ public class SatisfactionBar : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
-    private static int curSatisfaction;
+    private float curSatisfaction;
 
     public Image fill; // assign in the editor the "Fill"
 

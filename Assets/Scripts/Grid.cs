@@ -16,6 +16,8 @@ public class Grid<TGridObject>
 
     [SerializeField] float androidCoeff = 1f;
 
+    [SerializeField] private int nbEmptyCells;
+
     public Grid(int width, int height, float cellSize, Vector3 originPosition, bool isCenter = false, float androidCoeff = 1f)
     {
 
@@ -37,22 +39,20 @@ public class Grid<TGridObject>
         gridArray = new TGridObject[this.width, this.height];
         debugTextArray = new TextMesh[this.width, this.height];
 
-        bool showDebug = true;
-
-        if (showDebug)
+        this.nbEmptyCells = gridArray.Length;
+#if UNITY_EDITOR
+        for (int x = 0; x < gridArray.GetLength(0); x++)
         {
-            for (int x = 0; x < gridArray.GetLength(0); x++)
+            for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                for (int y = 0; y < gridArray.GetLength(1); y++)
-                {
-                    //debugTextArray[x, y] = CreateWorldText (gridArray[x, y].ToString (), null, GetWorldPosition (x, y) + new Vector3 (cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.gray, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.gray, 100f);
-                }
+                //debugTextArray[x, y] = CreateWorldText (gridArray[x, y].ToString (), null, GetWorldPosition (x, y) + new Vector3 (cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.gray, 100f);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.gray, 100f);
             }
-            Debug.DrawLine(GetWorldPosition(0, this.height), GetWorldPosition(this.width, this.height), Color.gray, 100f);
-            Debug.DrawLine(GetWorldPosition(this.width, 0), GetWorldPosition(this.width, this.height), Color.gray, 100f);
         }
+        Debug.DrawLine(GetWorldPosition(0, this.height), GetWorldPosition(this.width, this.height), Color.gray, 100f);
+        Debug.DrawLine(GetWorldPosition(this.width, 0), GetWorldPosition(this.width, this.height), Color.gray, 100f);
+#endif
     }
     private void SetWithHeightFromScreenSizeAndCellSize()
     {
@@ -118,6 +118,7 @@ public class Grid<TGridObject>
         if (IsInGrid(x, y))
         {
             this.gridArray[x, y] = value;
+            this.nbEmptyCells--;
         }
         else
         {
@@ -184,6 +185,11 @@ public class Grid<TGridObject>
     public float GetCellSize()
     {
         return this.cellSize;
+    }
+
+    public bool IsFull()
+    {
+        return this.nbEmptyCells <= 0;
     }
 
 

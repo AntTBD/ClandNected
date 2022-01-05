@@ -42,21 +42,63 @@ public class BuildingSpawner : MonoBehaviour
         StartCoroutine(CoroutineSpawnHouse());
     }
 
+#if UNITY_EDITOR
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Space))
         {
             //SpawnDatacenter();
             SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
+            SpawnHouse();
         }
     }
-
+#endif
     // Coroutine de spawn des houses
 
     IEnumerator CoroutineSpawnHouse()
     {
         //TODO : Change that by while game is running
-        while (true)
+        while (!_grid.IsFull())
         {
             this.SpawnHouse();
             yield return new WaitForSeconds(secondBeforeSpawnHouse);
@@ -65,8 +107,11 @@ public class BuildingSpawner : MonoBehaviour
 
     public void SpawnDatacenter(bool isPaid = false)
     {
+        if(_grid.IsFull()) return;
+        
         if (!isPaid)
             isPaid = moneyManager.GetComponent<MoneyManager>().removeMoney(dataCenterPrice);
+        
         if (isPaid)
         {
             for (int i = 0; i < 1000; i++)
@@ -99,6 +144,8 @@ public class BuildingSpawner : MonoBehaviour
 
     public void SpawnHouse()
     {
+        if(_grid.IsFull()) return;
+        
         for (int i = 0; i < 1000; i++)
         {
             var datacenter = dataCenters.GetChild(Random.Range(0, dataCenters.childCount)).position;

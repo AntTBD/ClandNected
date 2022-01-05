@@ -37,6 +37,7 @@ public class HouseController : MonoBehaviour
     [SerializeField] private bool useSpritesIndicateSatisfaction;
     [SerializeField] private Sprite satisfiedSprite, unsatisfiedSprite;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -108,4 +109,5 @@ public class HouseController : MonoBehaviour
     {
         StopCoroutine(SendDatas());
     }
+
 }

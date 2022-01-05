@@ -221,9 +221,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 344561449
-  m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingLayerID: 990092391
+  m_SortingLayer: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -283,7 +283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 129929219837603204, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1034910278793052648, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_RootOrder
@@ -293,6 +293,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 864912711}
+    - target: {fileID: 5275707539479412584, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5275707539479412585, guid: 79b559c8cc856dd40a270e42b9153117, type: 3}
       propertyPath: m_Camera
       value: 
@@ -692,7 +696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015299812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.22134294, y: 8.112986, z: 1218.9148}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
