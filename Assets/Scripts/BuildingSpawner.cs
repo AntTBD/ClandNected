@@ -49,47 +49,6 @@ public class BuildingSpawner : MonoBehaviour
         {
             //SpawnDatacenter();
             SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
-            SpawnHouse();
         }
     }
 #endif
