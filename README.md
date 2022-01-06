@@ -16,13 +16,13 @@ Création d'un jeu en 72h sur le thème de **"La Connexion"** et 3 styles impos�
 
 ## Description :
 
-C'est un jeu de gestion de networks où l'on doit relier des maisons demandant internet à un des datacenters disponible de façon aléatoire.
-On peut relier des câbles ensembles pour faire des routeurs et ainsi des nœuds.
-Ces routeurs, dotés d'une IA, vont rediriger chaque paquet sur le bon cable en fonction des différents chemins possibles, de leur capacité restante et de leur distance.
+C'est un jeu de gestion de networks où l'on doit relier des maisons demandant internet à un des datacenters disponibles de façon aléatoire.
+On peut relier des câbles ensemble pour faire des routeurs et ainsi des nœuds.
+Ces routeurs, dotés d'une IA, vont rediriger chaque paquet sur le bon câble en fonction des différents chemins possibles, de leur capacité restante et de leur distance.
 
 Le joueur doit gérer son argent et acheter des datacenters en fonctions de la demande et réussir à faire un beau câble management pour trier les câbles afin que chaque maison soit reliée à tous les datacenters.
 
-La partie est terminée quand le taux de statisfaction des habitants est trop bas (trop de pertes de paquets dû à un cable plein ou un datacenter ayant une file d'attente pleine).
+La partie est terminée quand le taux de satisfaction des habitants est trop bas (trop de pertes de paquets dû à un câble plein ou un datacenter ayant une file d'attente pleine).
 
 ## Made by : Team Claude 3000 !  <img src="Img/TeamClaud3000.png" height="30">
 * [GIMENEZ Théo](https://github.com/TheoGimenez7)
