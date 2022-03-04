@@ -56,9 +56,8 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 ## Made your own strategic !
 
 <div align="center">
-  <div></div>
   
-|    Home   |
+| Home |
 | --------- |
 | ![ClaudNected Home](Img/ClaudNected%20Home.png) |
 
@@ -77,7 +76,6 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 * Spawn circle
 
 <div align="center">
-  <div></div>
 
 | Exemple 1 |
 | --------- |
