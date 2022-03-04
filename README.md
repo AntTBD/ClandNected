@@ -58,7 +58,7 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 <div align="center">
   
 | Home |
-| --------- |
+| :---: |
 | ![ClaudNected Home](Img/ClaudNected%20Home.png) |
 
 | First demo |
