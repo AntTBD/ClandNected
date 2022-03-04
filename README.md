@@ -55,8 +55,6 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 
 ## Made your own strategic !
 
-<div align="center">
-  
 | Home |
 | :---: |
 | ![ClaudNected Home](Img/ClaudNected%20Home.png) |
@@ -64,8 +62,7 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 | First demo |
 | ---------- |
 | ![WonderJam Demo](Img/ClaudNected%20InGame%200.png) |
-  
-</div>
+
 
 ## Upgrades
 * Houses satisfaction
@@ -74,8 +71,6 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 * Final screenshot
 * Display more information
 * Spawn circle
-
-<div align="center">
 
 | Exemple 1 |
 | --------- |
@@ -96,5 +91,3 @@ Une version WebGL est également disponible [ici](https://anttbd.github.io/Claud
 | End |
 | --- |
 | ![ClaudNected End](Img/ClaudNected%20end.png) |
-
-</div>
